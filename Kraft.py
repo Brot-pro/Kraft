@@ -67,7 +67,7 @@ class Kräftaddieren(Scene):
 
 class safd(Scene):
     def construct(self):
-
+        self.wait()
         self.wait()
 # s = [2,1]
 # func1 = lambda pos: s[0] * RIGHT + s[1] * UP
