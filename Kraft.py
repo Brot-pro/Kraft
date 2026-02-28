@@ -13,7 +13,7 @@ class Test(Scene):
 
 class Kräftaddieren(Scene):
     def construct(self):
-        nupl = NumberPlane(x_range=(-10,10,1.5),y_range=(-6,6,1.5)).set_opacity(0.3)
+        nupl = NumberPlane(x_range=(-10,10,1.5),y_range=(-6,6,1.5)).set_opacity(0.5)
         nupl.shift(DL)
         vector1 = nupl.get_vector([0,0,0]).set_color(ORANGE)
         vector2 = nupl.get_vector([0,0,0]).set_color(BLUE)
@@ -65,10 +65,49 @@ class Kräftaddieren(Scene):
         self.play(vector1.animate.become(nupl.get_vector([vector1x,vector1y,0]).set_color(ORANGE)),vector2.animate.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE)),vector3.animate.become(nupl.get_vector([vector1x+vector2x,vector1y+vector2y,0]).set_color(WHITE)),run_time=2)
         self.wait()
 
-class safd(Scene):
+class Kräfteparalellogramm(Scene):
     def construct(self):
+        nupl = NumberPlane(x_range=(-10,10,1.5),y_range=(-6,6,1.5)).set_opacity(0.5)
+        nupl.shift(2*DL)
+        vector1 = nupl.get_vector([0,0,0]).set_color(ORANGE)
+        vector2 = nupl.get_vector([0,0,0]).set_color(BLUE)
+        vector3 = nupl.get_vector([0,0,0]).set_color(WHITE)
+        text = Tex("Kräfteparalellogramm")
+        vector1x = 4.5
+        vector1y = 1.5
+        vector2x = 1.5
+        vector2y = 3
+        vector4 = nupl.get_vector([vector2x,vector2y,0]).set_color(BLUE)
+        vector5 = nupl.get_vector([vector1x,vector1y,0]).set_color(ORANGE)
+        self.wait(0.5)
+        self.play(FadeIn(nupl))
+        self.play(vector1.animate.become(nupl.get_vector([vector1x,vector1y,0]).set_color(ORANGE)),vector2.animate.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE)),run_time=1)
         self.wait()
+        self.play(vector2.animate.shift(vector1y*UP).shift(vector1x*RIGHT))
+        self.play(vector3.animate.become(nupl.get_vector([vector1x+vector2x,vector1y+vector2y,0]).set_color(WHITE)),run_time=2)
+        #ist gehardcoded ich weiß....
+        punkt = Dot(point=[4,2.5,0],color=RED)
+        self.play(FadeIn(punkt))
+        self.wait(2)
+        self.play(vector3.animate.become(nupl.get_vector([0,0,0]).set_color(WHITE)))
         self.wait()
+        vector4.shift(vector1y*UP).shift(vector1x*RIGHT)
+        self.add(vector4)
+        self.add(vector5)
+        self.play(vector1.animate.become(nupl.get_vector([vector1x,vector1y,0]).set_color(ORANGE)),vector2.animate.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE)),run_time=1)
+        self.wait()
+        self.play(vector1.animate.shift(vector2y*UP).shift(vector2x*RIGHT))
+        self.play(vector3.animate.become(nupl.get_vector([vector1x+vector2x,vector1y+vector2y,0]).set_color(WHITE)),run_time=2)
+        self.wait(2)
+        text.shift(2.8*UP)
+        text.shift(0.7*RIGHT)
+        self.play(Write(text),run_time=0.8)
+        self.wait(0.2)
+        self.play(Circumscribe(text))
+        self.wait(2)
+
+
+        
 # s = [2,1]
 # func1 = lambda pos: s[0] * RIGHT + s[1] * UP
 # vecfield = ArrowVectorField(func1,x_range=[-9,8,0.7],y_range=[-5,4,0.7]).set_color(BLUE).set_opacity(0)
@@ -76,4 +115,3 @@ class safd(Scene):
 # self.play(vecfield.animate.shift(s[0]/2 * RIGHT + s[1]/2 * UP).set_opacity(1), rate_func=rate_functions.ease_in_quart, run_time=1.5)
 # self.play(vecfield.animate.shift(s[0]/2 * RIGHT + s[1]/2 * UP).set_opacity(0), rate_func=rate_functions.ease_out_quart, run_time=1.5)
 
-# Update-324
