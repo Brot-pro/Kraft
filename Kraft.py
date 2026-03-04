@@ -10,8 +10,70 @@ class Test(Scene):
         self.play(t.animate.set_value(3),run_time=2,)
         self.wait()
 
+class Kraftdarstellen(Scene):
+    def construct(self):
 
-class Kräftaddieren(Scene):
+        #Raster
+        nupl = NumberPlane(x_range=(-10,10,1.5),y_range=(-6,6,1.5)).set_opacity(0.5)
+
+        #Texte
+        kraftdarstellen = Tex("Kraft darstellen").scale(1.2)
+        ul1 = Underline(kraftdarstellen)
+        blackbox1 = SurroundingRectangle(kraftdarstellen, buff=0, color=BLACK,fill_opacity=1)
+        kraftdarstellengruppe = VGroup(blackbox1,kraftdarstellen,ul1)
+
+        pfeil = Tex("Pfeil = Vektor")
+        blackbox2 = SurroundingRectangle(pfeil, color=BLACK,fill_opacity=1,buff=0)
+        pfeilgruppe = VGroup(blackbox2,pfeil)
+
+        newton = Tex("1 Kästchen = 1 Newton (N)")
+        blackbox3 = SurroundingRectangle(newton, color=BLACK,fill_opacity=1,buff=0)
+        newtongruppe = VGroup(blackbox3,newton)
+
+        fünf = Tex("5N")
+        blackbox4 = SurroundingRectangle(fünf, color=BLACK,fill_opacity=1,buff=0)
+        fünfgruppe = VGroup(blackbox4,fünf)
+
+        angriffspunkt = Tex("Angriffspunkt")
+        blackbox5 = SurroundingRectangle(angriffspunkt, color=BLACK,fill_opacity=1,buff=0)
+        angriffspunktgruppe = VGroup(blackbox5,angriffspunkt)
+
+        #Andere Mobjects
+        v1 = nupl.get_vector([6,4.5,0]).set_color(ORANGE)
+        punkt = Dot()
+        punkt.shift(2 * DL)
+        
+
+        #Animationen
+        self.add(kraftdarstellengruppe)
+        self.wait()
+        self.play(kraftdarstellengruppe.animate.to_corner(UL))
+        nupl.shift(2 * DL)
+        self.play(FadeIn(nupl))
+        self.add(kraftdarstellengruppe)
+        self.wait()
+        v1.shift(2 * DL) 
+        self.play(GrowArrow(v1))
+        self.wait(3)
+        pfeilgruppe.move_to([-1.5,0,0])
+        self.play(Write(pfeilgruppe))
+        self.wait()
+        self.play(pfeilgruppe.animate.next_to(kraftdarstellen, DOWN).to_edge(LEFT))
+        self.wait(1.4)
+        newtongruppe.next_to(pfeilgruppe, DOWN).to_edge(LEFT)
+        fünf.move_to([0.3,0.4,0])
+        self.play(Write(newtongruppe))
+        self.wait()
+        self.play(Write(fünfgruppe))
+        self.wait()
+        angriffspunktgruppe.move_to([-3.6,-1.6,0])
+        self.play(Write(angriffspunktgruppe))
+        self.play(Circumscribe(punkt,Circle))
+        self.wait()
+        self.play(angriffspunktgruppe.animate.next_to(newtongruppe, DOWN).to_edge(LEFT))
+        self.wait()
+        
+class Kraftaddieren(Scene):
     def construct(self):
         kräfteaddieren = Tex("Kräfte addieren").scale(1.2)
         ul1 = Underline(kräfteaddieren)
@@ -271,6 +333,8 @@ class Kräfteparalellogramm(Scene):
 
         
         self.wait()
+
+
 
 # s = [2,1]
 # func1 = lambda pos: s[0] * RIGHT + s[1] * UP

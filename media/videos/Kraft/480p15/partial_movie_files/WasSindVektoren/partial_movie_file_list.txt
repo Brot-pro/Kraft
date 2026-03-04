@@ -1,0 +1,7 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/PC/Desktop/Über - ansamlung/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/WasSindVektoren/1584795214_1862311650_2023860264.mp4'
+file 'file:C:/Users/PC/Desktop/Über - ansamlung/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/WasSindVektoren/4072820271_2598968945_2774523530.mp4'
+file 'file:C:/Users/PC/Desktop/Über - ansamlung/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/WasSindVektoren/4072820271_1754310298_2091729451.mp4'
+file 'file:C:/Users/PC/Desktop/Über - ansamlung/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/WasSindVektoren/4072820271_168348425_3165306146.mp4'
+file 'file:C:/Users/PC/Desktop/Über - ansamlung/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/WasSindVektoren/4072820271_1754310298_685424422.mp4'
+file 'file:C:/Users/PC/Desktop/Über - ansamlung/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/WasSindVektoren/4072820271_3974794484_3943575912.mp4'
