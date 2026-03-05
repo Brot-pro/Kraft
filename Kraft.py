@@ -31,8 +31,6 @@ class Kraftdarstellen(Scene):
         newtongruppe = VGroup(blackbox3,newton)
 
         fünf = Tex("5N")
-        blackbox4 = SurroundingRectangle(fünf, color=BLACK,fill_opacity=1,buff=0)
-        fünfgruppe = VGroup(blackbox4,fünf)
 
         angriffspunkt = Tex("Angriffspunkt")
         blackbox5 = SurroundingRectangle(angriffspunkt, color=BLACK,fill_opacity=1,buff=0)
@@ -40,6 +38,12 @@ class Kraftdarstellen(Scene):
 
         #Andere Mobjects
         v1 = nupl.get_vector([6,4.5,0]).set_color(ORANGE)
+        v2 = nupl.get_vector([-3,1.5,0]).set_color(ORANGE)
+        v2.shift(0.5 * DOWN)
+        v2.shift(2.5 * RIGHT)
+        v3 = nupl.get_vector([4.5,-3,0]).set_color(ORANGE)
+        v3.shift(3.5*LEFT)
+        v3.shift(0.5*DOWN)
         punkt = Dot()
         punkt.shift(2 * DL)
         
@@ -64,14 +68,18 @@ class Kraftdarstellen(Scene):
         fünf.move_to([0.3,0.4,0])
         self.play(Write(newtongruppe))
         self.wait()
-        self.play(Write(fünfgruppe))
-        self.wait()
+        self.play(Write(fünf))
+        self.wait(1.4)
         angriffspunktgruppe.move_to([-3.6,-1.6,0])
         self.play(Write(angriffspunktgruppe))
         self.play(Circumscribe(punkt,Circle))
         self.wait()
         self.play(angriffspunktgruppe.animate.next_to(newtongruppe, DOWN).to_edge(LEFT))
+        self.wait(2)
+        self.play(ReplacementTransform(v1,v2),FadeOut(fünf),run_time=2)
         self.wait()
+        self.play(ReplacementTransform(v2,v3),run_time=2)
+        self.wait(0.3)
         
 class Kraftaddieren(Scene):
     def construct(self):
@@ -89,24 +97,83 @@ class Kraftaddieren(Scene):
         vector2 = nupl.get_vector([0,0,0]).set_color(BLUE)
         vector3 = nupl.get_vector([0,0,0]).set_color(WHITE)
         fragezeichen = Tex("?" , color = WHITE)
-        vector1x = 4
-        vector1y = 0.5
-        vector2x = 1
-        vector2y = 3
         fragezeichen.add_updater(lambda mob : mob.next_to(vector3, UR).shift(0.6 *DOWN))
         self.wait(0.5)
         self.play(FadeIn(nupl))
         self.add(kräftaddierengruppe)
+
+
+        vector1x = 1.5
+        vector1y = 1.5
+        vector2x = 3
+        vector2y = 3
+
         self.play(vector1.animate.become(nupl.get_vector([vector1x,vector1y,0]).set_color(ORANGE)),vector2.animate.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE)),run_time=1)
         self.wait(2)
-
+        self.play(vector1.animate.shift(0.1*UL))
+        self.wait()
         pfeil = Tex("Pfeil = Vektor")
         blackbox2 = SurroundingRectangle(pfeil, color=BLACK,fill_opacity=1,buff=0)
         pfeilgruppe = VGroup(blackbox2,pfeil)
-        pfeilgruppe.shift(1.5 * DR)
+        pfeilgruppe.move_to([-2.2,0,0])
         self.play(Write(pfeilgruppe))
         self.wait()
         self.play(pfeilgruppe.animate.next_to(kräftaddierengruppe, DOWN).to_edge(LEFT))
+
+        self.add(fragezeichen)
+        vector3.shift(0.1*DR)
+        self.play(vector3.animate.become(nupl.get_vector([4,4,0]).set_color(WHITE)).shift(0.1*DR),run_time=2)
+        self.wait(0.5)
+        self.play(vector3.animate.become(nupl.get_vector([4.5,4.5,0]).set_color(WHITE)).shift(0.1*DR),run_time=2)
+        self.wait(0.5)
+        self.play(vector3.animate.become(nupl.get_vector([3.5,3.5,0]).set_color(WHITE)).shift(0.1*DR),run_time=2)
+        self.wait(0.5)
+        self.play(vector3.animate.become(nupl.get_vector([0,0,0]).set_color(WHITE)).shift(0.1*DR),run_time=2)
+        self.play(FadeOut(fragezeichen))
+
+        self.play(vector1.animate.move_to(vector2.get_end() * 1.37))
+        #ich weiß selber nicht woher diese 1.37 kommt also falls das hier jemand sieht, frag nicht
+        self.wait()
+
+        vektorverbindung = Tex("Verbindung")
+        vektorverbindungfull = Tex("Vektoren werden Verbunden")
+        blackbox7 = SurroundingRectangle(vektorverbindungfull, color=BLACK,fill_opacity=1,buff=0)
+        vektorverbindungfullgruppe = VGroup(blackbox7,vektorverbindungfull)
+        blackbox8 = SurroundingRectangle(vektorverbindung, color=BLACK,fill_opacity=1,buff=0)
+        vektorverbindunggruppe = VGroup(blackbox8,vektorverbindung)
+        vektorverbindunggruppe.move_to([0.3,2.3,0])
+        punkt = Dot()
+        self.play(Write(vektorverbindunggruppe))
+        punkt.move_to(vector1.get_start())
+        self.play(Circumscribe(punkt,Circle),run_time=1.4)
+        self.play(vektorverbindunggruppe.animate.move_to([-5,1.8,1]).set_opacity(0))
+        vektorverbindungfullgruppe.next_to(pfeilgruppe, DOWN).to_edge(LEFT)
+        self.play(FadeIn(vektorverbindungfullgruppe))
+
+        self.play(vector3.animate.become(nupl.get_vector([4.5,4.5,0]).set_color(WHITE)).shift(0.1*DR),run_time=2)
+        self.play(vector1.animate.become(nupl.get_vector([vector1x,vector1y,0]).shift(0.1*UL).set_color(ORANGE)),vector2.animate.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE)),run_time=1)
+        self.wait()
+
+        resultierend = Tex("Resultierende Kraft")
+        blackbox6 = SurroundingRectangle(resultierend, color=BLACK,fill_opacity=1,buff=0)
+        resultierendgruppe = VGroup(blackbox6,resultierend)
+        resultierendgruppe.move_to([2.7,0,0])
+        self.play(Write(resultierendgruppe))
+        self.play(vector3.animate.set_stroke(width=8,color=YELLOW),rate_func=there_and_back)
+        self.play(resultierendgruppe.animate.next_to(vektorverbindungfullgruppe, DOWN).to_edge(LEFT))
+        self.wait()
+        self.play(FadeOut(vector3))
+        vector3.become(nupl.get_vector([0,0,0]).set_color(WHITE))
+        self.wait(1)
+
+
+        #2ter Abschnitt
+        vector1x = 4
+        vector1y = 0.5
+        vector2x = 1
+        vector2y = 3
+        self.play(vector1.animate.become(nupl.get_vector([vector1x,vector1y,0]).set_color(ORANGE)),vector2.animate.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE)),run_time=1)
+        self.wait(2)
 
         self.add(fragezeichen)
         self.play(vector3.animate.become(nupl.get_vector([2.5,3.2,0]).set_color(WHITE)),run_time=2)
@@ -120,34 +187,17 @@ class Kraftaddieren(Scene):
         self.play(vector2.animate.shift(vector1y*UP).shift(vector1x*RIGHT))
 
         vektorverbindung = Tex("Verbindung")
-        vektorverbindungfull = Tex("Vektoren werden Verbunden")
-        blackbox4 = SurroundingRectangle(vektorverbindungfull, color=BLACK,fill_opacity=1,buff=0)
-        vektorverbindungfullgruppe = VGroup(blackbox4,vektorverbindungfull)
-        vektorverbindungfullgruppe.move_to([-4.8,1.8,1])
         blackbox3 = SurroundingRectangle(vektorverbindung, color=BLACK,fill_opacity=1,buff=0)
         vektorverbindunggruppe = VGroup(blackbox3,vektorverbindung)
-        punkt = Dot()
+        punkt2 = Dot()
         vektorverbindunggruppe.shift(1.2 * RIGHT)
         self.play(Write(vektorverbindunggruppe))
-        punkt = Dot()
-        punkt.move_to(vector2.get_start())
-        self.play(Circumscribe(punkt,Circle),run_time=1.4)
-        self.play(vektorverbindunggruppe.animate.move_to([-5,1.8,1]).set_opacity(0))
-        vektorverbindungfullgruppe.next_to(pfeilgruppe, DOWN).to_edge(LEFT)
-        self.play(FadeIn(vektorverbindungfullgruppe))
-
+        punkt2.move_to(vector2.get_start())
+        self.play(Circumscribe(punkt2,Circle),run_time=1.4)
+        self.play(vektorverbindunggruppe.animate.set_opacity(0))
         self.play(vector3.animate.become(nupl.get_vector([vector1x+vector2x,vector1y+vector2y,0]).set_color(WHITE)),run_time=2)
+        self.wait()
 
-        resultierend = Tex("Resultierende Kraft")
-        blackbox6 = SurroundingRectangle(resultierend, color=BLACK,fill_opacity=1,buff=0)
-        resultierendgruppe = VGroup(blackbox6,resultierend)
-        resultierendgruppe.move_to([-2.3,0,0])
-        self.play(Write(resultierendgruppe))
-        self.play(vector3.animate.set_stroke(width=8,color=YELLOW),rate_func=there_and_back)
-        self.play(resultierendgruppe.animate.next_to(vektorverbindungfullgruppe, DOWN).to_edge(LEFT))
-
-        self.play(vector1.animate.become(nupl.get_vector([vector1x,vector1y,0]).set_color(ORANGE)),vector2.animate.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE)),run_time=2)
-        self.wait(2)
         vector1x = 3
         vector1y = -1.5
         vector2x = 4.5
