@@ -12,7 +12,6 @@ class Test(Scene):
         self.wait()
 
 class Kraftdarstellen(Scene):
-
     def construct(self):
 
         #Raster
@@ -104,9 +103,13 @@ class Axiom2(Scene):
         blackbox3 = SurroundingRectangle(formel1, color=BLACK,fill_opacity=1,buff=0)
         formel1gruppe = VGroup(blackbox3,formel1)
 
-        formel2 = Tex("F = m ")
+        formel2 = Tex("F = a ")
         blackbox6 = SurroundingRectangle(formel2, color=BLACK,fill_opacity=1,buff=0)
         formel2gruppe = VGroup(blackbox6,formel2)
+
+        formel3 = MathTex("F = m \cdot a")
+        blackbox9 = SurroundingRectangle(formel3, color=BLACK,fill_opacity=1,buff=0)
+        formel3gruppe = VGroup(blackbox9,formel3)
 
         n1 = Tex("1N")
         blackbox4 = SurroundingRectangle(n1, color=BLACK,fill_opacity=1,buff=0)
@@ -116,9 +119,17 @@ class Axiom2(Scene):
         blackbox5 = SurroundingRectangle(n2, color=BLACK,fill_opacity=1,buff=0)
         n2gruppe = VGroup(blackbox5,n2)
 
+        n3 = Tex("3N")
+        blackbox8 = SurroundingRectangle(n3, color=BLACK,fill_opacity=1,buff=0)
+        n3gruppe = VGroup(blackbox8,n3)
+
         m = Tex("m = Masse")
         blackbox7 = SurroundingRectangle(m, color=BLACK,fill_opacity=1,buff=0)
         mgruppe = VGroup(blackbox7,m)
+
+        a = Tex("a = Beschleunigung")
+        blackbox7 = SurroundingRectangle(a, color=BLACK,fill_opacity=1,buff=0)
+        agruppe = VGroup(blackbox7,a)
 
         #Andere Mobjects:
         iceblock1 = ImageMobject("ice.png").scale(0.6)
@@ -132,6 +143,7 @@ class Axiom2(Scene):
         ax1.shift(2.7*DOWN)
         v1 = Vector([1,0,0]).set_color(ORANGE)
         v2 = Vector([2,0,0]).set_color(ORANGE)
+        v3 = Vector([3,0,0]).set_color(ORANGE)
 
         t = ValueTracker(0)
         m = 1
@@ -140,47 +152,76 @@ class Axiom2(Scene):
         offset = ValueTracker(-5)
         f = 1
         f2 = 2
+        f3 = 3
 
         #animation
         self.wait(1.5)
         beschreibunggruppe.next_to(axiom2gruppe, DOWN).to_edge(LEFT)
-        self.wait()
+        self.wait(2)
         self.play(Write(beschreibunggruppe))
         self.wait(2)
         formel1gruppe.move_to([0,1,0])
         formel2gruppe.move_to([0,1,0])
+        formel3gruppe.move_to([0,1,0])
         self.play(Write(formel1gruppe))
-        self.wait(2)
+        self.wait(3)
         self.play(Create(ax1),run_time=2)
         n1gruppe.add_updater(lambda mob : mob.next_to(v1,UP).shift(0.1*DL))
         v1.add_updater(lambda mob : mob.next_to(iceblock1,RIGHT).shift(0.3*LEFT))
         self.play(FadeIn(iceblock1,v1,n1gruppe))
         iceblock1.add_updater(lambda mob : mob.move_to([(0.5*(f/m)* (t.get_value())**2) + offset.get_value(),-2.2,0]))
+        self.wait(2)
         self.play(t.animate.set_value(5.5), rate_func=linear, run_time=5.5)
         t.set_value(0)
+
         self.remove(iceblock1,v1,n1gruppe)
+        ax1.move_to([0,-2.7,0])
+        self.remove(iceblock2,iceblock3,v2,n2gruppe)
+        t.set_value(0)
+        self.wait(3)
+        v3.add_updater(lambda mob : mob.next_to(iceblock1,RIGHT).shift(0.3*LEFT))
+        n3gruppe.add_updater(lambda mob : mob.next_to(v3,UP).shift(0.1*DL))
+        v1.add_updater(lambda mob : mob.next_to(iceblock3,RIGHT).shift(0.3*LEFT))
+        n1gruppe.add_updater(lambda mob : mob.next_to(v1,UP).shift(0.1*DL))
+        ax1.shift(0.6*DOWN)
+        ax2.shift(1.6*DOWN)
+        iceblock1.clear_updaters()
+        iceblock1.move_to([-5,-2.8,0])
+        iceblock3.move_to([-5,-1,0])
+        self.play(FadeIn(v3,n3gruppe,v1,n1gruppe,ax1,ax2,iceblock1,iceblock3))
+        self.wait(3)
+        iceblock1.add_updater(lambda mob : mob.move_to([(0.5*(f3/m)* (t.get_value())**2) + offset.get_value(),-2.8,0]))
+        iceblock3.add_updater(lambda mob : mob.move_to([(0.5*(f/m)* (t.get_value())**2) + offset.get_value(),-1,0]))
+        self.play(t.animate.set_value(5.5), rate_func=linear, run_time=5.5)
+        self.play(ReplacementTransform(formel1gruppe,formel2gruppe))
+        agruppe.next_to(beschreibunggruppe, DOWN).to_edge(LEFT)
+        self.play(Write(agruppe))
+
+        self.wait(1.5)
+        iceblock2.clear_updaters()
         v1.clear_updaters()
+        iceblock1.clear_updaters()
         v2.add_updater(lambda mob : mob.next_to(iceblock2,RIGHT).shift(0.3*LEFT))
         v1.add_updater(lambda mob : mob.next_to(iceblock3,RIGHT).shift(0.3*LEFT))
         n2gruppe.add_updater(lambda mob : mob.next_to(v2,UP).shift(0.1*DL))
         iceblock2.move_to([0,0,0])
         iceblock2.add_updater(lambda mob : mob.move_to([(0.5*(f/m)* (t.get_value())**2) + offset.get_value(),-1,0]))
         iceblock3.add_updater(lambda mob : mob.move_to([(0.5*(f2/m2)* (t.get_value())**2) + offset.get_value(),-2.8,0]))
-        self.wait()
+        self.wait(2.5)
         self.play(FadeOut(ax1))
-        ax1.shift(0.6*DOWN)
-        ax2.shift(1.6*DOWN)
+        t.set_value(0)
         self.play(FadeIn(ax1,ax2,iceblock3,iceblock2,v1,n1gruppe,v2,n2gruppe))
+        self.wait(3.5)
         self.play(t.animate.set_value(5.5), rate_func=linear, run_time=5.5)
-        self.wait(2)
-        self.play(ReplacementTransform(formel1gruppe,formel2gruppe))
-        mgruppe.next_to(beschreibunggruppe, DOWN).to_edge(LEFT)
+        self.wait(2.5)
+        self.play(ReplacementTransform(formel2gruppe,formel3gruppe))
+        mgruppe.next_to(agruppe, DOWN).to_edge(LEFT)
         self.play(Write(mgruppe))
-        self.wait()
+        self.wait(2.5)
         self.play(FadeOut(ax1,ax2))
-        self.wait()
-        ax1.move_to([0,-2.7,0])
-        self.play(FadeIn(ax1))
+        self.wait(2.5)
+        self.play(Circumscribe(formel3gruppe))
+        self.play(formel3gruppe.animate.next_to(mgruppe, DOWN).to_edge(LEFT))
                
 class Kraftaddieren(Scene):
     def construct(self):
@@ -202,7 +243,6 @@ class Kraftaddieren(Scene):
         self.wait(0.5)
         self.play(FadeIn(nupl))
         self.add(kräftaddierengruppe)
-
 
         vector1x = 1.5
         vector1y = 1.5
