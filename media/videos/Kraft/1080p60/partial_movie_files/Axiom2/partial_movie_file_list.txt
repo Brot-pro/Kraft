@@ -1,0 +1,3 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/PC/Desktop/Über - ansamlung/Manim/Kraft/media/videos/Kraft/1080p60/partial_movie_files/Axiom2/2257293077_1754310298_631829896.mp4'
+file 'file:C:/Users/PC/Desktop/Über - ansamlung/Manim/Kraft/media/videos/Kraft/1080p60/partial_movie_files/Axiom2/2257293077_2545629697_1666280314.mp4'

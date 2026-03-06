@@ -1,4 +1,5 @@
 from manim import *
+import numpy as np
 class Test(Scene):
     def construct(self):
         t = ValueTracker(-2)
@@ -11,6 +12,7 @@ class Test(Scene):
         self.wait()
 
 class Kraftdarstellen(Scene):
+
     def construct(self):
 
         #Raster
@@ -79,8 +81,107 @@ class Kraftdarstellen(Scene):
         self.play(ReplacementTransform(v1,v2),FadeOut(fünf),run_time=2)
         self.wait()
         self.play(ReplacementTransform(v2,v3),run_time=2)
-        self.wait(0.3)
-        
+        self.wait(0.3)    
+
+class Axiom2(Scene):
+    def construct(self):
+
+        #texte
+        axiom2 = Tex("Newton's zweites Axiom").scale(1.2)
+        ul1 = Underline(axiom2)
+        blackbox1 = SurroundingRectangle(axiom2, buff=0, color=BLACK,fill_opacity=1)
+        axiom2gruppe = VGroup(blackbox1,axiom2,ul1)
+        self.add(axiom2gruppe)
+        self.wait()
+        self.play(axiom2gruppe.animate.to_corner(UL))
+
+        beschreibung = Tex("Formel der Kraft (F)")
+        blackbox2 = SurroundingRectangle(beschreibung, color=BLACK,fill_opacity=1,buff=0)
+        beschreibunggruppe = VGroup(blackbox2,beschreibung)
+
+        formel1 = Tex("F = ")
+        #(haha witzig wegen formel 1)
+        blackbox3 = SurroundingRectangle(formel1, color=BLACK,fill_opacity=1,buff=0)
+        formel1gruppe = VGroup(blackbox3,formel1)
+
+        formel2 = Tex("F = m ")
+        blackbox6 = SurroundingRectangle(formel2, color=BLACK,fill_opacity=1,buff=0)
+        formel2gruppe = VGroup(blackbox6,formel2)
+
+        n1 = Tex("1N")
+        blackbox4 = SurroundingRectangle(n1, color=BLACK,fill_opacity=1,buff=0)
+        n1gruppe = VGroup(blackbox4,n1)
+
+        n2 = Tex("2N")
+        blackbox5 = SurroundingRectangle(n2, color=BLACK,fill_opacity=1,buff=0)
+        n2gruppe = VGroup(blackbox5,n2)
+
+        m = Tex("m = Masse")
+        blackbox7 = SurroundingRectangle(m, color=BLACK,fill_opacity=1,buff=0)
+        mgruppe = VGroup(blackbox7,m)
+
+        #Andere Mobjects:
+        iceblock1 = ImageMobject("ice.png").scale(0.6)
+        iceblock1.move_to([-5,-2.2,0])
+        iceblock2 = ImageMobject("ice.png").scale(0.8)
+        iceblock2.move_to([-5,-1,0])
+        iceblock3 = ImageMobject("ice.png").scale(0.6)
+        iceblock3.move_to([-5,-2.8,0])
+        ax1 = NumberLine(x_range=[0,15,1])
+        ax2 = NumberLine(x_range=[0,15,1])
+        ax1.shift(2.7*DOWN)
+        v1 = Vector([1,0,0]).set_color(ORANGE)
+        v2 = Vector([2,0,0]).set_color(ORANGE)
+
+        t = ValueTracker(0)
+        m = 1
+        m2 = 2
+        vorzeichen = ValueTracker(1)
+        offset = ValueTracker(-5)
+        f = 1
+        f2 = 2
+
+        #animation
+        self.wait(1.5)
+        beschreibunggruppe.next_to(axiom2gruppe, DOWN).to_edge(LEFT)
+        self.wait()
+        self.play(Write(beschreibunggruppe))
+        self.wait(2)
+        formel1gruppe.move_to([0,1,0])
+        formel2gruppe.move_to([0,1,0])
+        self.play(Write(formel1gruppe))
+        self.wait(2)
+        self.play(Create(ax1),run_time=2)
+        n1gruppe.add_updater(lambda mob : mob.next_to(v1,UP).shift(0.1*DL))
+        v1.add_updater(lambda mob : mob.next_to(iceblock1,RIGHT).shift(0.3*LEFT))
+        self.play(FadeIn(iceblock1,v1,n1gruppe))
+        iceblock1.add_updater(lambda mob : mob.move_to([(0.5*(f/m)* (t.get_value())**2) + offset.get_value(),-2.2,0]))
+        self.play(t.animate.set_value(5.5), rate_func=linear, run_time=5.5)
+        t.set_value(0)
+        self.remove(iceblock1,v1,n1gruppe)
+        v1.clear_updaters()
+        v2.add_updater(lambda mob : mob.next_to(iceblock2,RIGHT).shift(0.3*LEFT))
+        v1.add_updater(lambda mob : mob.next_to(iceblock3,RIGHT).shift(0.3*LEFT))
+        n2gruppe.add_updater(lambda mob : mob.next_to(v2,UP).shift(0.1*DL))
+        iceblock2.move_to([0,0,0])
+        iceblock2.add_updater(lambda mob : mob.move_to([(0.5*(f/m)* (t.get_value())**2) + offset.get_value(),-1,0]))
+        iceblock3.add_updater(lambda mob : mob.move_to([(0.5*(f2/m2)* (t.get_value())**2) + offset.get_value(),-2.8,0]))
+        self.wait()
+        self.play(FadeOut(ax1))
+        ax1.shift(0.6*DOWN)
+        ax2.shift(1.6*DOWN)
+        self.play(FadeIn(ax1,ax2,iceblock3,iceblock2,v1,n1gruppe,v2,n2gruppe))
+        self.play(t.animate.set_value(5.5), rate_func=linear, run_time=5.5)
+        self.wait(2)
+        self.play(ReplacementTransform(formel1gruppe,formel2gruppe))
+        mgruppe.next_to(beschreibunggruppe, DOWN).to_edge(LEFT)
+        self.play(Write(mgruppe))
+        self.wait()
+        self.play(FadeOut(ax1,ax2))
+        self.wait()
+        ax1.move_to([0,-2.7,0])
+        self.play(FadeIn(ax1))
+               
 class Kraftaddieren(Scene):
     def construct(self):
         kräfteaddieren = Tex("Kräfte addieren").scale(1.2)
@@ -359,29 +460,6 @@ class Kräfteparalellogramm(Scene):
         vector2.animate.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE)),
         vector3.animate.become(nupl.get_vector([vector1x+vector2x,vector1y+vector2y,0]).set_color(WHITE)),
         run_time=1.7)
-
-
-
-
-
-
-
-        # self.wait()
-        # vector1x = 3
-        # vector1y = 1.5
-        # vector2x = 1.5
-        # vector2y = 3
-
-        # vector1.become(nupl.get_vector([vector1x,vector1y])),
-        # vector4.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE))
-        # self.play(
-        # vector4.animate.shift(vector1y*UP).shift(vector1x*RIGHT),
-        # vector5.animate.become(nupl.get_vector([vector1x,vector1y]).set_color(ORANGE)),
-        # vector1.animate.shift(vector2y*UP).shift(vector2x*RIGHT).set_color(ORANGE),
-        # vector2.animate.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE)),
-        # vector3.animate.become(nupl.get_vector([vector1x+vector2x,vector1y+vector2y,0]).set_color(WHITE)))
-
-        
         self.wait()
 
 
