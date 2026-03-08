@@ -1,0 +1,6 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/720p30/partial_movie_files/Kraftmessen/1987512680_2408024828_3118790860.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/720p30/partial_movie_files/Kraftmessen/2538612922_3053558618_2375220172.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/720p30/partial_movie_files/Kraftmessen/2538612922_1014007105_3575546045.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/720p30/partial_movie_files/Kraftmessen/2538612922_850321599_790742843.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/720p30/partial_movie_files/Kraftmessen/2538612922_1754310298_367196341.mp4'

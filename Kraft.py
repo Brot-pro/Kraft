@@ -11,6 +11,83 @@ class Test(Scene):
         self.play(t.animate.set_value(3),run_time=2,)
         self.wait()
 
+class Kraftmessen(Scene):
+    def construct(self):
+
+        #Texte:
+        wasistkraft = Tex("Was ist Kraft?").scale(1)
+        ul1 = Underline(wasistkraft)
+        blackbox1 = SurroundingRectangle(wasistkraft, buff=0, color=BLACK,fill_opacity=1)
+        wasistkraftgruppe = VGroup(blackbox1,wasistkraft,ul1)
+
+        newton = Tex("N = Newton")
+        blackbox2 = SurroundingRectangle(newton, buff=0, color=BLACK,fill_opacity=1)
+        newtongruppe = VGroup(blackbox2,newton)
+
+        #andere Mobjects:
+        o = ValueTracker(-2.2)
+        h = 2
+        g = 9.81
+        v0 = 7.5
+        ax = Axes(x_range=[0,10],y_range=[0,5])
+        schieferwurf = ax.plot(lambda x : np.tan(o.get_value())*x-((g*(x**2))/(2*(v0**2)*np.cos(o.get_value())*np.cos(o.get_value())))+h)
+        schieferwurf.add_updater(lambda mob : mob.become(ax.plot(lambda x : np.tan(o.get_value())*x-((g*(x**2))/(2*(v0**2)*np.cos(o.get_value())*np.cos(o.get_value())))+h)))
+        ball = ImageMobject("ball.png").scale(0.3)
+        feder = ImageMobject("feder.png").scale(0.4)
+        feder.rotate(-90 * DEGREES)
+        mark0 = Line(UP*0.1, DOWN*0.1)
+        mark1 = Line(UP*0.1, DOWN*0.1)
+        mark2 = Line(UP*0.1, DOWN*0.1)
+        n = Tex("0N 1N 2N 3N...").scale(0.66)
+
+
+        #animation:
+        self.add(wasistkraftgruppe)
+        self.wait(2)
+        self.play(wasistkraftgruppe.animate.to_corner(UL))
+        ball.shift(DOWN)
+        ball.shift(6*LEFT)
+        ax.shift(0.5 * DOWN)
+        ball.set_z_index(1)
+        self.play(FadeIn(ball))
+        self.wait(2)
+        self.play(Create(ax))
+        self.play(Create(schieferwurf),run_time=2)
+        self.wait(2)
+        self.play(o.animate.set_value(-2.6),run_time=2)
+        self.wait()
+        self.play(o.animate.set_value(-1.9),run_time=2)
+        self.wait()
+        self.play(o.animate.set_value(-2.3),run_time=2)
+        self.wait()
+        self.wait(3)
+        self.play(FadeOut(ax,ball),Uncreate(schieferwurf))
+        feder.shift(LEFT * 0.5)
+        self.play(FadeIn(feder))
+        self.wait(2)
+        mark0.shift(0.3*RIGHT)
+        mark0.shift(1*UP)
+        self.play(FadeIn(mark0))
+        self.play(feder.animate.stretch(1.4,dim=0,about_edge=LEFT))
+        self.wait()
+        mark1.shift(1*RIGHT)
+        mark1.shift(1*UP)
+        self.play(FadeIn(mark1))
+        self.play(feder.animate.stretch(9/7,dim=0,about_edge=LEFT))
+        self.wait()
+        mark2.shift(1*UP)
+        mark2.shift(1.7*RIGHT)
+        self.play(FadeIn(mark2))
+        self.play(feder.animate.stretch(5/9,dim=0,about_edge=LEFT))
+        self.wait(2)
+        n.shift(1.4*UP)
+        n.shift(1.2*RIGHT)
+        self.play(FadeIn(n))
+        self.wait()
+        newtongruppe.next_to(wasistkraftgruppe, DOWN).to_edge(LEFT)
+        self.play(Write(newtongruppe))
+
+
 class Kraftdarstellen(Scene):
     def construct(self):
 
