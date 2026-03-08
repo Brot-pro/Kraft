@@ -15,7 +15,7 @@ class Kraftmessen(Scene):
     def construct(self):
 
         #Texte:
-        wasistkraft = Tex("Was ist Kraft?").scale(1)
+        wasistkraft = Tex("Wie misst man Kraft?").scale(1)
         ul1 = Underline(wasistkraft)
         blackbox1 = SurroundingRectangle(wasistkraft, buff=0, color=BLACK,fill_opacity=1)
         wasistkraftgruppe = VGroup(blackbox1,wasistkraft,ul1)
@@ -24,21 +24,27 @@ class Kraftmessen(Scene):
         blackbox2 = SurroundingRectangle(newton, buff=0, color=BLACK,fill_opacity=1)
         newtongruppe = VGroup(blackbox2,newton)
 
+        kraftmesser = Tex("Feder / Kraftmesser")
+        blackbox3 = SurroundingRectangle(kraftmesser, buff=0, color=BLACK,fill_opacity=1)
+        kraftmessergruppe = VGroup(blackbox3,kraftmesser)
+
         #andere Mobjects:
         o = ValueTracker(-2.2)
         h = 2
         g = 9.81
-        v0 = 7.5
+        v0 = ValueTracker(7.5)
         ax = Axes(x_range=[0,10],y_range=[0,5])
-        schieferwurf = ax.plot(lambda x : np.tan(o.get_value())*x-((g*(x**2))/(2*(v0**2)*np.cos(o.get_value())*np.cos(o.get_value())))+h)
-        schieferwurf.add_updater(lambda mob : mob.become(ax.plot(lambda x : np.tan(o.get_value())*x-((g*(x**2))/(2*(v0**2)*np.cos(o.get_value())*np.cos(o.get_value())))+h)))
+        schieferwurf = ax.plot(lambda x : np.tan(o.get_value())*x-((g*(x**2))/(2*(v0.get_value()**2)*np.cos(o.get_value())*np.cos(o.get_value())))+h)
+        schieferwurf.add_updater(lambda mob : mob.become(ax.plot(lambda x : np.tan(o.get_value())*x-((g*(x**2))/(2*(v0.get_value()**2)*np.cos(o.get_value())*np.cos(o.get_value())))+h)))
         ball = ImageMobject("ball.png").scale(0.3)
         feder = ImageMobject("feder.png").scale(0.4)
         feder.rotate(-90 * DEGREES)
+        kraftbild = ImageMobject("kraftmesser.png").scale(0.5)
+        kraftbild.rotate(90 * DEGREES)
         mark0 = Line(UP*0.1, DOWN*0.1)
         mark1 = Line(UP*0.1, DOWN*0.1)
         mark2 = Line(UP*0.1, DOWN*0.1)
-        n = Tex("0N 1N 2N 3N...").scale(0.66)
+        n = Tex("0N 1N 2N...").scale(1)
 
 
         #animation:
@@ -54,6 +60,13 @@ class Kraftmessen(Scene):
         self.play(Create(ax))
         self.play(Create(schieferwurf),run_time=2)
         self.wait(2)
+        self.wait()
+        self.play(v0.animate.set_value(9),run_time=2)
+        self.wait()
+        self.play(v0.animate.set_value(5.5),run_time=2)
+        self.wait()
+        self.play(v0.animate.set_value(7.6),run_time=2)
+        self.wait(3)
         self.play(o.animate.set_value(-2.6),run_time=2)
         self.wait()
         self.play(o.animate.set_value(-1.9),run_time=2)
@@ -86,7 +99,12 @@ class Kraftmessen(Scene):
         self.wait()
         newtongruppe.next_to(wasistkraftgruppe, DOWN).to_edge(LEFT)
         self.play(Write(newtongruppe))
-
+        self.wait()
+        kraftmesser.next_to(newtongruppe, DOWN).to_edge(LEFT)
+        self.wait()
+        self.play(Write(kraftmesser))
+        self.play(FadeIn(kraftbild),FadeOut(feder))
+        self.wait()
 
 class Kraftdarstellen(Scene):
     def construct(self):
@@ -108,7 +126,11 @@ class Kraftdarstellen(Scene):
         blackbox3 = SurroundingRectangle(newton, color=BLACK,fill_opacity=1,buff=0)
         newtongruppe = VGroup(blackbox3,newton)
 
-        fünf = Tex("5N")
+        v = MathTex(r"\vec{v}")
+
+        fünf = MathTex("v = 5N")
+        blackbox4 = SurroundingRectangle(fünf, color=BLACK,fill_opacity=1,buff=0)
+        fünfgruppe = VGroup(blackbox4,fünf)
 
         angriffspunkt = Tex("Angriffspunkt")
         blackbox5 = SurroundingRectangle(angriffspunkt, color=BLACK,fill_opacity=1,buff=0)
@@ -143,18 +165,22 @@ class Kraftdarstellen(Scene):
         self.play(pfeilgruppe.animate.next_to(kraftdarstellen, DOWN).to_edge(LEFT))
         self.wait(1.4)
         newtongruppe.next_to(pfeilgruppe, DOWN).to_edge(LEFT)
-        fünf.move_to([0.3,0.4,0])
+        fünfgruppe.move_to([0,0.4,0])
+        self.wait()
+        self.play(Write(v))
+        self.wait(4)
         self.play(Write(newtongruppe))
         self.wait()
-        self.play(Write(fünf))
-        self.wait(1.4)
+        fünfgruppe.next_to(newtongruppe, DOWN).to_edge(LEFT)
+        self.play(Write(fünfgruppe))
+        self.wait(4)
         angriffspunktgruppe.move_to([-3.6,-1.6,0])
         self.play(Write(angriffspunktgruppe))
         self.play(Circumscribe(punkt,Circle))
-        self.wait()
-        self.play(angriffspunktgruppe.animate.next_to(newtongruppe, DOWN).to_edge(LEFT))
         self.wait(2)
-        self.play(ReplacementTransform(v1,v2),FadeOut(fünf),run_time=2)
+        self.play(angriffspunktgruppe.animate.next_to(fünfgruppe, DOWN).to_edge(LEFT))
+        self.wait(2)
+        self.play(ReplacementTransform(v1,v2),FadeOut(v),run_time=2)
         self.wait()
         self.play(ReplacementTransform(v2,v3),run_time=2)
         self.wait(0.3)    
@@ -201,8 +227,8 @@ class Axiom2(Scene):
         n3gruppe = VGroup(blackbox8,n3)
 
         m = Tex("m = Masse")
-        blackbox7 = SurroundingRectangle(m, color=BLACK,fill_opacity=1,buff=0)
-        mgruppe = VGroup(blackbox7,m)
+        blackbox8 = SurroundingRectangle(m, color=BLACK,fill_opacity=1,buff=0)
+        mgruppe = VGroup(blackbox8,m)
 
         a = Tex("a = Beschleunigung")
         blackbox7 = SurroundingRectangle(a, color=BLACK,fill_opacity=1,buff=0)
