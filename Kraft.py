@@ -15,7 +15,7 @@ class Kraftmessen(Scene):
     def construct(self):
 
         #Texte:
-        wasistkraft = Tex("Wie misst man Kraft?").scale(1)
+        wasistkraft = Tex("Wie misst man Kraft?").scale(1.2)
         ul1 = Underline(wasistkraft)
         blackbox1 = SurroundingRectangle(wasistkraft, buff=0, color=BLACK,fill_opacity=1)
         wasistkraftgruppe = VGroup(blackbox1,wasistkraft,ul1)
@@ -326,6 +326,121 @@ class Axiom2(Scene):
         self.play(Circumscribe(formel3gruppe))
         self.play(formel3gruppe.animate.next_to(mgruppe, DOWN).to_edge(LEFT))
                
+class Einheiten(Scene):
+    def construct(self):
+
+        #texte:
+        axiom2 = Tex("Einheiten").scale(1.2)
+        ul1 = Underline(axiom2)
+        blackbox1 = SurroundingRectangle(axiom2, buff=0, color=BLACK,fill_opacity=1)
+        axiom2gruppe = VGroup(blackbox1,axiom2,ul1)
+
+        formel = MathTex(r"F = m \cdot a")
+        blackbox6 = SurroundingRectangle(formel, color=BLACK,fill_opacity=1,buff=0)
+        formelgruppe = VGroup(blackbox6,formel)
+
+        f1 = MathTex("F : Newton")
+        blackbox2 = SurroundingRectangle(f1, color=BLACK,fill_opacity=1,buff=0)
+        f1gruppe = VGroup(blackbox2,f1)
+
+        f2 = MathTex(r"[F] = m \cdot a")
+        blackbox2 = SurroundingRectangle(f2, color=BLACK,fill_opacity=1,buff=0)
+        f2gruppe = VGroup(blackbox2,f2)
+
+        f3 = MathTex(r"[F] = kg \cdot a")
+        blackbox3 = SurroundingRectangle(f3, color=BLACK,fill_opacity=1,buff=0)
+        f3gruppe = VGroup(blackbox3,f3)
+
+        f4 = MathTex(r"[F] = kg \cdot \frac{Meter}{sekunde^{2}}")
+        blackbox4 = SurroundingRectangle(f4, color=BLACK,fill_opacity=1,buff=0)
+        f4gruppe = VGroup(blackbox4,f4)
+
+        m = MathTex(r"m : Kilogramm")
+        blackbox5 = SurroundingRectangle(m, color=BLACK,fill_opacity=1,buff=0)
+        mgruppe = VGroup(blackbox5,m)
+
+        agruppe = MathTex(r"a : \frac{Meter}{sekunde^{2}}")
+
+        a1 = MathTex(r"\frac{Meter/sekunde}{sekunde}")
+        a2 = MathTex(r"\frac{Meter}{sekunde \cdot  sekunde}")
+        a3 = MathTex(r"\frac{Meter}{sekunde^{2}}")
+
+        gruppe = VGroup(axiom2,ul1,formel,f4,m,agruppe)
+
+        frage1 = MathTex(r"a = 5 \cdot \frac{Meter}{sekunde^{2}} ?")
+        frage2 = MathTex(r"a = 12.3 \cdot \frac{Meter}{sekunde^{2}} ?")
+        frage3 = MathTex(r"a = 10 \cdot \frac{Meter}{sekunde^{2}} ?")
+
+        g1 = MathTex(r"g")
+        g2 = MathTex(r"g = 9.81 \cdot \frac{Meter}{sekunde^{2}}")
+        g3 = MathTex(r"g = \frac{a}{9.81 \cdot \frac{Meter}{sekunde^{2}}}")
+
+
+        lösung1 = MathTex(r"g(10) = \frac{10 \cdot \frac{Meter}{sekunde^{2}}}{9.81 \cdot \frac{Meter}{sekunde^{2}}}")
+        lösung2 = MathTex(r"g(10) \approx 1.19")
+
+        #animation:
+        self.add(axiom2gruppe)
+        self.wait()
+        self.play(axiom2gruppe.animate.to_corner(UL))
+        self.wait(2)
+        formelgruppe.next_to(axiom2gruppe, DOWN).to_edge(LEFT)
+        self.play(Write(formelgruppe))
+        self.wait(2)
+        f1gruppe.next_to(formelgruppe, DOWN).to_edge(LEFT)
+        mgruppe.next_to(f1gruppe, DOWN).to_edge(LEFT)
+        agruppe.next_to(mgruppe, DOWN).to_edge(LEFT)
+        self.play(FadeIn(f1gruppe))
+        self.wait(3)
+        self.play(FadeIn(mgruppe))
+        self.wait(3)
+        self.play(FadeIn(agruppe))
+        self.wait(3)
+        self.play(f1.animate.move_to([0,0,0]))
+        self.wait(1)
+        self.play(ReplacementTransform(f1,f2))
+        self.wait(3)
+        self.play(ReplacementTransform(f2,f3))
+        self.wait(3)
+        self.play(ReplacementTransform(f3,f4))
+        self.wait(4)
+        self.play(f4.animate.next_to(formelgruppe, DOWN).to_edge(LEFT),mgruppe.animate.shift(0.7*DOWN),agruppe.animate.shift(0.7*DOWN))
+        self.play(mgruppe.animate.next_to(f4, DOWN).to_edge(LEFT))
+        self.play(agruppe.animate.next_to(mgruppe, DOWN).to_edge(LEFT))
+        self.wait(1)
+        self.play(Circumscribe(agruppe))
+
+        self.play(gruppe.animate.set_color(GRAY_D))
+        self.wait(6)
+        self.play(Write(a1))
+        self.wait(14)
+        self.play(TransformMatchingShapes(a1,a2))
+        self.wait(9)
+        self.play(TransformMatchingShapes(a2,a3))
+        self.wait(5)
+        self.play(Circumscribe(a3))
+        self.play(FadeOut(a3))
+        self.wait(2)
+        self.play(FadeIn(frage1))
+        self.wait()
+        self.play(TransformMatchingShapes(frage1,frage2))
+        self.wait()
+        self.play(TransformMatchingShapes(frage2,frage3))
+        self.wait()
+        g1.shift(4.7*RIGHT)
+        g2.shift(4.7*RIGHT)
+        g3.shift(4.7*RIGHT)
+        self.play(FadeIn(g1))
+        self.wait(12)
+        self.play(TransformMatchingShapes(g1,g2))
+        self.wait(6)
+        self.play(TransformMatchingShapes(g2,g3))
+        self.wait(13)
+        self.play(ReplacementTransform(frage3,lösung1))
+        self.wait(5)
+        self.play(TransformMatchingShapes(lösung1,lösung2))
+        self.wait()
+        
 class Kraftaddieren(Scene):
     def construct(self):
         kräfteaddieren = Tex("Kräfte addieren").scale(1.2)
