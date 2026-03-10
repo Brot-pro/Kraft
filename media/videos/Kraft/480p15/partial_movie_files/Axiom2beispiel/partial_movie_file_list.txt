@@ -1,0 +1,12 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/Axiom2beispiel/1584795214_1754310298_3247756219.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/Axiom2beispiel/4072820271_3868459972_2375220172.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/Axiom2beispiel/4072820271_2408024828_3401896849.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/Axiom2beispiel/4072820271_3709464846_2655817679.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/Axiom2beispiel/4072820271_2408024828_3702010420.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/Axiom2beispiel/4072820271_1185895266_2347780406.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/Axiom2beispiel/4072820271_1734327179_273312675.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/Axiom2beispiel/4072820271_1880040637_3659223929.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/Axiom2beispiel/4072820271_1734327179_2488006319.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/Axiom2beispiel/4072820271_2425241749_2032759830.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/Axiom2beispiel/4072820271_2408024828_3128558712.mp4'
