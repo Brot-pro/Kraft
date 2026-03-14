@@ -128,6 +128,14 @@ class Kraftdarstellen(Scene):
 
         v = MathTex(r"\vec{v}")
 
+        vectorzahl = MathTex(r" \begin{bmatrix} 4\\3 \end{bmatrix}")
+        blackbox6 = SurroundingRectangle(vectorzahl, color=BLACK,fill_opacity=1,buff=0)
+        vectorzahlgruppe = VGroup(blackbox6,vectorzahl)
+
+        vectorzahlfull = MathTex(r" \vec{v} = \begin{bmatrix} 4\\3 \end{bmatrix}")
+        blackbox7 = SurroundingRectangle(vectorzahlfull, color=BLACK,fill_opacity=1,buff=0)
+        vectorzahlfullgruppe = VGroup(blackbox7,vectorzahlfull)
+
         fünf = MathTex("v = 5N")
         blackbox4 = SurroundingRectangle(fünf, color=BLACK,fill_opacity=1,buff=0)
         fünfgruppe = VGroup(blackbox4,fünf)
@@ -164,13 +172,21 @@ class Kraftdarstellen(Scene):
         self.wait()
         self.play(pfeilgruppe.animate.next_to(kraftdarstellen, DOWN).to_edge(LEFT))
         self.wait(1.4)
-        newtongruppe.next_to(pfeilgruppe, DOWN).to_edge(LEFT)
+        newtongruppe.next_to(vectorzahlfullgruppe, DOWN).to_edge(LEFT)
+        newtongruppe.shift(1.6*UP)
         fünfgruppe.move_to([0,0.4,0])
         self.wait()
         self.play(Write(v))
-        self.wait(4)
+        self.wait(6)
+        vectorzahlgruppe.move_to([4,1.3,0])
+        self.play(Write(vectorzahlgruppe))
+        self.wait(10)
+        self.play(vectorzahlgruppe.animate.next_to(pfeilgruppe, DOWN).to_edge(LEFT).set_opacity(0))
+        vectorzahlfullgruppe.next_to(pfeilgruppe, DOWN).to_edge(LEFT)
+        self.play(FadeIn(vectorzahlfullgruppe))
+        self.wait(3)
         self.play(Write(newtongruppe))
-        self.wait()
+        self.wait(2)
         fünfgruppe.next_to(newtongruppe, DOWN).to_edge(LEFT)
         self.play(Write(fünfgruppe))
         self.wait(4)
@@ -471,13 +487,14 @@ class Kraftaddieren(Scene):
         self.wait(2)
         self.play(vector1.animate.shift(0.1*UL))
         self.wait()
-        pfeil = Tex("Pfeil = Vektor")
-        blackbox2 = SurroundingRectangle(pfeil, color=BLACK,fill_opacity=1,buff=0)
-        pfeilgruppe = VGroup(blackbox2,pfeil)
-        pfeilgruppe.move_to([-2.2,0,0])
-        self.play(Write(pfeilgruppe))
-        self.wait()
-        self.play(pfeilgruppe.animate.next_to(kräftaddierengruppe, DOWN).to_edge(LEFT))
+
+        # pfeil = Tex("Pfeil = Vektor")
+        # blackbox2 = SurroundingRectangle(pfeil, color=BLACK,fill_opacity=1,buff=0)
+        # pfeilgruppe = VGroup(blackbox2,pfeil)
+        # pfeilgruppe.move_to([-2.2,0,0])
+        # self.play(Write(pfeilgruppe))
+        # self.wait()
+        # self.play(pfeilgruppe.animate.next_to(kräftaddierengruppe, DOWN).to_edge(LEFT))
 
         self.add(fragezeichen)
         vector3.shift(0.1*DR)
@@ -505,8 +522,8 @@ class Kraftaddieren(Scene):
         self.play(Write(vektorverbindunggruppe))
         punkt.move_to(vector1.get_start())
         self.play(Circumscribe(punkt,Circle),run_time=1.4)
-        self.play(vektorverbindunggruppe.animate.move_to([-5,1.8,1]).set_opacity(0))
-        vektorverbindungfullgruppe.next_to(pfeilgruppe, DOWN).to_edge(LEFT)
+        self.play(vektorverbindunggruppe.animate.move_to([-5,2,1]).set_opacity(0))
+        vektorverbindungfullgruppe.next_to(kräftaddierengruppe, DOWN).to_edge(LEFT)
         self.play(FadeIn(vektorverbindungfullgruppe))
 
         self.play(vector3.animate.become(nupl.get_vector([4.5,4.5,0]).set_color(WHITE)).shift(0.1*DR),run_time=2)
@@ -592,6 +609,145 @@ class Kraftaddieren(Scene):
         self.wait()
         self.play(vector1.animate.become(basevector1),vector2.animate.become(basevector2),vector3.animate.become(nupl.get_vector([vector1x+vector2x,vector1y+vector2y,0]).set_color(WHITE)),run_time=2)
         self.wait()
+
+class Additionrechnen(Scene):
+    def construct(self):
+
+
+        #Texte
+        addition = Tex("Kraftaddition - Rechnen").scale(1.2)
+        ul1 = Underline(addition)
+        blackbox1 = SurroundingRectangle(addition, buff=0, color=BLACK,fill_opacity=1)
+        additiongruppe = VGroup(blackbox1,addition,ul1)
+        self.add(additiongruppe)
+
+        v1zahl = MathTex(r" \begin{bmatrix} 1\\1 \end{bmatrix}").set_color("#F5B176")
+        blackbox2 = SurroundingRectangle(v1zahl, color=BLACK,fill_opacity=1,buff=0)
+        v1zahlgruppe = VGroup(blackbox2,v1zahl)
+
+        v2zahl = MathTex(r" \begin{bmatrix} 2\\1 \end{bmatrix}").set_color("#86CFF9")
+        blackbox3 = SurroundingRectangle(v2zahl, color=BLACK,fill_opacity=1,buff=0)
+        v2zahlgruppe = VGroup(blackbox3,v2zahl)
+
+        v1zahlcopy = MathTex(r" \begin{bmatrix} 1\\1 \end{bmatrix}").set_color("#F5B176")
+        blackbox4 = SurroundingRectangle(v1zahlcopy, color=BLACK,fill_opacity=1,buff=0)
+        v1zahlcopygruppe = VGroup(blackbox4,v1zahlcopy)
+
+        v2zahlcopy = MathTex(r" \begin{bmatrix} 2\\1 \end{bmatrix}").set_color("#86CFF9")
+        blackbox5 = SurroundingRectangle(v2zahlcopy, color=BLACK,fill_opacity=1,buff=0)
+        v2zahlcopygruppe = VGroup(blackbox5,v2zahlcopy)
+
+        plus = MathTex("+").scale(2)
+        blackbox6 = SurroundingRectangle(plus, color=BLACK,fill_opacity=1,buff=0)
+        plusgruppe = VGroup(blackbox6,plus)
+
+        lösung = MathTex(r" =\begin{bmatrix} 1 + 2 \\ 1 + 1 \end{bmatrix}").scale(1.5)
+        blackbox7 = SurroundingRectangle(lösung, color=BLACK,fill_opacity=1,buff=0)
+        lösunggruppe = VGroup(blackbox7,lösung)
+        lösung[0][2].set_color("#F5B176")
+        lösung[0][4].set_color("#86CFF9")
+        lösung[0][5].set_color("#F5B176")
+        lösung[0][7].set_color("#86CFF9")
+
+        lösungfull = MathTex(r" =\begin{bmatrix} 3 \\ 2 \end{bmatrix}").scale(1.5)
+        blackbox8 = SurroundingRectangle(lösungfull, color=BLACK,fill_opacity=1,buff=0)
+        lösungfullgruppe = VGroup(blackbox8,lösungfull)
+
+        lösungfullcopy = MathTex(r" \begin{bmatrix} 3 \\ 2 \end{bmatrix}").scale(1.5)
+        blackbox9 = SurroundingRectangle(lösungfullcopy, color=BLACK,fill_opacity=1,buff=0)
+        lösungfullcopygruppe = VGroup(blackbox9,lösungfullcopy)
+
+        keinenamenmehr = MathTex(r" \begin{bmatrix} 3 \\ 2 \end{bmatrix}")
+        blackbox10 = SurroundingRectangle(keinenamenmehr, color=BLACK,fill_opacity=1,buff=0)
+        keinenamenmehrgruppe = VGroup(blackbox10,keinenamenmehr)
+
+        v1zahlrichtig = MathTex(r" \begin{bmatrix} a\\b \end{bmatrix}").set_color("#F5B176").scale(1.5)
+        blackbox11 = SurroundingRectangle(v1zahlrichtig, color=BLACK,fill_opacity=1,buff=0)
+        v1zahlrichtiggruppe = VGroup(blackbox11,v1zahlrichtig)
+
+        v2zahlrichtig = MathTex(r" \begin{bmatrix} c\\d \end{bmatrix}").set_color("#86CFF9").scale(1.5)
+        blackbox12 = SurroundingRectangle(v2zahlrichtig, color=BLACK,fill_opacity=1,buff=0)
+        v2zahlrichtiggruppe = VGroup(blackbox12,v2zahlrichtig)
+
+        lösungrichtig = MathTex(r" =\begin{bmatrix} a + c \\ b + d \end{bmatrix}").scale(1.5)
+        blackbox7 = SurroundingRectangle(lösungrichtig, color=BLACK,fill_opacity=1,buff=0)
+        lösungrichtiggruppe = VGroup(blackbox7,lösungrichtig)
+        lösungrichtig[0][2].set_color("#F5B176")
+        lösungrichtig[0][4].set_color("#86CFF9")
+        lösungrichtig[0][5].set_color("#F5B176")
+        lösungrichtig[0][7].set_color("#86CFF9")
+
+        plusrichtiggruppe = MathTex("+").scale(2)
+
+        #andere mobjects
+        nupl = NumberPlane(x_range=(0,20,1.5),y_range=(0,12,1.5)).set_opacity(0.5)
+        nupl.shift(1.5*DL)
+        nupl.shift(0.5*LEFT)
+        v1 = Vector([1.5,1.5]).set_color(ORANGE)
+        v2 = Vector([3,1.5]).set_color(BLUE)
+        v3 = Vector([4.5,3])
+
+        #59l
+
+        #animationen
+        self.wait()
+        self.play(additiongruppe.animate.to_corner(UL))
+        self.wait(1)
+        self.play(FadeIn(nupl)),self.add(additiongruppe)
+        self.wait(2)
+        v1.shift(6*LEFT)
+        v1.shift(1.5*DOWN)
+        v2.shift(6*LEFT)
+        v2.shift(1.5*DOWN)
+        v3.shift(6*LEFT)
+        v3.shift(1.5*DOWN)
+        v1zahlgruppe.shift(4.5*LEFT)
+        v1zahlcopygruppe.shift(4.5*LEFT)
+        v2zahlgruppe.shift(3*LEFT)
+        v2zahlcopygruppe.shift(3*LEFT)
+        v1zahlgruppe.shift(0.7*UP)
+        v1zahlcopygruppe.shift(0.7*UP)
+        v2zahlgruppe.shift(0.7*UP)
+        v2zahlcopygruppe.shift(0.7*UP)
+        self.play(GrowArrow(v1),GrowArrow(v2))
+        self.wait(4)
+        self.play(Write(v1zahlgruppe),Write(v2zahlgruppe))
+        self.wait(4)
+        self.add(v1zahlcopygruppe,v2zahlcopygruppe)
+        self.play(v1zahlcopygruppe.animate.move_to([-1,0,0]).scale(1.5),v2zahlcopygruppe.animate.move_to([1,0,0]).scale(1.5))
+        self.wait(4)
+        self.play(FadeIn(plusgruppe))
+        lösunggruppe.shift(RIGHT*3.4)
+        self.play(Write(lösunggruppe))
+        self.wait(9)
+        lösungfullgruppe.shift(RIGHT*2.8)
+        lösungfullcopygruppe.shift(RIGHT*3.3)
+        lösung_original = lösunggruppe.copy()
+        self.play(Transform(lösunggruppe,lösungfullgruppe))
+        self.wait(5)
+        self.play(FadeOut(v1zahlgruppe,v2zahlgruppe))
+        self.play(GrowArrow(v3))
+        self.wait()
+        self.add(lösungfullcopygruppe)
+        self.play(lösungfullcopygruppe.animate.move_to([-1.3,1.8,0]).scale(0.7).set_opacity(0))
+        keinenamenmehrgruppe.move_to([-2.5,1.8,0])
+        self.play(FadeIn(keinenamenmehrgruppe))
+        self.wait(5)
+        self.play(Transform(lösunggruppe,lösung_original),FadeOut(v1,v2,v3,keinenamenmehrgruppe))
+        gruppe = VGroup(lösunggruppe,v1zahlcopygruppe,v2zahlcopygruppe,plusgruppe)
+        self.play(gruppe.animate.move_to([0,0,0]))
+        self.wait(3)
+        v1zahlrichtiggruppe.move_to([-1,0,0])
+        v2zahlrichtiggruppe.move_to([1,0,0])
+        lösungrichtiggruppe.move_to([3.4,0,0])
+        plusrichtiggruppe.move_to([0,0,0])
+        richtiggruppe = VGroup(v1zahlrichtiggruppe,v2zahlrichtiggruppe,lösungrichtiggruppe,plusrichtiggruppe)
+        richtiggruppe.shift(1.75 * LEFT)   
+        self.play(FadeIn(richtiggruppe),FadeOut(gruppe))
+        self.wait(3)
+        self.play(Circumscribe(richtiggruppe))
+        self.wait()
+
 
 class Kräfteparalellogramm(Scene):
     def construct(self):
@@ -720,8 +876,16 @@ class Kräfteparalellogramm(Scene):
         run_time=1.7)
         self.wait()
 
-
-
+class Rückstoß(Scene):
+    def construct(self):
+        rückstoß = Tex("Rückstoß").scale(1.2)
+        ul1 = Underline(rückstoß)
+        blackbox1 = SurroundingRectangle(rückstoß, buff=0, color=BLACK,fill_opacity=1)
+        rückstoßgruppe = VGroup(blackbox1,rückstoß,ul1)
+        self.add(rückstoßgruppe)
+        self.wait()
+        self.play(rückstoßgruppe.animate.to_corner(UL))
+        self.wait()
 # s = [2,1]
 # func1 = lambda pos: s[0] * RIGHT + s[1] * UP
 # vecfield = ArrowVectorField(func1,x_range=[-9,8,0.7],y_range=[-5,4,0.7]).set_color(BLUE).set_opacity(0)
