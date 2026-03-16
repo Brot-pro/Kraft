@@ -610,6 +610,42 @@ class Kraftaddieren(Scene):
         self.play(vector1.animate.become(basevector1),vector2.animate.become(basevector2),vector3.animate.become(nupl.get_vector([vector1x+vector2x,vector1y+vector2y,0]).set_color(WHITE)),run_time=2)
         self.wait()
 
+
+        vector3_real = nupl.get_vector([0,0,0]).set_color(GREEN)
+        vector1x = 0
+        vector1y = -1.5
+        vector2x = 1.5
+        vector2y = 3
+        vector3x = 3
+        vector3y = -1.5
+        basevector1 = nupl.get_vector([vector1x,vector1y,0]).set_color(ORANGE)
+        basevector2 = nupl.get_vector([vector2x,vector2y,0]).set_color(BLUE)
+        basevector3 = nupl.get_vector([vector3x,vector3y,0]).set_color(GREEN)
+        self.wait()
+        self.play(vector1.animate.become(basevector1),
+                  vector2.animate.become(basevector2),
+                  vector3_real.animate.become(basevector3),
+                  vector3.animate.become(nupl.get_vector([0,0,0]).set_color(WHITE)))
+        self.wait(3)
+        self.play(vector1.animate.shift(vector2x*RIGHT).shift(vector2y*UP))
+        self.wait(3)
+        self.play(vector3_real.animate.shift((vector2x+vector1x)*RIGHT).shift((vector2y+vector1y)*UP))
+        self.wait(4)
+        self.play(vector3.animate.become(nupl.get_vector([vector1x+vector2x+vector3x,vector1y+vector2y+vector3y,0]).set_color(WHITE)))
+        self.wait(3)
+        self.play(vector1.animate.become(basevector1),
+                  vector2.animate.become(basevector2),
+                  vector3_real.animate.become(basevector3))
+        self.wait(3)
+        self.play(vector2.animate.shift((vector3x)*RIGHT).shift((vector3y)*UP))
+        self.wait(2)
+        self.play(vector1.animate.shift((vector2x+vector3x)*RIGHT).shift((vector2y+vector3y)*UP))
+        self.wait(2)
+        self.play(vector1.animate.become(basevector1),
+                  vector2.animate.become(basevector2),
+                  vector3_real.animate.become(basevector3))
+        self.wait()
+
 class Additionrechnen(Scene):
     def construct(self):
 
@@ -640,6 +676,10 @@ class Additionrechnen(Scene):
         plus = MathTex("+").scale(2)
         blackbox6 = SurroundingRectangle(plus, color=BLACK,fill_opacity=1,buff=0)
         plusgruppe = VGroup(blackbox6,plus)
+
+        v3zahlrichtig = MathTex(r" \begin{bmatrix} e\\f \end{bmatrix}").set_color("#B5FCA6").scale(1.5)
+        blackbox14 = SurroundingRectangle(v3zahlrichtig, color=BLACK,fill_opacity=1,buff=0)
+        v3zahlrichtiggruppe = VGroup(blackbox14,v3zahlrichtig)
 
         lösung = MathTex(r" =\begin{bmatrix} 1 + 2 \\ 1 + 1 \end{bmatrix}").scale(1.5)
         blackbox7 = SurroundingRectangle(lösung, color=BLACK,fill_opacity=1,buff=0)
@@ -677,7 +717,18 @@ class Additionrechnen(Scene):
         lösungrichtig[0][5].set_color("#F5B176")
         lösungrichtig[0][7].set_color("#86CFF9")
 
+        lösungrichtig2 = MathTex(r" =\begin{bmatrix} a + c + e \\ b + d + f\end{bmatrix}").scale(1.5)
+        blackbox13 = SurroundingRectangle(lösungrichtig2, color=BLACK,fill_opacity=1,buff=0)
+        lösungrichtig2gruppe = VGroup(blackbox13,lösungrichtig2)
+        lösungrichtig2[0][2].set_color("#F5B176")
+        lösungrichtig2[0][4].set_color("#86CFF9")
+        lösungrichtig2[0][7].set_color("#F5B176")
+        lösungrichtig2[0][9].set_color("#86CFF9")
+        lösungrichtig2[0][11].set_color("#B5FCA6")
+        lösungrichtig2[0][6].set_color("#B5FCA6")
+
         plusrichtiggruppe = MathTex("+").scale(2)
+        plusrichti2ggruppe = MathTex("+").scale(2)
 
         #andere mobjects
         nupl = NumberPlane(x_range=(0,20,1.5),y_range=(0,12,1.5)).set_opacity(0.5)
@@ -742,11 +793,20 @@ class Additionrechnen(Scene):
         lösungrichtiggruppe.move_to([3.4,0,0])
         plusrichtiggruppe.move_to([0,0,0])
         richtiggruppe = VGroup(v1zahlrichtiggruppe,v2zahlrichtiggruppe,lösungrichtiggruppe,plusrichtiggruppe)
+        richtig2gruppe = VGroup(v1zahlrichtiggruppe,v2zahlrichtiggruppe,plusrichtiggruppe)
         richtiggruppe.shift(1.75 * LEFT)   
         self.play(FadeIn(richtiggruppe),FadeOut(gruppe))
         self.wait(3)
         self.play(Circumscribe(richtiggruppe))
-        self.wait()
+        self.wait(2)
+        lösungrichtig2gruppe.shift(2.5*RIGHT)
+        v3zahlrichtiggruppe.shift(0.6*LEFT)
+        plusrichti2ggruppe.shift(1.6*LEFT)
+        self.play(ReplacementTransform(lösungrichtiggruppe,lösungrichtig2gruppe),
+                  richtig2gruppe.animate.shift(1.8*LEFT),
+                  FadeIn(v3zahlrichtiggruppe),
+                  FadeIn(plusrichti2ggruppe)
+                  )
 
 class Kräfteparalellogramm(Scene):
     def construct(self):
@@ -1078,10 +1138,12 @@ class Axiom3lösung(Scene):
         self.wait(5)
         self.play(TransformMatchingShapes(axiom2_6,axiom2_7))
         self.wait(5)
-        self.play(TransformMatchingShapes(axiom2_6,axiom2_8))
+        self.play(TransformMatchingShapes(axiom2_7,axiom2_8))
         self.wait(7)
-        axiom2_8.shift(1.5*DOWN)
-        self.play(Write(axiom2_8),ax.animate.shift(0.4*DOWN),kanone.animate.shift(0.4*DOWN))
+        axiom2_9.shift(1.5*DOWN)
+        self.play(Write(axiom2_9),ax.animate.shift(0.4*DOWN),kanone.animate.shift(0.4*DOWN))
+
+
 
 #für text farben:
 # ("#F5B176") orange
