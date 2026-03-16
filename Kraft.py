@@ -748,7 +748,6 @@ class Additionrechnen(Scene):
         self.play(Circumscribe(richtiggruppe))
         self.wait()
 
-
 class Kräfteparalellogramm(Scene):
     def construct(self):
 
@@ -876,19 +875,238 @@ class Kräfteparalellogramm(Scene):
         run_time=1.7)
         self.wait()
 
-class Rückstoß(Scene):
+class Axiom3(Scene):
     def construct(self):
-        rückstoß = Tex("Rückstoß").scale(1.2)
-        ul1 = Underline(rückstoß)
-        blackbox1 = SurroundingRectangle(rückstoß, buff=0, color=BLACK,fill_opacity=1)
-        rückstoßgruppe = VGroup(blackbox1,rückstoß,ul1)
-        self.add(rückstoßgruppe)
+        #texte
+        axiom3 = Tex("Newton's drittes Axiom").scale(1.2)
+        ul1 = Underline(axiom3)
+        blackbox1 = SurroundingRectangle(axiom3, buff=0, color=BLACK,fill_opacity=1)
+        axiom3gruppe = VGroup(blackbox1,axiom3,ul1)
+
+        text1 = Tex("Auf jede Aktion folgt eine gleichstarke ").scale(1.2)
+        text1_2 = Tex("Reaktion in entgegengesetzter Richtung.").scale(1.2)
+        text1gruppe = VGroup(text1,text1_2)
+        text1[0][7:13].set_color("#F5B176")
+        text1_2[0][0:8].set_color("#86CFF9")
+
+        text1kurz = Tex("Actio = Reactio")
+        blackbox3 = SurroundingRectangle(text1kurz, buff=0, color=BLACK,fill_opacity=1)
+        text1kurzgruppe = VGroup(blackbox3,text1kurz)
+        text1kurz[0][0:5].set_color("#F5B176")
+        text1kurz[0][6:13].set_color("#86CFF9")
+
+        drei = Tex("3").scale(1.2)
+        blackbox4 = SurroundingRectangle(drei, buff=0, color=BLACK,fill_opacity=1)
+        dreigruppe = VGroup(blackbox4,drei)
+
+        zwei = Tex("2").scale(1.2)
+        blackbox5 = SurroundingRectangle(zwei, buff=0, color=BLACK,fill_opacity=1)
+        zweigruppe = VGroup(blackbox5,zwei)
+
+        eins = Tex("1").scale(1.2)
+        blackbox6 = SurroundingRectangle(eins, buff=0, color=BLACK,fill_opacity=1)
+        einsgruppe = VGroup(blackbox6,eins)
+
+        newton1 = MathTex(r"\approx  200.000 N").scale(0.8)
+
+        newton2 = MathTex(r"\approx  200.000 N").scale(0.8)
+
+        fragetext = MathTex("Kugelbeschleunigung > Kanonenbeschleunigung")
+
+        fragezeichen = MathTex("?")
+
+        #andere Mobjects
+        kanone = ImageMobject("Kanone.png").scale(0.5)
+        kanonenkugel = ImageMobject("Kanonenkugel.png").scale(0.2)
+        ax = NumberLine(x_range=[0,15,1])
+        ax.shift(2.4* DOWN)
+        zahlen = VGroup(dreigruppe,zweigruppe,einsgruppe)
+        v1 = Vector([2,0]).set_color(ORANGE)
+        v2 = Vector([-2,0]).set_color(BLUE)
+
+        #animationen
+        self.add(axiom3gruppe)
+        self.wait(1)
+        self.play(axiom3gruppe.animate.shift(3*UP))
+        self.wait(3)
+        text1.shift(0.4*UP)
+        text1_2.shift(0.4*DOWN)
+        self.play(Write(text1gruppe),run_time=3)
+        self.wait(4)
+        self.play(ReplacementTransform(text1gruppe,text1kurzgruppe))
+        self.wait(4)
+        self.play(axiom3gruppe.animate.to_corner(UL),text1kurzgruppe.animate.next_to(axiom3gruppe, DOWN).to_edge(LEFT))
         self.wait()
-        self.play(rückstoßgruppe.animate.to_corner(UL))
+        kanone.move_to([-2.5,-1.7,0])
+        self.play(Create(ax))
         self.wait()
+        self.play(FadeIn(kanone))
+        self.wait()
+        zahlen.move_to(kanone)
+        zahlen.shift(UP)
+        dreigruppecopy = dreigruppe.copy()
+        zweigruppecopy = zweigruppe.copy()
+        self.play(FadeIn(dreigruppecopy))
+        self.play(ReplacementTransform(dreigruppecopy,zweigruppecopy))
+        self.play(ReplacementTransform(zweigruppecopy,einsgruppe))
+        self.play(FadeOut(eins))
+        kanonenkugel.move_to(kanone)
+        kanonenkugel.shift(0.2*UP)
+        kanonenkugel.shift(1.85*RIGHT)
+        
+        #erster versuch
+        v1.move_to(kanonenkugel).shift(1.3*RIGHT)
+        v2.move_to(kanone).shift(2.4*LEFT).shift(0.2*UP)
+        newton1.add_updater(lambda mob : mob.next_to(v1,UP))
+        newton2.add_updater(lambda mob : mob.next_to(v2,UP))
+        self.play(FadeIn(kanonenkugel,v1,newton1,v2,newton2),run_time=0.5)
+        self.wait(5)
+        self.play(
+            kanonenkugel.animate.shift(8.2*RIGHT),
+            kanone.animate.shift(0.5*LEFT),
+            v1.animate.set_opacity(-20),
+            v2.animate.set_opacity(-20),
+            newton1.animate.set_opacity(-20),
+            newton2.animate.set_opacity(-20),
+            run_time=2,
+            rate_func=linear
+        )
+        self.wait(1.5)
+        self.play(FadeOut(kanone,kanonenkugel))
+
+        #zweiter versuch
+        kanone.move_to([-2.5,-1.7,0])
+        self.play(FadeIn(kanone))
+        zahlen.move_to(kanone)
+        zahlen.shift(UP)
+        self.wait()
+        self.play(FadeIn(dreigruppe))
+        self.play(ReplacementTransform(dreigruppe,zweigruppe))
+        self.play(ReplacementTransform(zweigruppe,einsgruppe))
+        self.play(FadeOut(eins))
+        kanonenkugel.move_to(kanone)
+        kanonenkugel.shift(0.2*UP)
+        kanonenkugel.shift(1.85*RIGHT)
+        v1.move_to(kanonenkugel).shift(1.3*RIGHT)
+        v2.move_to(kanone).shift(2.4*LEFT).shift(0.2*UP)
+        newton1.add_updater(lambda mob : mob.next_to(v1,UP))
+        newton2.add_updater(lambda mob : mob.next_to(v2,UP))
+        newton1.set_opacity(1)
+        newton2.set_opacity(1)
+        v1.set_opacity(1)
+        v2.set_opacity(1)
+        self.play(FadeIn(kanonenkugel,v1,newton1,v2,newton2),run_time=0.5)
+        self.wait(1)
+        self.play(
+            kanonenkugel.animate.shift(8.2*RIGHT),
+            kanone.animate.shift(0.5*LEFT),
+            v1.animate.set_opacity(-20),
+            v2.animate.set_opacity(-20),
+            newton1.animate.set_opacity(-20),
+            newton2.animate.set_opacity(-20),
+            run_time=2,
+            rate_func=linear
+        )
+        self.wait(2)
+        self.play(ax.animate.shift(DOWN),kanone.animate.shift(DOWN))
+        self.play(Write(fragetext))
+        self.wait()
+        self.play(Circumscribe(fragetext))
+        fragezeichen.shift(DOWN)
+        self.play(Write(fragezeichen))
+
+class Axiom3lösung(Scene):
+    def construct(self):
+
+        #texte
+        axiom3 = Tex("Newton's drittes Axiom").scale(1.2)
+        ul1 = Underline(axiom3)
+        blackbox1 = SurroundingRectangle(axiom3, buff=0, color=BLACK,fill_opacity=1)
+        axiom3gruppe = VGroup(blackbox1,axiom3,ul1)
+
+        text1kurz = Tex("Actio = Reactio")
+        blackbox3 = SurroundingRectangle(text1kurz, buff=0, color=BLACK,fill_opacity=1)
+        text1kurzgruppe = VGroup(blackbox3,text1kurz)
+        text1kurz[0][0:5].set_color("#F5B176")
+        text1kurz[0][6:13].set_color("#86CFF9")
+
+        fragetext = MathTex("Kugelbeschleunigung > Kanonenbeschleunigung")
+
+        fragezeichen = MathTex("?")
+
+        axiom2_1 = MathTex(r"F = m \cdot a")
+        axiom2_2 = MathTex(r" F = m \cdot a \mid \div m")
+        axiom2_3 = MathTex(r"\frac{F}{m} = \frac{m \cdot a}{m}")
+        axiom2_4 = MathTex(r"\frac{F}{m} = a")
+        axiom2_5 = MathTex(r"a = \frac{F}{m}")
+        axiom2_6 = MathTex(r"a = \frac{\approx 200.000 N}{m}")
+        axiom2_7 = MathTex(r"a = \frac{\approx 200.000 N}{200 kg}")
+        axiom2_8 = MathTex(r"Kanone: 1000 \frac{m}{s^{2}} = \frac{\approx 200.000 N}{200 kg}")
+        #-_ (wer checkt der checkt)
+        axiom2_9 = MathTex(r"Kugel: 40000 \frac{m}{s^{2}} = \frac{\approx 200.000 N}{5 kg}")
+
+
+
+        #andere Mobjects
+        ax = NumberLine(x_range=[0,15,1])
+        kanone = ImageMobject("Kanone.png").scale(0.5)
+
+        #animationen
+        kanone.move_to([-3,-2.7,0])
+        fragezeichen.shift(DOWN)
+        ax.shift(3.4* DOWN)
+        axiom3gruppe.to_corner(UL)
+        text1kurzgruppe.next_to(axiom3gruppe, DOWN).to_edge(LEFT)
+        self.add(fragetext,fragezeichen,axiom3gruppe,text1kurzgruppe,ax,kanone)
+        self.wait()
+        self.play(FadeOut(fragezeichen))
+        self.play(fragetext.animate.next_to(text1kurzgruppe, DOWN).to_edge(LEFT))
+        self.wait(2)
+        self.play(Write(axiom2_1))
+        self.wait(2)
+        self.play(Circumscribe(axiom2_1[0][4]))
+        self.wait(2)
+        self.play(TransformMatchingShapes(axiom2_1,axiom2_2))
+        self.wait(6)
+        self.play(TransformMatchingShapes(axiom2_2,axiom2_3))
+        self.wait(6)
+        self.play(TransformMatchingShapes(axiom2_3,axiom2_4))
+        self.wait(3)
+        self.play(TransformMatchingShapes(axiom2_4,axiom2_5))
+        self.wait(6)
+        self.play(TransformMatchingShapes(axiom2_5,axiom2_6))
+        self.wait(5)
+        self.play(TransformMatchingShapes(axiom2_6,axiom2_7))
+        self.wait(5)
+        self.play(TransformMatchingShapes(axiom2_6,axiom2_8))
+        self.wait(7)
+        axiom2_8.shift(1.5*DOWN)
+        self.play(Write(axiom2_8),ax.animate.shift(0.4*DOWN),kanone.animate.shift(0.4*DOWN))
+
+#für text farben:
+# ("#F5B176") orange
+# ("#86CFF9") blau
+
+#agruppe.next_to(beschreibunggruppe, DOWN).to_edge(LEFT)
+
 # s = [2,1]
 # func1 = lambda pos: s[0] * RIGHT + s[1] * UP
 # vecfield = ArrowVectorField(func1,x_range=[-9,8,0.7],y_range=[-5,4,0.7]).set_color(BLUE).set_opacity(0)
 # self.add(vecfield)
 # self.play(vecfield.animate.shift(s[0]/2 * RIGHT + s[1]/2 * UP).set_opacity(1), rate_func=rate_functions.ease_in_quart, run_time=1.5)
 # self.play(vecfield.animate.shift(s[0]/2 * RIGHT + s[1]/2 * UP).set_opacity(0), rate_func=rate_functions.ease_out_quart, run_time=1.5)
+
+
+
+
+
+
+        # v1.add_updater(lambda mob : mob.move_to(kanonenkugel).shift(1.2*RIGHT))
+        # newton1.add_updater(lambda mob : mob.next_to(v1,UP))
+        # v2.add_updater(lambda mob : mob.move_to(kanone).shift(2.5*LEFT).shift(0.2*UP))
+        # newton2.add_updater(lambda mob : mob.next_to(v2,UP))
+        # self.play(FadeIn(kanonenkugel,v1,newton1,v2,newton2),run_time=0.3)
+        # self.play(kanonenkugel.animate.shift(8.2*RIGHT),kanone.animate.shift(0.5*LEFT),run_time=5,rate_func=linear)
+        # self.play(FadeOut(v2,newton2),run_time=0.3)
+        # self.wait(1.5)
+        # self.play(FadeOut(kanone,v2,newton2,newton1,v1,kanonenkugel))

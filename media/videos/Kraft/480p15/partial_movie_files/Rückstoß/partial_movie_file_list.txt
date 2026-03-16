@@ -1,0 +1,4 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/Rückstoß/1584795214_1754310298_2719841276.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/Rückstoß/4072820271_747788149_2375220172.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/480p15/partial_movie_files/Rückstoß/4072820271_1754310298_2219143481.mp4'
