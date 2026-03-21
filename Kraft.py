@@ -267,7 +267,6 @@ class Axiom2(Scene):
         t = ValueTracker(0)
         m = 1
         m2 = 2
-        vorzeichen = ValueTracker(1)
         offset = ValueTracker(-5)
         f = 1
         f2 = 2
@@ -456,7 +455,64 @@ class Einheiten(Scene):
         self.wait(5)
         self.play(TransformMatchingShapes(lösung1,lösung2))
         self.wait()
+
+class Axiom1(Scene):
+    def construct(self):
         
+        #texte
+        axiom1 = Tex("Newton's erstes Axiom").scale(1.2)
+        ul1 = Underline(axiom1)
+        blackbox1 = SurroundingRectangle(axiom1, buff=0, color=BLACK,fill_opacity=1)
+        axiom1gruppe = VGroup(blackbox1,axiom1,ul1)
+
+        fragezeichen = Tex("?")
+        blackbox2 = SurroundingRectangle(fragezeichen, color=BLACK,fill_opacity=1,buff=0)
+        fragezeichengruppe = VGroup(blackbox2,fragezeichen)
+
+        #andere mobjects
+        iceblock = ImageMobject("ice.png").scale(0.6)
+        iceblock.move_to([-5,-2.2,0])
+        ax = NumberLine(x_range=[0,15,1])
+        ax.shift(2.7*DOWN)
+        v1 = Vector([2,0,0]).set_color(ORANGE)
+        t = ValueTracker(0)
+        m = 1
+        offset = ValueTracker(-5)
+        f = 1
+        line = Line(3*LEFT, RIGHT*t.get_value())
+
+        #animation
+        self.add(axiom1gruppe)
+        self.play(axiom1gruppe.animate.to_corner(UL))
+        self.wait()
+        self.play(Create(ax))
+        self.play(FadeIn(iceblock))
+        self.wait(2)
+        v1.add_updater(lambda mob : mob.next_to(iceblock,RIGHT).shift(0.3*LEFT))
+        iceblock.add_updater(lambda mob : mob.move_to([(0.5*(f/m)* (t.get_value())**2) + offset.get_value(),-2.2,0]))
+        self.play(FadeIn(v1))
+        self.play(t.animate.set_value(2),FadeOut(v1), rate_func=linear, run_time=1)
+        iceblock.clear_updaters()
+        self.play(iceblock.animate.move_to([8.5,-2.2,0]), rate_func=linear, run_time=2.8)
+        self.play(FadeOut(iceblock))
+        t.set_value(0)
+
+        #zweiter versuch
+        iceblock.move_to([-5,-2.2,0])
+        self.play(FadeIn(iceblock))
+        self.wait(2)
+        iceblock.add_updater(lambda mob : mob.move_to([(0.5*(f/m)* (t.get_value())**2) + offset.get_value(),-2.2,0]))
+        self.play(FadeIn(v1))
+        self.play(t.animate.set_value(2),FadeOut(v1), rate_func=linear, run_time=1)
+        iceblock.clear_updaters()
+        t.set_value(0)
+        self.add(line)
+        line.add_updater(lambda mob : mob.become(Line(2.6*LEFT, RIGHT*(t.get_value()-2.6))))
+        self.play(iceblock.animate.move_to([8.5,-2.2,0]),t.animate.set_value(10), rate_func=linear, run_time=2.8)
+        self.play(FadeIn(fragezeichengruppe))
+        self.wait()
+
+
 class Kraftaddieren(Scene):
     def construct(self):
         kräfteaddieren = Tex("Kräfte addieren").scale(1.2)
