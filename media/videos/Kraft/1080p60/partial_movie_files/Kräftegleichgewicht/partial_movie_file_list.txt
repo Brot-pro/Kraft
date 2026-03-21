@@ -1,0 +1,6 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/1080p60/partial_movie_files/Kräftegleichgewicht/2257293077_1754310298_3346721766.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/1080p60/partial_movie_files/Kräftegleichgewicht/2135761390_1254722677_2375220172.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/1080p60/partial_movie_files/Kräftegleichgewicht/2135761390_2408024828_3885633604.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/1080p60/partial_movie_files/Kräftegleichgewicht/2135761390_41483214_3713273983.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/1080p60/partial_movie_files/Kräftegleichgewicht/2135761390_1754310298_2641755067.mp4'

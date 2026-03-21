@@ -367,7 +367,7 @@ class Einheiten(Scene):
         blackbox3 = SurroundingRectangle(f3, color=BLACK,fill_opacity=1,buff=0)
         f3gruppe = VGroup(blackbox3,f3)
 
-        f4 = MathTex(r"[F] = kg \cdot \frac{Meter}{sekunde^{2}}")
+        f4 = MathTex(r"[F] = kg \cdot \frac{Meter}{Sekunde^{2}}")
         blackbox4 = SurroundingRectangle(f4, color=BLACK,fill_opacity=1,buff=0)
         f4gruppe = VGroup(blackbox4,f4)
 
@@ -375,24 +375,24 @@ class Einheiten(Scene):
         blackbox5 = SurroundingRectangle(m, color=BLACK,fill_opacity=1,buff=0)
         mgruppe = VGroup(blackbox5,m)
 
-        agruppe = MathTex(r"a : \frac{Meter}{sekunde^{2}}")
+        agruppe = MathTex(r"a : \frac{Meter}{Sekunde^{2}}")
 
-        a1 = MathTex(r"\frac{Meter/sekunde}{sekunde}")
-        a2 = MathTex(r"\frac{Meter}{sekunde \cdot  sekunde}")
-        a3 = MathTex(r"\frac{Meter}{sekunde^{2}}")
+        a1 = MathTex(r"\frac{Meter/Sekunde}{Sekunde}")
+        a2 = MathTex(r"\frac{Meter}{Sekunde \cdot  Sekunde}")
+        a3 = MathTex(r"\frac{Meter}{Sekunde^{2}}")
 
         gruppe = VGroup(axiom2,ul1,formel,f4,m,agruppe)
 
-        frage1 = MathTex(r"a = 5 \cdot \frac{Meter}{sekunde^{2}} ?")
-        frage2 = MathTex(r"a = 12.3 \cdot \frac{Meter}{sekunde^{2}} ?")
-        frage3 = MathTex(r"a = 10 \cdot \frac{Meter}{sekunde^{2}} ?")
+        frage1 = MathTex(r"a = 5 \cdot \frac{Meter}{Sekunde^{2}} ?")
+        frage2 = MathTex(r"a = 12.3 \cdot \frac{Meter}{Sekunde^{2}} ?")
+        frage3 = MathTex(r"a = 10 \cdot \frac{Meter}{Sekunde^{2}} ?")
 
         g1 = MathTex(r"g")
-        g2 = MathTex(r"g = 9.81 \cdot \frac{Meter}{sekunde^{2}}")
-        g3 = MathTex(r"g = \frac{a}{9.81 \cdot \frac{Meter}{sekunde^{2}}}")
+        g2 = MathTex(r"g = 9.81 \cdot \frac{Meter}{Sekunde^{2}}")
+        g3 = MathTex(r"g = \frac{a}{9.81 \cdot \frac{Meter}{Sekunde^{2}}}")
 
 
-        lösung1 = MathTex(r"g(10) = \frac{10 \cdot \frac{Meter}{sekunde^{2}}}{9.81 \cdot \frac{Meter}{sekunde^{2}}}")
+        lösung1 = MathTex(r"g(10) = \frac{10 \cdot \frac{Meter}{Sekunde^{2}}}{9.81 \cdot \frac{Meter}{Sekunde^{2}}}")
         lösung2 = MathTex(r"g(10) \approx 1.19")
 
         #animation:
@@ -933,6 +933,103 @@ class Kräfteparalellogramm(Scene):
         vector2.animate.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE)),
         vector3.animate.become(nupl.get_vector([vector1x+vector2x,vector1y+vector2y,0]).set_color(WHITE)),
         run_time=1.7)
+        self.wait()
+
+class Kräftegleichgewicht(Scene):
+    def construct(self):
+    
+        #texte
+        Kräftegleichgewicht = Tex("Kräftegleichgewicht").scale(1.2)
+        ul1 = Underline(Kräftegleichgewicht)
+        blackbox1 = SurroundingRectangle(Kräftegleichgewicht, buff=0, color=BLACK,fill_opacity=1)
+        Kräftegleichgewichtgruppe = VGroup(blackbox1,Kräftegleichgewicht,ul1)
+
+        #andere mobjects
+        nupl = NumberPlane(x_range=(-10,10,1.5),y_range=(-6,6,1.5)).set_opacity(0.5)
+
+        v1 = nupl.get_vector([-1.5,-1.5]).set_color(ORANGE)
+        v2 = nupl.get_vector([1.5,1.5]).set_color(BLUE)
+        v3 = nupl.get_vector([2,0]).set_color(GREEN)
+        v4 = nupl.get_vector([0,0]).set_color(PURPLE)
+        ball = ImageMobject("ball.png")
+        ball.scale(0.4)
+
+        keinebeschleunigung = Tex("Keine Beschleunigung")
+        blackbox2 = SurroundingRectangle(keinebeschleunigung, buff=0, color=BLACK,fill_opacity=1)
+        keinebeschleunigunggruppe = VGroup(blackbox2,keinebeschleunigung)
+        punkt = Dot([0,0,0]).set_color(RED).scale(2)
+
+        keinekraft = Tex("Keine Resultierende Kraft")
+        blackbox3 = SurroundingRectangle(keinekraft, buff=0, color=BLACK,fill_opacity=1)
+        keinekraftgruppe = VGroup(blackbox3,keinekraft)
+
+        keinekraftfull = Tex("Resultierende Kraft = 0")
+        blackbox4 = SurroundingRectangle(keinekraftfull, buff=0, color=BLACK,fill_opacity=1)
+        keinekraftfullgruppe = VGroup(blackbox4,keinekraftfull)
+
+        #animationen:
+        self.add(Kräftegleichgewichtgruppe)
+        self.wait()
+        self.play(Kräftegleichgewichtgruppe.animate.to_corner(UL))
+        self.wait(2)
+        self.play(FadeIn(nupl)),self.add(Kräftegleichgewichtgruppe)
+        self.wait()
+        self.play(FadeIn(ball))
+        self.wait(2)
+        v1.shift(0.5*DL)
+        v2.shift(0.47*UR)
+        self.play(GrowArrow(v1),GrowArrow(v2))
+        self.wait(2)
+        keinebeschleunigunggruppe.shift(3*LEFT)
+        keinebeschleunigunggruppe.shift(0.7*UP)
+        self.play(Write(keinebeschleunigunggruppe))
+        self.wait()
+        self.play(keinebeschleunigunggruppe.animate.next_to(Kräftegleichgewichtgruppe, DOWN).to_edge(LEFT))
+        self.wait(3)
+        self.play(
+            ball.animate.scale(0),
+            FadeIn(punkt),
+            v1.animate.shift(0.4*UR),
+            v2.animate.shift(0.4*DL))
+        self.wait(2)
+        self.play(v2.animate.move_to([-0.6,-0.8,0]))
+        self.wait()
+        keinekraftgruppe.move_to([-3,0.5,0])
+        self.play(Write(keinekraftgruppe))
+        self.wait(2)
+        self.play(keinekraftgruppe.animate.next_to(keinebeschleunigunggruppe, DOWN).to_edge(LEFT).set_opacity(0))
+        keinekraftfullgruppe.next_to(keinebeschleunigunggruppe, DOWN).to_edge(LEFT)
+        self.play(FadeIn(keinekraftfullgruppe))
+        self.play(v2.animate.move_to([0.8,0.8,0]))
+        self.wait(5)
+        #selber herausgefunden :) (dieses cosinus/sinus kaack unten) (mathe boss)
+        self.play(GrowArrow(v3),
+                  v1.animate.become(nupl.get_vector([2*np.cos(2*(1/3)*np.pi),2*np.sin(2*(1/3)*np.pi)]).set_color(ORANGE)),
+                  v2.animate.become(nupl.get_vector([2*np.cos(2*(2/3)*np.pi),2*np.sin(2*(2/3)*np.pi)]).set_color(BLUE))),self.add(punkt)
+        self.wait(4)
+        self.play(v1.animate.move_to([1.44,0.84,0]))
+        self.wait()
+        self.play(v2.animate.move_to([0.46,0.8,0]))
+        self.wait(2)
+        self.play(Circumscribe(keinekraftgruppe))
+        self.wait(5)
+        self.play(v1.animate.become(nupl.get_vector([1.5,1.5,0]).set_color(ORANGE)),
+                  v2.animate.become(nupl.get_vector([-1.5,1,0]).set_color(BLUE)),
+                  v3.animate.become(nupl.get_vector([-1.5,-1.5,0]).set_color(GREEN)),
+                  v4.animate.become(nupl.get_vector([1.5,-1,0]).set_color(PURPLE))),self.add(punkt)
+        self.wait(5)
+        self.play(v4.animate.move_to([2.25,0.9,0]))
+        self.wait(1)
+        self.play(v3.animate.move_to([2.2,-0.3,0]))
+        self.wait(1)
+        self.play(v2.animate.move_to([0.7,-0.5,0]))
+        self.wait(2)
+        self.play(Circumscribe(keinekraftgruppe))
+        self.wait()
+        self.play(v1.animate.move_to([0.7,0.7,0]),
+                v2.animate.move_to([-0.7,0.5,0]),
+                v4.animate.move_to([0.7,-0.5,0]),
+                v3.animate.move_to([-0.7,-0.7,0]),)
         self.wait()
 
 class Axiom3(Scene):
