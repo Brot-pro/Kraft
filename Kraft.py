@@ -469,6 +469,19 @@ class Axiom1(Scene):
         blackbox2 = SurroundingRectangle(fragezeichen, color=BLACK,fill_opacity=1,buff=0)
         fragezeichengruppe = VGroup(blackbox2,fragezeichen)
 
+        axiom1text = Tex("Ohne äußeren Einfluss verändert ein")
+        blackbox3 = SurroundingRectangle(axiom1text, color=BLACK,fill_opacity=1,buff=0)
+        axiom1textgruppe = VGroup(blackbox3,axiom1text)
+        axiom1text[0][4:19].set_color("#F5B176")
+
+        axiom1text2 = Tex("Körper seinen Bewegungszustand nicht.")
+        blackbox4 = SurroundingRectangle(axiom1text2, color=BLACK,fill_opacity=1,buff=0)
+        axiom1text2gruppe = VGroup(blackbox4,axiom1text2)
+
+        axiom1textkurz = Tex("Trägheitsgesetz")
+        blackbox5 = SurroundingRectangle(axiom1textkurz, color=BLACK,fill_opacity=1,buff=0)
+        axiom1textkurzgruppe = VGroup(blackbox5,axiom1textkurz)
+
         #andere mobjects
         iceblock = ImageMobject("ice.png").scale(0.6)
         iceblock.move_to([-5,-2.2,0])
@@ -480,6 +493,8 @@ class Axiom1(Scene):
         offset = ValueTracker(-5)
         f = 1
         line = Line(3*LEFT, RIGHT*t.get_value())
+        mark = Line(UP*0.1, DOWN*0.1)
+
 
         #animation
         self.add(axiom1gruppe)
@@ -487,7 +502,7 @@ class Axiom1(Scene):
         self.wait()
         self.play(Create(ax))
         self.play(FadeIn(iceblock))
-        self.wait(2)
+        self.wait(3)
         v1.add_updater(lambda mob : mob.next_to(iceblock,RIGHT).shift(0.3*LEFT))
         iceblock.add_updater(lambda mob : mob.move_to([(0.5*(f/m)* (t.get_value())**2) + offset.get_value(),-2.2,0]))
         self.play(FadeIn(v1))
@@ -496,6 +511,7 @@ class Axiom1(Scene):
         self.play(iceblock.animate.move_to([8.5,-2.2,0]), rate_func=linear, run_time=2.8)
         self.play(FadeOut(iceblock))
         t.set_value(0)
+        self.wait(2)
 
         #zweiter versuch
         iceblock.move_to([-5,-2.2,0])
@@ -507,9 +523,50 @@ class Axiom1(Scene):
         iceblock.clear_updaters()
         t.set_value(0)
         self.add(line)
-        line.add_updater(lambda mob : mob.become(Line(2.6*LEFT, RIGHT*(t.get_value()-2.6))))
-        self.play(iceblock.animate.move_to([8.5,-2.2,0]),t.animate.set_value(10), rate_func=linear, run_time=2.8)
+        mark.move_to([-2.6,-1,0])
+        line.add_updater(lambda mob : mob.become(Line(2.6*LEFT, RIGHT*(t.get_value()-2.6))).shift(DOWN))
+        self.play(iceblock.animate.move_to([8.5,-2.2,0]),t.animate.set_value(10),FadeIn(mark), rate_func=linear, run_time=2.8)
+        self.wait()
         self.play(FadeIn(fragezeichengruppe))
+        self.wait(3)
+        self.play(axiom1gruppe.animate.move_to([0,3,0]),
+                  FadeOut(fragezeichengruppe),
+                  FadeOut(iceblock),
+                  FadeOut(ax),
+                  Uncreate(line),
+                  Uncreate(mark),
+                  run_time=2)
+        self.wait()
+        axiom1textgruppe.shift(0.4*UP)
+        axiom1text2gruppe.shift(0.4*DOWN)
+        self.wait(2)
+        self.play(Write(axiom1textgruppe))
+        self.play(Write(axiom1text2gruppe))
+        self.wait(4)
+        gruppe = VGroup(axiom1text,axiom1text2)
+        self.play(ReplacementTransform(gruppe,axiom1textkurzgruppe))
+        self.remove(blackbox3,blackbox4)
+        self.wait(2)
+        self.play(axiom1gruppe.animate.to_corner(UL),axiom1textkurzgruppe.animate.next_to(axiom1gruppe, DOWN).to_edge(LEFT))
+        self.wait(2)
+
+        #dritterversuch
+        t.set_value(0)
+        iceblock.move_to([-5,-2.2,0])
+        self.play(Create(ax))
+        self.play(FadeIn(iceblock))
+        self.wait(3)
+        iceblock.add_updater(lambda mob : mob.move_to([(0.5*(f/m)* (t.get_value())**2) + offset.get_value(),-2.2,0]))
+        self.play(FadeIn(v1))
+        self.play(t.animate.set_value(2),FadeOut(v1), rate_func=linear, run_time=1)
+        iceblock.clear_updaters()
+        t.set_value(0)
+        self.add(line)
+        mark.move_to([-2.6,-1,0])
+        line.add_updater(lambda mob : mob.become(Line(2.6*LEFT, RIGHT*(t.get_value()-2.6))).shift(DOWN))
+        self.play(iceblock.animate.move_to([8.5,-2.2,0]),t.animate.set_value(10),FadeIn(mark), rate_func=linear, run_time=2.8)
+        self.wait(2)
+        self.play(Circumscribe(axiom1textkurzgruppe))
         self.wait()
 
 
