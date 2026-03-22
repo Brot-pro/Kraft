@@ -569,7 +569,6 @@ class Axiom1(Scene):
         self.play(Circumscribe(axiom1textkurzgruppe))
         self.wait()
 
-
 class Kraftaddieren(Scene):
     def construct(self):
         kräfteaddieren = Tex("Kräfte addieren").scale(1.2)
