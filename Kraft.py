@@ -49,7 +49,7 @@ class Kraftmessen(Scene):
 
         #animation:
         self.add(wasistkraftgruppe)
-        self.wait(2)
+        self.wait(1)
         self.play(wasistkraftgruppe.animate.to_corner(UL))
         ball.shift(DOWN)
         ball.shift(6*LEFT)
@@ -522,11 +522,12 @@ class Axiom1(Scene):
         geschwindigkeit.add_updater(lambda mob : mob.become(DecimalNumber(t.get_value(), num_decimal_places=1)))
         geschwindigkeit.add_updater(lambda mob : mob.next_to(iceblock, UP))
         self.add(axiom1gruppe)
+        self.wait()
         self.play(axiom1gruppe.animate.to_corner(UL))
         self.wait()
         self.play(Create(ax))
         self.play(FadeIn(iceblock))
-        self.wait(3)
+        self.wait(4)
         v1.add_updater(lambda mob : mob.next_to(iceblock,RIGHT).shift(0.3*LEFT))
         iceblock.add_updater(lambda mob : mob.move_to([(0.5*(f/m)* (t.get_value())**2) + offset.get_value(),-2.2,0]))
         self.play(FadeIn(v1))
@@ -540,7 +541,7 @@ class Axiom1(Scene):
         #zweiter versuch
         iceblock.move_to([-5,-2.2,0])
         self.play(FadeIn(iceblock))
-        self.wait(2)
+        self.wait(3)
         iceblock.add_updater(lambda mob : mob.move_to([(0.5*(f/m)* (t.get_value())**2) + offset.get_value(),-2.2,0]))
         self.play(FadeIn(v1))
         self.play(t.animate.set_value(2),FadeOut(v1), rate_func=linear, run_time=1)
@@ -552,7 +553,7 @@ class Axiom1(Scene):
         self.play(iceblock.animate.move_to([8.5,-2.2,0]),t.animate.set_value(11),FadeIn(mark), rate_func=linear, run_time=2.8)
         self.wait()
         self.play(FadeIn(fragezeichengruppe))
-        self.wait(3)
+        self.wait(4)
         self.play(axiom1gruppe.animate.move_to([0,3,0]),
                   FadeOut(fragezeichengruppe),
                   FadeOut(iceblock),
@@ -563,10 +564,10 @@ class Axiom1(Scene):
         self.wait()
         axiom1textgruppe.shift(0.4*UP)
         axiom1text2gruppe.shift(0.4*DOWN)
-        self.wait(2)
+        self.wait(3)
         self.play(Write(axiom1textgruppe))
         self.play(Write(axiom1text2gruppe))
-        self.wait(4)
+        self.wait(6)
         gruppe = VGroup(axiom1text,axiom1text2)
         self.play(ReplacementTransform(gruppe,axiom1textkurzgruppe))
         self.remove(blackbox3,blackbox4)
@@ -575,7 +576,7 @@ class Axiom1(Scene):
         self.wait(2)
 
         #dritterversuch
-        self.wait()
+        self.wait(2)
         vtext.next_to(axiom1textkurz, DOWN).to_edge(LEFT)
         self.play(Write(vtext))
         self.wait(2)
@@ -586,8 +587,9 @@ class Axiom1(Scene):
         self.wait(3)
         iceblock.add_updater(lambda mob : mob.move_to([(0.5*(f/m)* (t.get_value())**2) + offset.get_value(),-2.2,0]))
         vaddon.add_updater(lambda mob : mob.next_to(geschwindigkeit, LEFT))
-        self.play(FadeIn(v1))
         self.play(FadeIn(vaddon,geschwindigkeit),run_time=0.1)
+        self.wait(0.6)
+        self.play(FadeIn(v1))
         self.play(t.animate.set_value(2),FadeOut(v1), rate_func=linear, run_time=1)
         iceblock.clear_updaters()
         geschwindigkeit.clear_updaters()
@@ -598,7 +600,7 @@ class Axiom1(Scene):
         line.add_updater(lambda mob : mob.become(Line(2.6*LEFT, RIGHT*(t.get_value()-2.6))).shift(0.5*DOWN))
         self.play(iceblock.animate.move_to([8.5,-2.2,0]),t.animate.set_value(11),FadeIn(mark2), rate_func=linear, run_time=2.8)
         self.remove(vaddon,geschwindigkeit)
-        self.wait(2)
+        self.wait(3)
         self.play(Circumscribe(axiom1textkurzgruppe))
         self.wait()
 
@@ -615,8 +617,8 @@ class Axiom1(Scene):
         self.wait(3)
         iceblock.add_updater(lambda mob : mob.move_to([(0.5*(f/m)* (t.get_value())**2) + offset.get_value(),-2.2,0]))
         vaddon.add_updater(lambda mob : mob.next_to(geschwindigkeit, LEFT))
-        self.play(FadeIn(v1))
         self.play(FadeIn(vaddon,geschwindigkeit),run_time=0.1)
+        self.play(FadeIn(v1))
         self.play(t.animate.set_value(2),FadeOut(v1), rate_func=linear, run_time=1)
         iceblock.clear_updaters()
         geschwindigkeit.clear_updaters()
@@ -1413,8 +1415,6 @@ class Axiom3lösung(Scene):
         self.wait(7)
         axiom2_9.shift(1.5*DOWN)
         self.play(Write(axiom2_9),ax.animate.shift(0.4*DOWN),kanone.animate.shift(0.4*DOWN))
-
-
 
 #für text farben:
 # ("#F5B176") orange
