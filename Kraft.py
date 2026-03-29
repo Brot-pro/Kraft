@@ -36,7 +36,7 @@ class Kraftmessen(Scene):
         ax = Axes(x_range=[0,10],y_range=[0,5])
         schieferwurf = ax.plot(lambda x : np.tan(o.get_value())*x-((g*(x**2))/(2*(v0.get_value()**2)*np.cos(o.get_value())*np.cos(o.get_value())))+h)
         schieferwurf.add_updater(lambda mob : mob.become(ax.plot(lambda x : np.tan(o.get_value())*x-((g*(x**2))/(2*(v0.get_value()**2)*np.cos(o.get_value())*np.cos(o.get_value())))+h)))
-        ball = ImageMobject("ball.png").scale(0.3)
+        ball = ImageMobject("ball.png").scale(0.35)
         feder = ImageMobject("feder.png").scale(0.4)
         feder.rotate(-90 * DEGREES)
         kraftbild = ImageMobject("kraftmesser.png").scale(0.5)
@@ -381,9 +381,10 @@ class Einheiten(Scene):
 
         agruppe = MathTex(r"a : \frac{Meter}{Sekunde^{2}}")
 
-        a1 = MathTex(r"\frac{Meter/Sekunde}{Sekunde}")
-        a2 = MathTex(r"\frac{Meter}{Sekunde \cdot  Sekunde}")
-        a3 = MathTex(r"\frac{Meter}{Sekunde^{2}}")
+        a0 = MathTex(r"Geschwindigkeit: \frac{Meter}{Sekunde}")
+        a1 = MathTex(r"Beschleunigung: \frac{Meter/Sekunde}{Sekunde}")
+        a2 = MathTex(r"Beschleunigung: \frac{Meter}{Sekunde \cdot  Sekunde}")
+        a3 = MathTex(r"Beschleunigung: \frac{Meter}{Sekunde^{2}}")
 
         gruppe = VGroup(axiom2,ul1,formel,f4,m,agruppe)
 
@@ -391,13 +392,13 @@ class Einheiten(Scene):
         frage2 = MathTex(r"a = 12.3 \cdot \frac{Meter}{Sekunde^{2}} ?")
         frage3 = MathTex(r"a = 10 \cdot \frac{Meter}{Sekunde^{2}} ?")
 
-        gkraft1 = MathTex(r"g-Kr\ddot{a}fte")
-        gkraft2 = MathTex(r"g-Kr\ddot{a}fte = \frac{a}{g}")
+        gkraft1 = MathTex(r"G-Kraft")
+        gkraft2 = MathTex(r"G-Kraft = \frac{a}{g}")
         g = MathTex(r"g \approx 9.81 \cdot \frac{Meter}{Sekunde^{2}}")
-        gkraft3 = MathTex(r"g-Kr\ddot{a}fte = \frac{a}{9.81 \cdot \frac{Meter}{Sekunde^{2}}}")
+        gkraft3 = MathTex(r"G-Kraft = \frac{a}{9.81 \cdot \frac{Meter}{Sekunde^{2}}}")
 
-        lösung1 = MathTex(r"gKr\ddot{a}fte(10) = \frac{10 \cdot \frac{Meter}{Sekunde^{2}}}{9.81 \cdot \frac{Meter}{Sekunde^{2}}}")
-        lösung2 = MathTex(r"gKr\ddot{a}fte(10) \approx 1.19")
+        lösung1 = MathTex(r"G-Kraft(10) = \frac{10 \cdot \frac{Meter}{Sekunde^{2}}}{9.81 \cdot \frac{Meter}{Sekunde^{2}}}")
+        lösung2 = MathTex(r"G-Kraft(10) \approx 1.19")
 
 
         #andere Mobjects
@@ -424,7 +425,7 @@ class Einheiten(Scene):
         self.play(f1.animate.move_to([0,0,0]))
         self.wait(4)
         self.play(ReplacementTransform(f1,f2))
-        self.wait(4)
+        self.wait(7)
         self.play(ReplacementTransform(f2,f3))
         self.wait(4)
         self.play(ReplacementTransform(f3,f4))
@@ -436,11 +437,15 @@ class Einheiten(Scene):
         self.play(Circumscribe(agruppe))
 
         self.play(gruppe.animate.set_color(GRAY_D))
-        self.wait(6)
-        self.play(Write(a1))
-        self.wait(14)
-        self.play(TransformMatchingShapes(a1,a2))
+        self.wait(4)
+        self.play(Write(a0))
         self.wait(10)
+        a1.shift(0.5*RIGHT)
+        self.play(TransformMatchingShapes(a0,a1))
+        self.wait(10)
+        a2.shift(0.8*RIGHT)
+        self.play(TransformMatchingShapes(a1,a2))
+        self.wait(12)
         self.play(TransformMatchingShapes(a2,a3))
         self.wait(5)
         self.play(Circumscribe(a3))
@@ -463,7 +468,7 @@ class Einheiten(Scene):
         self.play(TransformMatchingShapes(gkraft1,gkraft2))
         self.wait(6)
         self.play(FadeIn(g),Create(ecke))
-        self.wait(6)
+        self.wait(8)
         self.play(TransformMatchingShapes(gkraft2,gkraft3))
         self.wait(13)
         self.play(ReplacementTransform(frage3,lösung1))
@@ -652,6 +657,7 @@ class Kraftaddieren(Scene):
         fragezeichen.add_updater(lambda mob : mob.next_to(vector3, UR).shift(0.6 *DOWN))
         self.wait(0.5)
         self.play(FadeIn(nupl))
+        self.wait()
         self.add(kräftaddierengruppe)
 
         vector1x = 1.5
@@ -660,9 +666,9 @@ class Kraftaddieren(Scene):
         vector2y = 3
 
         self.play(vector1.animate.become(nupl.get_vector([vector1x,vector1y,0]).set_color(ORANGE)),vector2.animate.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE)),run_time=1)
-        self.wait(2)
+        self.wait(3)
         self.play(vector1.animate.shift(0.1*UL))
-        self.wait()
+        self.wait(3)
 
         # pfeil = Tex("Pfeil = Vektor")
         # blackbox2 = SurroundingRectangle(pfeil, color=BLACK,fill_opacity=1,buff=0)
@@ -682,10 +688,10 @@ class Kraftaddieren(Scene):
         self.wait(0.5)
         self.play(vector3.animate.become(nupl.get_vector([0,0,0]).set_color(WHITE)).shift(0.1*DR),run_time=2)
         self.play(FadeOut(fragezeichen))
-
+        self.wait()
         self.play(vector1.animate.move_to(vector2.get_end() * 1.37))
         #ich weiß selber nicht woher diese 1.37 kommt also falls das hier jemand sieht, frag nicht
-        self.wait()
+        self.wait(2)
 
         vektorverbindung = Tex("Verbindung")
         vektorverbindungfull = Tex("Vektoren werden Verbunden")
@@ -703,8 +709,9 @@ class Kraftaddieren(Scene):
         self.play(FadeIn(vektorverbindungfullgruppe))
 
         self.play(vector3.animate.become(nupl.get_vector([4.5,4.5,0]).set_color(WHITE)).shift(0.1*DR),run_time=2)
-        self.play(vector1.animate.become(nupl.get_vector([vector1x,vector1y,0]).shift(0.1*UL).set_color(ORANGE)),vector2.animate.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE)),run_time=1)
         self.wait()
+        self.play(vector1.animate.become(nupl.get_vector([vector1x,vector1y,0]).shift(0.1*UL).set_color(ORANGE)),vector2.animate.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE)),run_time=1)
+        self.wait(2)
 
         resultierend = Tex("Resultierende Kraft")
         blackbox6 = SurroundingRectangle(resultierend, color=BLACK,fill_opacity=1,buff=0)
@@ -716,8 +723,6 @@ class Kraftaddieren(Scene):
         self.wait()
         self.play(FadeOut(vector3))
         vector3.become(nupl.get_vector([0,0,0]).set_color(WHITE))
-        self.wait(1)
-
 
         #2ter Abschnitt
         vector1x = 4
@@ -725,7 +730,7 @@ class Kraftaddieren(Scene):
         vector2x = 1
         vector2y = 3
         self.play(vector1.animate.become(nupl.get_vector([vector1x,vector1y,0]).set_color(ORANGE)),vector2.animate.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE)),run_time=1)
-        self.wait(2)
+        self.wait(3)
 
         self.add(fragezeichen)
         self.play(vector3.animate.become(nupl.get_vector([2.5,3.2,0]).set_color(WHITE)),run_time=2)
@@ -735,7 +740,7 @@ class Kraftaddieren(Scene):
         self.play(vector3.animate.become(nupl.get_vector([3.7,1.8,0]).set_color(WHITE)),run_time=2)
         self.wait(0.5)
         self.play(vector3.animate.become(nupl.get_vector([0,0,0]).set_color(WHITE)),FadeOut(fragezeichen),run_time=2)
-        self.wait(2)
+        self.wait(3)
         self.play(vector2.animate.shift(vector1y*UP).shift(vector1x*RIGHT))
 
         vektorverbindung = Tex("Verbindung")
@@ -746,9 +751,11 @@ class Kraftaddieren(Scene):
         self.play(Write(vektorverbindunggruppe))
         punkt2.move_to(vector2.get_start())
         self.play(Circumscribe(punkt2,Circle),run_time=1.4)
-        self.play(vektorverbindunggruppe.animate.set_opacity(0))
-        self.play(vector3.animate.become(nupl.get_vector([vector1x+vector2x,vector1y+vector2y,0]).set_color(WHITE)),run_time=2)
         self.wait()
+        self.play(vektorverbindunggruppe.animate.set_opacity(0))
+        self.wait(2)
+        self.play(vector3.animate.become(nupl.get_vector([vector1x+vector2x,vector1y+vector2y,0]).set_color(WHITE)),run_time=2)
+        self.wait(4)
 
         vector1x = 3
         vector1y = -1.5
@@ -757,9 +764,11 @@ class Kraftaddieren(Scene):
         basevector1 = nupl.get_vector([vector1x,vector1y,0]).set_color(ORANGE)
         basevector2 = nupl.get_vector([vector2x,vector2y,0]).set_color(BLUE)
         self.play(vector1.animate.become(basevector1),vector2.animate.become(basevector2),vector3.animate.become(nupl.get_vector([0,0,0]).set_color(WHITE)),run_time=2)
-        self.wait()
+        self.wait(2)
         self.play(vector2.animate.shift(vector1y*UP).shift(vector1x*RIGHT))
+        self.wait(2)
         self.play(vector3.animate.become(nupl.get_vector([vector1x+vector2x,vector1y+vector2y,0]).set_color(WHITE)),run_time=2)
+        self.wait()
         self.play(vector1.animate.become(basevector1),vector2.animate.become(basevector2),run_time=2)
         vector1x = -1.5
         vector1y = 0.75
@@ -774,6 +783,7 @@ class Kraftaddieren(Scene):
         fürallegruppe = VGroup(blackbox5,füralle)
         fürallegruppe.next_to(resultierendgruppe, DOWN).to_edge(LEFT)
         self.play(FadeIn(fürallegruppe))
+        self.wait(3)
 
         self.play(vector1.animate.become(basevector1),vector2.animate.become(basevector2),vector3.animate.become(nupl.get_vector([vector1x+vector2x,vector1y+vector2y,0]).set_color(WHITE)),run_time=2)
         vector1x = -4.5
@@ -802,13 +812,13 @@ class Kraftaddieren(Scene):
                   vector2.animate.become(basevector2),
                   vector3_real.animate.become(basevector3),
                   vector3.animate.become(nupl.get_vector([0,0,0]).set_color(WHITE)))
-        self.wait(3)
+        self.wait(5)
         self.play(vector1.animate.shift(vector2x*RIGHT).shift(vector2y*UP))
-        self.wait(3)
+        self.wait(4)
         self.play(vector3_real.animate.shift((vector2x+vector1x)*RIGHT).shift((vector2y+vector1y)*UP))
         self.wait(4)
         self.play(vector3.animate.become(nupl.get_vector([vector1x+vector2x+vector3x,vector1y+vector2y+vector3y,0]).set_color(WHITE)))
-        self.wait(3)
+        self.wait(5)
         self.play(vector1.animate.become(basevector1),
                   vector2.animate.become(basevector2),
                   vector3_real.animate.become(basevector3))
@@ -816,7 +826,7 @@ class Kraftaddieren(Scene):
         self.play(vector2.animate.shift((vector3x)*RIGHT).shift((vector3y)*UP))
         self.wait(2)
         self.play(vector1.animate.shift((vector2x+vector3x)*RIGHT).shift((vector2y+vector3y)*UP))
-        self.wait(2)
+        self.wait(3)
         self.play(vector1.animate.become(basevector1),
                   vector2.animate.become(basevector2),
                   vector3_real.animate.become(basevector3))
@@ -939,31 +949,33 @@ class Additionrechnen(Scene):
         self.play(GrowArrow(v1),GrowArrow(v2))
         self.wait(4)
         self.play(Write(v1zahlgruppe),Write(v2zahlgruppe))
-        self.wait(4)
+        self.wait(6)
         self.add(v1zahlcopygruppe,v2zahlcopygruppe)
         self.play(v1zahlcopygruppe.animate.move_to([-1,0,0]).scale(1.5),v2zahlcopygruppe.animate.move_to([1,0,0]).scale(1.5))
         self.wait(4)
         self.play(FadeIn(plusgruppe))
+        self.wait(2)
         lösunggruppe.shift(RIGHT*3.4)
         self.play(Write(lösunggruppe))
-        self.wait(9)
+        self.wait(12)
         lösungfullgruppe.shift(RIGHT*2.8)
         lösungfullcopygruppe.shift(RIGHT*3.3)
         lösung_original = lösunggruppe.copy()
         self.play(Transform(lösunggruppe,lösungfullgruppe))
-        self.wait(5)
+        self.wait(6)
         self.play(FadeOut(v1zahlgruppe,v2zahlgruppe))
+        self.wait()
         self.play(GrowArrow(v3))
         self.wait()
         self.add(lösungfullcopygruppe)
         self.play(lösungfullcopygruppe.animate.move_to([-1.3,1.8,0]).scale(0.7).set_opacity(0))
         keinenamenmehrgruppe.move_to([-2.5,1.8,0])
         self.play(FadeIn(keinenamenmehrgruppe))
-        self.wait(5)
+        self.wait(6)
         self.play(Transform(lösunggruppe,lösung_original),FadeOut(v1,v2,v3,keinenamenmehrgruppe))
         gruppe = VGroup(lösunggruppe,v1zahlcopygruppe,v2zahlcopygruppe,plusgruppe)
         self.play(gruppe.animate.move_to([0,0,0]))
-        self.wait(3)
+        self.wait(5)
         v1zahlrichtiggruppe.move_to([-1,0,0])
         v2zahlrichtiggruppe.move_to([1,0,0])
         lösungrichtiggruppe.move_to([3.4,0,0])
@@ -972,7 +984,7 @@ class Additionrechnen(Scene):
         richtig2gruppe = VGroup(v1zahlrichtiggruppe,v2zahlrichtiggruppe,plusrichtiggruppe)
         richtiggruppe.shift(1.75 * LEFT)   
         self.play(FadeIn(richtiggruppe),FadeOut(gruppe))
-        self.wait(3)
+        self.wait(5)
         self.play(Circumscribe(richtiggruppe))
         self.wait(2)
         lösungrichtig2gruppe.shift(2.5*RIGHT)
@@ -983,6 +995,7 @@ class Additionrechnen(Scene):
                   FadeIn(v3zahlrichtiggruppe),
                   FadeIn(plusrichti2ggruppe)
                   )
+        self.wait()
 
 class Kräfteparalellogramm(Scene):
     def construct(self):
@@ -1011,10 +1024,13 @@ class Kräfteparalellogramm(Scene):
 
         self.play(FadeIn(nupl))
         self.add(kräfteparalellogrammgruppe)
-        self.play(vector1.animate.become(nupl.get_vector([vector1x,vector1y,0]).set_color(ORANGE)),vector2.animate.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE)),run_time=1)
         self.wait()
+        self.play(vector1.animate.become(nupl.get_vector([vector1x,vector1y,0]).set_color(ORANGE)),vector2.animate.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE)),run_time=1)
+        self.wait(2)
         self.play(vector2.animate.shift(vector1y*UP).shift(vector1x*RIGHT))
+        self.wait()
         self.play(vector3.animate.become(nupl.get_vector([vector1x+vector2x,vector1y+vector2y,0]).set_color(WHITE)),run_time=2)
+        self.wait()
 
         additionbasisfull = Tex("Basis auf Kraftaddition")
         blackbox2 = SurroundingRectangle(additionbasisfull, color=BLACK,fill_opacity=1,buff=0)
@@ -1033,9 +1049,9 @@ class Kräfteparalellogramm(Scene):
         #ist gehardcoded ich weiß....
         punkt = Dot(point=[3,2.5,0],color=RED)
         self.play(FadeIn(punkt))
-        self.wait(2)
+        self.wait(3)
         self.play(vector3.animate.become(nupl.get_vector([0,0,0]).set_color(WHITE)))
-        self.wait()
+        self.wait(2)
         vector4.shift(vector1y*UP).shift(vector1x*RIGHT)
         self.add(vector4)
         self.add(vector5)
@@ -1063,9 +1079,10 @@ class Kräfteparalellogramm(Scene):
         vector5.become(nupl.get_vector([vector1x,vector1y]).set_color(ORANGE))
         vector1.shift(vector2y*UP).shift(vector2x*RIGHT).set_color(ORANGE)
         vector2.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE))
+        self.wait()
         self.play(vector3.animate.become(nupl.get_vector([vector1x+vector2x,vector1y+vector2y,0]).set_color(WHITE)))
 
-        self.wait()
+        self.wait(2)
         vector1x = 3
         vector1y = 0
         vector2x = 3
@@ -1083,7 +1100,7 @@ class Kräfteparalellogramm(Scene):
         fürallegruppe = VGroup(blackbox6,füralle)
         fürallegruppe.next_to(spieglungfullgruppe, DOWN).to_edge(LEFT)
 
-        self.wait()
+        self.wait(2)
         vector1x = -3
         vector1y = -0.75
         vector2x = 1.5
@@ -1097,7 +1114,7 @@ class Kräfteparalellogramm(Scene):
         FadeIn(fürallegruppe),
         run_time=1.5)
 
-        self.wait()
+        self.wait(2)
         vector1x = 6
         vector1y = -1.5
         vector2x = 1.5
@@ -1155,13 +1172,13 @@ class Kräftegleichgewicht(Scene):
         v1.shift(0.5*DL)
         v2.shift(0.47*UR)
         self.play(GrowArrow(v1),GrowArrow(v2))
-        self.wait(2)
+        self.wait(4)
         keinebeschleunigunggruppe.shift(3*LEFT)
         keinebeschleunigunggruppe.shift(0.7*UP)
         self.play(Write(keinebeschleunigunggruppe))
         self.wait()
         self.play(keinebeschleunigunggruppe.animate.next_to(Kräftegleichgewichtgruppe, DOWN).to_edge(LEFT))
-        self.wait(3)
+        self.wait(4)
         self.play(
             ball.animate.scale(0),
             FadeIn(punkt),
@@ -1177,18 +1194,18 @@ class Kräftegleichgewicht(Scene):
         keinekraftfullgruppe.next_to(keinebeschleunigunggruppe, DOWN).to_edge(LEFT)
         self.play(FadeIn(keinekraftfullgruppe))
         self.play(v2.animate.move_to([0.8,0.8,0]))
-        self.wait(5)
+        self.wait(6)
         #selber herausgefunden :) (dieses cosinus/sinus kaack unten) (mathe boss)
         self.play(GrowArrow(v3),
                   v1.animate.become(nupl.get_vector([2*np.cos(2*(1/3)*np.pi),2*np.sin(2*(1/3)*np.pi)]).set_color(ORANGE)),
                   v2.animate.become(nupl.get_vector([2*np.cos(2*(2/3)*np.pi),2*np.sin(2*(2/3)*np.pi)]).set_color(BLUE))),self.add(punkt)
-        self.wait(4)
+        self.wait(5)
         self.play(v1.animate.move_to([1.44,0.84,0]))
         self.wait()
         self.play(v2.animate.move_to([0.46,0.8,0]))
         self.wait(2)
         self.play(Circumscribe(keinekraftgruppe))
-        self.wait(5)
+        self.wait(6)
         self.play(v1.animate.become(nupl.get_vector([1.5,1.5,0]).set_color(ORANGE)),
                   v2.animate.become(nupl.get_vector([-1.5,1,0]).set_color(BLUE)),
                   v3.animate.become(nupl.get_vector([-1.5,-1.5,0]).set_color(GREEN)),
@@ -1201,7 +1218,7 @@ class Kräftegleichgewicht(Scene):
         self.play(v2.animate.move_to([0.7,-0.5,0]))
         self.wait(2)
         self.play(Circumscribe(keinekraftgruppe))
-        self.wait()
+        self.wait(3)
         self.play(v1.animate.move_to([0.7,0.7,0]),
                 v2.animate.move_to([-0.7,0.5,0]),
                 v4.animate.move_to([0.7,-0.5,0]),
@@ -1261,20 +1278,20 @@ class Axiom3(Scene):
         self.add(axiom3gruppe)
         self.wait(1)
         self.play(axiom3gruppe.animate.shift(3*UP))
-        self.wait(3)
+        self.wait(4)
         text1.shift(0.4*UP)
         text1_2.shift(0.4*DOWN)
         self.play(Write(text1gruppe),run_time=3)
         self.wait(4)
         self.play(ReplacementTransform(text1gruppe,text1kurzgruppe))
-        self.wait(4)
+        self.wait(6)
         self.play(axiom3gruppe.animate.to_corner(UL),text1kurzgruppe.animate.next_to(axiom3gruppe, DOWN).to_edge(LEFT))
         self.wait()
         kanone.move_to([-2.5,-1.7,0])
         self.play(Create(ax))
         self.wait()
         self.play(FadeIn(kanone))
-        self.wait()
+        self.wait(1.5)
         zahlen.move_to(kanone)
         zahlen.shift(UP)
         dreigruppecopy = dreigruppe.copy()
@@ -1306,6 +1323,7 @@ class Axiom3(Scene):
         )
         self.wait(1.5)
         self.play(FadeOut(kanone,kanonenkugel))
+        self.wait()
 
         #zweiter versuch
         kanone.move_to([-2.5,-1.7,0])
@@ -1347,6 +1365,7 @@ class Axiom3(Scene):
         self.play(Circumscribe(fragetext))
         fragezeichen.shift(DOWN)
         self.play(Write(fragezeichen))
+        self.wait()
 
 class Axiom3lösung(Scene):
     def construct(self):
@@ -1372,8 +1391,8 @@ class Axiom3lösung(Scene):
         axiom2_3 = MathTex(r"\frac{F}{m} = \frac{m \cdot a}{m}")
         axiom2_4 = MathTex(r"\frac{F}{m} = a")
         axiom2_5 = MathTex(r"a = \frac{F}{m}")
-        axiom2_6 = MathTex(r"a = \frac{\approx 200.000 N}{m}")
-        axiom2_7 = MathTex(r"a = \frac{\approx 200.000 N}{200 kg}")
+        axiom2_6 = MathTex(r"Kanone: a = \frac{\approx 200.000 N}{m}")
+        axiom2_7 = MathTex(r"Kanone: a = \frac{\approx 200.000 N}{200 kg}")
         axiom2_8 = MathTex(r"Kanone: 1000 \frac{m}{s^{2}} = \frac{\approx 200.000 N}{200 kg}")
         #-_ (wer checkt der checkt)
         axiom2_9 = MathTex(r"Kugel: 40000 \frac{m}{s^{2}} = \frac{\approx 200.000 N}{5 kg}")
@@ -1396,13 +1415,13 @@ class Axiom3lösung(Scene):
         self.play(fragetext.animate.next_to(text1kurzgruppe, DOWN).to_edge(LEFT))
         self.wait(2)
         self.play(Write(axiom2_1))
-        self.wait(2)
+        self.wait(3)
         self.play(Circumscribe(axiom2_1[0][4]))
         self.wait(2)
         self.play(TransformMatchingShapes(axiom2_1,axiom2_2))
         self.wait(6)
         self.play(TransformMatchingShapes(axiom2_2,axiom2_3))
-        self.wait(6)
+        self.wait(7)
         self.play(TransformMatchingShapes(axiom2_3,axiom2_4))
         self.wait(3)
         self.play(TransformMatchingShapes(axiom2_4,axiom2_5))
@@ -1420,5 +1439,5 @@ class Axiom3lösung(Scene):
 # ("#F5B176") orange
 # ("#86CFF9") blau
 
-#KRAFT MESSEN UND DARSTELLEN UND AXION2 UND EINHEITEN SIND SCHON GESTRECHT
-#ALLE ANIMATIONEN IN DER PP
+#KRAFT MESSEN, DARSTELLEN, AXION2, EINHEITEN, AXIOM1, KRAFTADDIEREN, ADDITIONRECHNEN, KRÄFTEPARRALELOGRAMM, KRÄFTEGLEICHGEWICHT, AXIOM3, AXIOM3LÖSUNG   : GESTRECHT
+#ALLE ANIMATIONEN IN DER PP (aber ungestecht und bissle anders und pql(schlechte quali)...)
