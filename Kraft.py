@@ -1,5 +1,5 @@
 from manim import *
-import numpy as np
+
 class Test(Scene):
     def construct(self):
         t = ValueTracker(-2)
@@ -10,6 +10,72 @@ class Test(Scene):
         vektor.add_updater(lambda x : x.become(Vector([1,t.get_value()],color=ORANGE).move_to([t.get_value(),0,0])))
         self.play(t.animate.set_value(3),run_time=2,)
         self.wait()
+
+class Wasistkraft(Scene):
+    def construct(self):
+
+        #texte
+        wasistkraft = Tex("Was ist Kraft?").scale(1.2)
+        ul1 = Underline(wasistkraft)
+        wasistkraftgruppe = VGroup(wasistkraft,ul1)
+
+        bewegungszustand = Tex("Veränderung des Bewegungszustandes")
+        form = Tex("Veränderung der Form")
+
+        #andere Mobjects
+        ball = ImageMobject("handball.png").scale(0.5)
+
+
+        #gruppen
+        g1 = Tex("Kraft").scale(1.2)
+        g2 = Rectangle(width=1.8, height=0.6).set_color(ORANGE)
+        g3 = Vector([2,0]).set_color(ORANGE)
+        g3.shift(0.9*RIGHT)
+        ggruppe = VGroup(g1,g2,g3)
+        ggruppe.shift(6*LEFT)
+
+        f1 = Tex("Kraft").scale(1.2)
+        f2 = Rectangle(width=1.8, height=0.6).set_color(ORANGE)
+        f3 = Vector([-2,0]).set_color(ORANGE)
+        f3.shift(0.9*LEFT)
+        fgruppe = VGroup(f1,f2,f3)
+        fgruppe.shift(5.8*RIGHT)
+
+        #animation
+        self.add(wasistkraftgruppe)
+        self.wait(1)
+        self.play(wasistkraftgruppe.animate.to_corner(UL))
+        self.wait(1)
+        ball.shift(2*LEFT)
+        self.play(FadeIn(ball))
+        self.wait(4)
+        self.play(FadeIn(ggruppe))
+        self.play(FadeOut(ggruppe),
+                  ball.animate.shift(1*RIGHT),rate_func=linear)
+        self.play(ball.animate.shift(1*RIGHT),rate_func=linear)
+        self.play(ball.animate.shift(1*RIGHT),rate_func=linear)
+        self.play(FadeIn(fgruppe),
+                  ball.animate.shift(1*RIGHT),rate_func=linear)
+        self.play(FadeOut(fgruppe),rate_func=linear)
+        bewegungszustand.next_to(wasistkraftgruppe, DOWN).to_edge(LEFT)
+        self.play(Write(bewegungszustand))
+        self.wait(3)
+        self.play(FadeOut(ball))
+        self.wait(2)
+        ball.move_to([0,0,0])
+        self.play(FadeIn(ball))
+        self.wait()
+        fgruppe.move_to([3,0,0])
+        ggruppe.move_to([-3,0,0])
+        self.play(FadeIn(ggruppe),FadeIn(fgruppe))
+        self.play(ball.animate.stretch(0.7,dim=0,))
+        self.wait(1)
+        form.next_to(bewegungszustand, DOWN).to_edge(LEFT)
+        self.play(Write(form))
+        self.wait(4)
+        self.play(FadeOut(ggruppe),FadeOut(fgruppe))
+        self.play(ball.animate.stretch(10/7,dim=0,))
+        self.wait(2)
 
 class Kraftmessen(Scene):
     def construct(self):
@@ -26,7 +92,6 @@ class Kraftmessen(Scene):
 
         kraftmesser = Tex("Feder / Kraftmesser")
         blackbox3 = SurroundingRectangle(kraftmesser, buff=0, color=BLACK,fill_opacity=1)
-        kraftmessergruppe = VGroup(blackbox3,kraftmesser)
 
         #andere Mobjects:
         o = ValueTracker(-2.2)
@@ -123,7 +188,7 @@ class Kraftdarstellen(Scene):
         blackbox2 = SurroundingRectangle(pfeil, color=BLACK,fill_opacity=1,buff=0)
         pfeilgruppe = VGroup(blackbox2,pfeil)
 
-        newton = Tex("1 Kästchen = 1 Newton (N)")
+        newton = Tex("1 Kästchenlänge = 1 Newton (N)")
         blackbox3 = SurroundingRectangle(newton, color=BLACK,fill_opacity=1,buff=0)
         newtongruppe = VGroup(blackbox3,newton)
 
@@ -196,9 +261,9 @@ class Kraftdarstellen(Scene):
         self.wait(4)
         self.play(angriffspunktgruppe.animate.next_to(fünfgruppe, DOWN).to_edge(LEFT))
         self.wait(3)
-        self.play(ReplacementTransform(v1,v2),FadeOut(v),run_time=2)
+        self.play(ReplacementTransform(v1,v2),FadeOut(v),run_time=4)
         self.wait()
-        self.play(ReplacementTransform(v2,v3),run_time=2)
+        self.play(ReplacementTransform(v2,v3),run_time=4)
         self.wait(0.3)    
 
 class Axiom2(Scene):
@@ -359,27 +424,22 @@ class Einheiten(Scene):
         blackbox6 = SurroundingRectangle(formel, color=BLACK,fill_opacity=1,buff=0)
         formelgruppe = VGroup(blackbox6,formel)
 
-        f1 = MathTex("F : Newton")
+        f1 = MathTex("F : Newton (N)")
         blackbox2 = SurroundingRectangle(f1, color=BLACK,fill_opacity=1,buff=0)
         f1gruppe = VGroup(blackbox2,f1)
 
         f2 = MathTex(r"[F] = m \cdot a")
         blackbox2 = SurroundingRectangle(f2, color=BLACK,fill_opacity=1,buff=0)
-        f2gruppe = VGroup(blackbox2,f2)
 
         f3 = MathTex(r"[F] = kg \cdot a")
-        blackbox3 = SurroundingRectangle(f3, color=BLACK,fill_opacity=1,buff=0)
-        f3gruppe = VGroup(blackbox3,f3)
 
         f4 = MathTex(r"[F] = kg \cdot \frac{Meter}{Sekunde^{2}}")
-        blackbox4 = SurroundingRectangle(f4, color=BLACK,fill_opacity=1,buff=0)
-        f4gruppe = VGroup(blackbox4,f4)
 
-        m = MathTex(r"m : Kilogramm")
+        m = MathTex(r"m : Kilogramm (kg)")
         blackbox5 = SurroundingRectangle(m, color=BLACK,fill_opacity=1,buff=0)
         mgruppe = VGroup(blackbox5,m)
 
-        agruppe = MathTex(r"a : \frac{Meter}{Sekunde^{2}}")
+        agruppe = MathTex(r"a : \frac{Meter}{Sekunde^{2}} (\frac{m}{s^{2}})")
 
         a0 = MathTex(r"Geschwindigkeit: \frac{Meter}{Sekunde}")
         a1 = MathTex(r"Beschleunigung: \frac{Meter/Sekunde}{Sekunde}")
@@ -430,7 +490,7 @@ class Einheiten(Scene):
         self.wait(4)
         self.play(ReplacementTransform(f3,f4))
         self.wait(5)
-        self.play(f4.animate.next_to(formelgruppe, DOWN).to_edge(LEFT),mgruppe.animate.shift(0.7*DOWN),agruppe.animate.shift(0.7*DOWN))
+        self.play(f4.animate.next_to(formelgruppe, DOWN).to_edge(LEFT),mgruppe.animate.shift(0.5*DOWN),agruppe.animate.shift(0.5*DOWN))
         self.play(mgruppe.animate.next_to(f4, DOWN).to_edge(LEFT))
         self.play(agruppe.animate.next_to(mgruppe, DOWN).to_edge(LEFT))
         self.wait(4)
@@ -438,14 +498,16 @@ class Einheiten(Scene):
 
         self.play(gruppe.animate.set_color(GRAY_D))
         self.wait(4)
+        a0.shift(RIGHT)
         self.play(Write(a0))
         self.wait(10)
-        a1.shift(0.5*RIGHT)
+        a1.shift(1.5*RIGHT)
         self.play(TransformMatchingShapes(a0,a1))
         self.wait(10)
-        a2.shift(0.8*RIGHT)
+        a2.shift(1.5*RIGHT)
         self.play(TransformMatchingShapes(a1,a2))
         self.wait(12)
+        a3.shift(0.9*RIGHT)
         self.play(TransformMatchingShapes(a2,a3))
         self.wait(5)
         self.play(Circumscribe(a3))
@@ -464,17 +526,20 @@ class Einheiten(Scene):
         g.shift(4.5*RIGHT)
         g.shift(3*UP)
         self.play(FadeIn(gkraft1))
-        self.wait(12)
+        self.wait(20)
         self.play(TransformMatchingShapes(gkraft1,gkraft2))
         self.wait(6)
         self.play(FadeIn(g),Create(ecke))
         self.wait(8)
         self.play(TransformMatchingShapes(gkraft2,gkraft3))
         self.wait(13)
+        lösung1.shift(1.1 * RIGHT)
+        lösung1.shift(0.1*DOWN)
+        lösung2.shift(0.1*DOWN)
         self.play(ReplacementTransform(frage3,lösung1))
         self.wait(7)
         self.play(TransformMatchingShapes(lösung1,lösung2))
-        self.wait()
+        self.wait(10)
 
 class Axiom1(Scene):
     def construct(self):
@@ -640,6 +705,9 @@ class Axiom1(Scene):
 
 class Kraftaddieren(Scene):
     def construct(self):
+
+        #ich möchte kurz sagen, dass war die allerste scene und vom aufbau her ist sie komplett müll... also fallst das jemand liest, ich weiß wie sclimm das ist...
+
         kräfteaddieren = Tex("Kräfte addieren").scale(1.2)
         ul1 = Underline(kräfteaddieren)
         blackbox1 = SurroundingRectangle(kräfteaddieren, buff=0, color=BLACK,fill_opacity=1)
@@ -665,18 +733,10 @@ class Kraftaddieren(Scene):
         vector2x = 3
         vector2y = 3
 
-        self.play(vector1.animate.become(nupl.get_vector([vector1x,vector1y,0]).set_color(ORANGE)),vector2.animate.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE)),run_time=1)
+        self.play(vector2.animate.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE)),vector1.animate.become(nupl.get_vector([vector1x,vector1y,0]).set_color(ORANGE)),run_time=1)
         self.wait(3)
         self.play(vector1.animate.shift(0.1*UL))
         self.wait(3)
-
-        # pfeil = Tex("Pfeil = Vektor")
-        # blackbox2 = SurroundingRectangle(pfeil, color=BLACK,fill_opacity=1,buff=0)
-        # pfeilgruppe = VGroup(blackbox2,pfeil)
-        # pfeilgruppe.move_to([-2.2,0,0])
-        # self.play(Write(pfeilgruppe))
-        # self.wait()
-        # self.play(pfeilgruppe.animate.next_to(kräftaddierengruppe, DOWN).to_edge(LEFT))
 
         self.add(fragezeichen)
         vector3.shift(0.1*DR)
@@ -756,6 +816,8 @@ class Kraftaddieren(Scene):
         self.wait(2)
         self.play(vector3.animate.become(nupl.get_vector([vector1x+vector2x,vector1y+vector2y,0]).set_color(WHITE)),run_time=2)
         self.wait(4)
+        self.play(vector2.animate.shift(vector1y*DOWN).shift(vector1x*LEFT))
+        self.wait(4)
 
         vector1x = 3
         vector1y = -1.5
@@ -808,6 +870,11 @@ class Kraftaddieren(Scene):
         basevector2 = nupl.get_vector([vector2x,vector2y,0]).set_color(BLUE)
         basevector3 = nupl.get_vector([vector3x,vector3y,0]).set_color(GREEN)
         self.wait()
+        self.play(vector1.animate.become(nupl.get_vector([0,0,0]).set_color(ORANGE)),
+                  vector2.animate.become(nupl.get_vector([0,0,0]).set_color(ORANGE)),
+                  vector3_real.animate.become(nupl.get_vector([0,0,0]).set_color(ORANGE)),
+                  vector3.animate.become(nupl.get_vector([0,0,0]).set_color(WHITE)))
+        
         self.play(vector1.animate.become(basevector1),
                   vector2.animate.become(basevector2),
                   vector3_real.animate.become(basevector3),
@@ -997,6 +1064,101 @@ class Additionrechnen(Scene):
                   )
         self.wait()
 
+class KraftaddierenBeispiele(Scene):
+    def construct(self):
+
+        #texte
+        bsp = Tex("Kraftaddition - Beispiel").scale(1.2)
+        ul1 = Underline(bsp)
+        blackbox1 = SurroundingRectangle(bsp, buff=0, color=BLACK,fill_opacity=1)
+        bspgruppe = VGroup(blackbox1,bsp,ul1)
+        fragezeichen = Tex("?" , color = WHITE)
+        fragezeichen.add_updater(lambda mob : mob.next_to(v3_1, UR).shift(0.2 *DL))
+
+        #andere Mobjects
+        schiffgezogen = ImageMobject("schiffgezogen.png").scale(0.5)
+        schiffziehen1 = ImageMobject("schiffziehen.png").scale(0.3).rotate(-0.375*PI)
+        schiffziehen1.move_to([2.5,1.5,0])
+        schiffziehen2 = ImageMobject("schiffziehen.png").scale(0.3).rotate(-0.625*PI)
+        schiffziehen2.move_to([2.5,-2.2,0])
+        seil1 = ImageMobject("seil.png").scale(0.75).rotate(0.145*PI)
+        seil1.move_to([0.2,0.45,0])
+        seil2 = ImageMobject("seil.png").scale(0.75).rotate(-0.145*PI)
+        seil2.move_to([0.2,-1.15,0])
+        nupl = NumberPlane(x_range=(0,20,1.5),y_range=(0,12,1.5)).set_opacity(0.5)
+        nupl.move_to([-1.76,-1.8,0])
+        v3_1 = nupl.get_vector([7,0.3])
+        v3_2 = nupl.get_vector([4,-0.1])
+        v3_3 = nupl.get_vector([6,0.2])
+        v3_4 = nupl.get_vector([3.5,-0.1])
+        v3_5 = nupl.get_vector([6,0])
+        v3_6 = nupl.get_vector([5.76,-0.8])
+        v3_7 = nupl.get_vector([5.6,1.5])
+        v3gruppe = VGroup(v3_1,v3_2,v3_3,v3_4,v3_5,v3_6,v3_7)
+        v1 = nupl.get_vector([3,-1.5]).set_color(ORANGE)
+        v2 = nupl.get_vector([3,1.5]).set_color(BLUE)
+
+        #animation 
+        self.add(bspgruppe)
+        self.wait()
+        self.play(bspgruppe.animate.to_corner(UL))
+        self.wait(2)
+        schiffgezogen.move_to([-4,-0.5,0])
+        self.play(FadeIn(schiffgezogen))
+        self.wait(2)
+        self.play(FadeIn(schiffziehen1,schiffziehen2,seil1,seil2))
+        self.wait(3)
+        self.play(FadeIn(nupl)),self.add(bspgruppe,schiffgezogen,schiffziehen1,schiffziehen2,seil1,seil2)
+        self.wait()
+        v3gruppe.move_to([2.2,0,0])
+        self.play(GrowArrow(v3_1),FadeIn(fragezeichen),run_time=2)
+        self.wait()
+        self.play(Transform(v3_1,v3_2),run_time=2)
+        self.wait()
+        self.play(Transform(v3_1,v3_3),run_time=2)
+        self.wait()
+        self.play(Transform(v3_1,v3_4),run_time=2)
+        self.wait()
+        self.play(FadeOut(v3_1,fragezeichen))
+        self.wait(2)
+        v1.move_to([0.2,-1.15,0])
+        v2.move_to([0.2,0.45,0])
+        self.play(seil1.animate.set_opacity(0.2),
+                  seil2.animate.set_opacity(0.2),
+                  schiffgezogen.animate.set_opacity(0.2),
+                  schiffziehen1.animate.set_opacity(0.2),
+                  schiffziehen2.animate.set_opacity(0.2))
+        self.play(GrowArrow(v1),GrowArrow(v2))
+        self.wait(5)
+        self.play(v2.animate.move_to([3.15,-1.07,0]))
+        self.wait(2)
+        self.play(GrowArrow(v3_5))
+        self.wait()
+        self.play(v2.animate.move_to([0.2,0.45,0]))
+        self.wait(5)
+        self.play(seil1.animate.set_opacity(1),
+                  seil2.animate.set_opacity(1),
+                  schiffgezogen.animate.set_opacity(1),
+                  schiffziehen1.animate.set_opacity(1),
+                  schiffziehen2.animate.set_opacity(1),
+                  FadeOut(v1),
+                  FadeOut(v2))
+        self.wait(2)
+        self.play(seil2.animate.rotate(-0.05*PI).move_to([0.1,-1.4,0]),
+                  schiffziehen2.animate.rotate(-0.05*PI).move_to([2.2,-2.9,0]),
+                  seil1.animate.rotate(-0.06*PI).move_to([0.35,0.2,0]),
+                  schiffziehen1.animate.rotate(-0.06*PI).move_to([2.7,0.8,0]),
+                  Transform(v3_5,v3_6)
+                  )
+        self.wait(3)
+        self.play(seil2.animate.rotate(0.195*PI).move_to([0.35,-0.3,0]),
+                  schiffziehen2.animate.rotate(0.175*PI).move_to([2.8,-0.3,0]),
+                  seil1.animate.rotate(0.1*PI).move_to([0.1,0.65,0]),
+                  schiffziehen1.animate.rotate(0.1*PI).move_to([2.2,2,0]),
+                  Transform(v3_5,v3_7)
+                  )
+        self.wait()
+
 class Kräfteparalellogramm(Scene):
     def construct(self):
 
@@ -1047,8 +1209,6 @@ class Kräfteparalellogramm(Scene):
         self.wait(0.6)
 
         #ist gehardcoded ich weiß....
-        punkt = Dot(point=[3,2.5,0],color=RED)
-        self.play(FadeIn(punkt))
         self.wait(3)
         self.play(vector3.animate.become(nupl.get_vector([0,0,0]).set_color(WHITE)))
         self.wait(2)
@@ -1071,7 +1231,6 @@ class Kräfteparalellogramm(Scene):
         self.play(spieglunggruppe.animate.move_to([-4.5,1.6,1]).set_opacity(0))
         spieglungfullgruppe.next_to(additionbasisfullgruppe, DOWN).to_edge(LEFT)
         self.play(FadeIn(spieglungfullgruppe))
-        self.play(FadeOut(punkt))
         
         vector1.become(nupl.get_vector([vector1x,vector1y]))
         vector4.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE))
@@ -1434,6 +1593,7 @@ class Axiom3lösung(Scene):
         self.wait(7)
         axiom2_9.shift(1.5*DOWN)
         self.play(Write(axiom2_9),ax.animate.shift(0.4*DOWN),kanone.animate.shift(0.4*DOWN))
+        self.wait()
 
 #für text farben:
 # ("#F5B176") orange
