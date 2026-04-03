@@ -3,13 +3,15 @@ from manim import *
 class Test(Scene):
     def construct(self):
         t = ValueTracker(-2)
-        vektor = Vector([1,t.get_value()],color=ORANGE)
-        #achsen = Axes(y_range=[-2.999,2.999,1],x_range=[-4.5,4.5,1],x_length=9,y_length=6,axis_config={'tip_shape': StealthTip})
-        nupl = NumberPlane().set_opacity(0.5)
-        self.add(nupl,vektor)
-        vektor.add_updater(lambda x : x.become(Vector([1,t.get_value()],color=ORANGE).move_to([t.get_value(),0,0])))
-        self.play(t.animate.set_value(3),run_time=2,)
-        self.wait()
+        a = MathTex(r"\begin{bmatrix}12 \\34\end{bmatrix}")
+        #  vektor = Vector([1,t.get_value()],color=ORANGE)
+        # #achsen = Axes(y_range=[-2.999,2.999,1],x_range=[-4.5,4.5,1],x_length=9,y_length=6,axis_config={'tip_shape': StealthTip})
+        # nupl = NumberPlane().set_opacity(0.5)
+        # self.add(nupl,vektor)
+        # vektor.add_updater(lambda x : x.become(Vector([1,t.get_value()],color=ORANGE).move_to([t.get_value(),0,0])))
+        # self.play(t.animate.set_value(3),run_time=2,)
+        # self.wait()
+        self.add(a)
 
 class Wasistkraft(Scene):
     def construct(self):
@@ -282,6 +284,10 @@ class Axiom2(Scene):
         blackbox2 = SurroundingRectangle(beschreibung, color=BLACK,fill_opacity=1,buff=0)
         beschreibunggruppe = VGroup(blackbox2,beschreibung)
 
+        beschreibung2 = Tex("Grundgleichung der Mechanik")
+        blackbox10 = SurroundingRectangle(beschreibung2, color=BLACK,fill_opacity=1,buff=0)
+        beschreibung2gruppe = VGroup(blackbox10,beschreibung2)
+
         formel1 = Tex("F = ")
         #(haha witzig wegen formel 1)
         blackbox3 = SurroundingRectangle(formel1, color=BLACK,fill_opacity=1,buff=0)
@@ -340,8 +346,11 @@ class Axiom2(Scene):
         #animation
         self.wait(1.5)
         beschreibunggruppe.next_to(axiom2gruppe, DOWN).to_edge(LEFT)
+        beschreibung2gruppe.next_to(axiom2gruppe, DOWN).to_edge(LEFT)
         self.wait(3)
         self.play(Write(beschreibunggruppe))
+        self.wait(6)
+        self.play(ReplacementTransform(beschreibunggruppe,beschreibung2gruppe))
         self.wait(4)
         formel1gruppe.move_to([0,1,0])
         formel2gruppe.move_to([0,1,0])
@@ -410,7 +419,7 @@ class Axiom2(Scene):
         self.wait(2)
         self.play(formel3gruppe.animate.next_to(mgruppe, DOWN).to_edge(LEFT))
         self.wait()
-               
+
 class Einheiten(Scene):
     def construct(self):
 
@@ -541,6 +550,104 @@ class Einheiten(Scene):
         self.play(TransformMatchingShapes(lösung1,lösung2))
         self.wait(10)
 
+class Gewichtskraft(Scene):
+    def construct(self):
+
+        #texte:
+        gewichtskraft = Tex("Gewichtskraft").scale(1.2)
+        ul1 = Underline(gewichtskraft)
+        gewichtskraftgruppe = VGroup(gewichtskraft,ul1)
+
+        frage = Tex("Wie stark wird ein Körper von der Erde angezogen?")
+
+        fma = MathTex(r"F = m \cdot a")
+        fma2 = MathTex(r"F = m \cdot g")
+
+        fma2_3 = MathTex(r"Stein: F = 200 kg \cdot g")
+        fma2_4 = MathTex(r"Stein: F = 200 kg \cdot 9.81 \frac{Meter}{Sekunde^{2}}")
+        fma2_5 = MathTex(r"Stein: 1962N = 200 kg \cdot 9.81 \frac{Meter}{Sekunde^{2}}")
+        fma2gruppe = VGroup(fma2_3,fma2_4,fma2_5)
+
+        g = MathTex(r"Erdbeschleunigung \approx 9.81 \frac{Meter}{Sekunde^{2}}")
+
+        fragezeichen = Tex("?")
+
+        newton = Tex("1962N")
+
+        #andere mobjects
+        ax = NumberLine(x_range=[0,15,1])
+        stone = ImageMobject("stone.png").scale(0.8)
+        v1 = Vector([0,-1.5]).set_color(ORANGE)
+        v2 = Vector([0,-0.9]).set_color(ORANGE)
+        v3 = Vector([0,-1.8]).set_color(ORANGE)
+        v4 = Vector([0,-1.2]).set_color(ORANGE)
+        vgruppe = VGroup(v1,v2,v3,v4)
+
+        #animationen:
+        self.add(gewichtskraftgruppe)
+        self.wait()
+        self.play(gewichtskraftgruppe.animate.to_corner(UL))
+        self.wait(3)
+        self.play(Write(frage))
+        self.wait(2)
+        self.play(frage.animate.next_to(gewichtskraftgruppe, DOWN).to_edge(LEFT))
+        self.wait(6)
+        g.next_to(frage, DOWN).to_edge(LEFT)
+        self.play(Write(g))
+        self.wait(10)
+        self.play(Write(fma))
+        self.wait(8)
+        self.play(ReplacementTransform(fma,fma2))
+        self.wait(7)
+        self.play(Circumscribe(fma2))
+        self.wait()
+        self.play(fma2.animate.next_to(g, DOWN).to_edge(LEFT))
+        self.wait(3)
+        ax.shift(1.8*DOWN)
+        self.play(Create(ax))
+        stone.shift(1.25*DOWN)
+        self.play(FadeIn(stone))
+        self.wait(2)
+        vgruppe.shift(2.1*DOWN)
+        fragezeichen.add_updater(lambda mob : mob.next_to(v1,RIGHT))
+        self.play(GrowArrow(v1),FadeIn(fragezeichen))
+        self.wait()
+        self.play(Transform(v1,v2))
+        self.wait()
+        self.play(Transform(v1,v3))
+        self.wait()
+        self.play(Transform(v1,v4))
+        self.wait(4)
+        fma2copy = fma2.copy()
+        self.add(fma2copy)
+        self.play(FadeOut(v1,fragezeichen))
+        self.play(ax.animate.shift(1.7*DOWN),
+                  stone.animate.shift(1.7*DOWN),
+                  fma2copy.animate.move_to([0,-0.3,0]))
+        fma2gruppe.move_to([0,-0.3,0])
+        self.wait(4)
+        self.play(ReplacementTransform(fma2copy,fma2_3))
+        self.wait(5)
+        self.play(ReplacementTransform(fma2_3,fma2_4))
+        self.wait(5)
+        self.play(ReplacementTransform(fma2_4,fma2_5))
+        self.wait(6)
+        self.play(FadeOut(frage))
+        v1.shift(0.2*DOWN)
+        newton.next_to(v1,RIGHT)
+        self.play(g.animate.next_to(gewichtskraftgruppe, DOWN).to_edge(LEFT),
+                  fma2.animate.next_to(g, DOWN).to_edge(LEFT).shift(0.8*UP),
+                  fma2_5.animate.next_to(fma2, DOWN).to_edge(LEFT).shift(UP),
+                  ax.animate.shift(1.5*UP),
+                  stone.animate.shift(1.5*UP),
+                  FadeIn(v1,newton))
+        
+        self.wait()
+
+class GewichtskraftWagen(Scene):
+    def construct(self):
+        self.wait()
+
 class Axiom1(Scene):
     def construct(self):
         
@@ -601,9 +708,9 @@ class Axiom1(Scene):
         v1.add_updater(lambda mob : mob.next_to(iceblock,RIGHT).shift(0.3*LEFT))
         iceblock.add_updater(lambda mob : mob.move_to([(0.5*(f/m)* (t.get_value())**2) + offset.get_value(),-2.2,0]))
         self.play(FadeIn(v1))
-        self.play(t.animate.set_value(2),FadeOut(v1), rate_func=linear, run_time=1)
+        self.play(t.animate.set_value(2),FadeOut(v1), rate_func=linear, run_time=2)
         iceblock.clear_updaters()
-        self.play(iceblock.animate.move_to([8.5,-2.2,0]), rate_func=linear, run_time=2.8)
+        self.play(iceblock.animate.move_to([8.5,-2.2,0]), rate_func=linear, run_time=5.6)
         self.play(FadeOut(iceblock))
         t.set_value(0)
         self.wait(2)
@@ -614,13 +721,13 @@ class Axiom1(Scene):
         self.wait(3)
         iceblock.add_updater(lambda mob : mob.move_to([(0.5*(f/m)* (t.get_value())**2) + offset.get_value(),-2.2,0]))
         self.play(FadeIn(v1))
-        self.play(t.animate.set_value(2),FadeOut(v1), rate_func=linear, run_time=1)
+        self.play(t.animate.set_value(2),FadeOut(v1), rate_func=linear, run_time=2)
         iceblock.clear_updaters()
         t.set_value(0)
         self.add(line)
         mark.move_to([-2.6,-1,0])
         line.add_updater(lambda mob : mob.become(Line(2.6*LEFT, RIGHT*(t.get_value()-2.6))).shift(DOWN))
-        self.play(iceblock.animate.move_to([8.5,-2.2,0]),t.animate.set_value(11),FadeIn(mark), rate_func=linear, run_time=2.8)
+        self.play(iceblock.animate.move_to([8.5,-2.2,0]),t.animate.set_value(11),FadeIn(mark), rate_func=linear, run_time=5.6)
         self.wait()
         self.play(FadeIn(fragezeichengruppe))
         self.wait(4)
@@ -660,7 +767,7 @@ class Axiom1(Scene):
         self.play(FadeIn(vaddon,geschwindigkeit),run_time=0.1)
         self.wait(0.6)
         self.play(FadeIn(v1))
-        self.play(t.animate.set_value(2),FadeOut(v1), rate_func=linear, run_time=1)
+        self.play(t.animate.set_value(2),FadeOut(v1), rate_func=linear, run_time=2)
         iceblock.clear_updaters()
         geschwindigkeit.clear_updaters()
         geschwindigkeit.add_updater(lambda mob : mob.next_to(iceblock, UP))
@@ -668,7 +775,7 @@ class Axiom1(Scene):
         self.add(line)
         mark2.move_to([-2.6,-0.5,0])
         line.add_updater(lambda mob : mob.become(Line(2.6*LEFT, RIGHT*(t.get_value()-2.6))).shift(0.5*DOWN))
-        self.play(iceblock.animate.move_to([8.5,-2.2,0]),t.animate.set_value(11),FadeIn(mark2), rate_func=linear, run_time=2.8)
+        self.play(iceblock.animate.move_to([8.5,-2.2,0]),t.animate.set_value(11),FadeIn(mark2), rate_func=linear, run_time=5.6)
         self.remove(vaddon,geschwindigkeit)
         self.wait(3)
         self.play(Circumscribe(axiom1textkurzgruppe))
@@ -689,7 +796,7 @@ class Axiom1(Scene):
         vaddon.add_updater(lambda mob : mob.next_to(geschwindigkeit, LEFT))
         self.play(FadeIn(vaddon,geschwindigkeit),run_time=0.1)
         self.play(FadeIn(v1))
-        self.play(t.animate.set_value(2),FadeOut(v1), rate_func=linear, run_time=1)
+        self.play(t.animate.set_value(2),FadeOut(v1), rate_func=linear, run_time=2)
         iceblock.clear_updaters()
         geschwindigkeit.clear_updaters()
         geschwindigkeit.add_updater(lambda mob : mob.next_to(iceblock, UP))
@@ -697,7 +804,7 @@ class Axiom1(Scene):
         self.add(line)
         mark3.move_to([-2.6,-0.5,0])
         line.add_updater(lambda mob : mob.become(Line(2.6*LEFT, RIGHT*(t.get_value()-2.6))).shift(0.5*DOWN))
-        self.play(iceblock.animate.move_to([8.5,-2.2,0]),t.animate.set_value(11),FadeIn(mark3), rate_func=linear, run_time=2.8)
+        self.play(iceblock.animate.move_to([8.5,-2.2,0]),t.animate.set_value(11),FadeIn(mark3), rate_func=linear, run_time=5.6)
         self.remove(vaddon,geschwindigkeit)
         self.wait(2)
         self.play(Circumscribe(axiom1textkurzgruppe))
@@ -983,6 +1090,10 @@ class Additionrechnen(Scene):
         plusrichtiggruppe = MathTex("+").scale(2)
         plusrichti2ggruppe = MathTex("+").scale(2)
 
+        kommu = Tex("Kommutativgesetz")
+        blackbox15 = SurroundingRectangle(kommu, color=BLACK,fill_opacity=1,buff=0)
+        kommugruppe = VGroup(blackbox15,kommu)
+
         #andere mobjects
         nupl = NumberPlane(x_range=(0,20,1.5),y_range=(0,12,1.5)).set_opacity(0.5)
         nupl.shift(1.5*DL)
@@ -1039,7 +1150,32 @@ class Additionrechnen(Scene):
         keinenamenmehrgruppe.move_to([-2.5,1.8,0])
         self.play(FadeIn(keinenamenmehrgruppe))
         self.wait(6)
-        self.play(Transform(lösunggruppe,lösung_original),FadeOut(v1,v2,v3,keinenamenmehrgruppe))
+        v2.set_z_index(1)
+        self.play(v2.animate.move_to([-3,0.75,0]))
+        self.wait(5)
+
+        v1zahlgruppecopy = v1zahlcopygruppe.copy()
+        v1zahlgruppecopy.move_to(v2zahlcopygruppe)
+        v2zahlgruppecopy = v2zahlcopygruppe.copy()
+        v2zahlgruppecopy.move_to(v1zahlcopygruppe)
+
+        v1zahlcopycopygruppe = v1zahlcopygruppe.copy()
+        v2zahlcopycopygruppe = v2zahlcopygruppe.copy()
+        self.play(ClockwiseTransform(v1zahlcopygruppe,v1zahlgruppecopy),
+                  ClockwiseTransform(v2zahlcopygruppe,v2zahlgruppecopy))
+        kommugruppe.next_to(additiongruppe, DOWN).to_edge(LEFT)
+        self.wait(2)
+        self.play(Write(kommugruppe),keinenamenmehrgruppe.animate.move_to([-3.2,1.5,0]))
+        self.wait(6)
+        v1.set_z_index(1)
+        self.play(v2.animate.move_to([-4.5,-0.73,0]),v1.animate.move_to([-2.25,0.75,0]))
+        self.wait(6)
+        self.play(v2.animate.move_to([-3,0.76,0]),v1.animate.move_to([-5.25,-0.75,0]))
+        self.wait(4)
+        self.play(Transform(lösunggruppe,lösung_original),
+                  FadeOut(v1,v2,v3,keinenamenmehrgruppe),
+                  CounterclockwiseTransform(v1zahlcopygruppe,v1zahlcopycopygruppe),
+                  CounterclockwiseTransform(v2zahlcopygruppe,v2zahlcopycopygruppe))
         gruppe = VGroup(lösunggruppe,v1zahlcopygruppe,v2zahlcopygruppe,plusgruppe)
         self.play(gruppe.animate.move_to([0,0,0]))
         self.wait(5)
@@ -1121,8 +1257,8 @@ class KraftaddierenBeispiele(Scene):
         self.wait()
         self.play(FadeOut(v3_1,fragezeichen))
         self.wait(2)
-        v1.move_to([0.2,-1.15,0])
-        v2.move_to([0.2,0.45,0])
+        v1.move_to([0.2,-1.11,0])
+        v2.move_to([0.2,0.42,0])
         self.play(seil1.animate.set_opacity(0.2),
                   seil2.animate.set_opacity(0.2),
                   schiffgezogen.animate.set_opacity(0.2),
@@ -1130,7 +1266,7 @@ class KraftaddierenBeispiele(Scene):
                   schiffziehen2.animate.set_opacity(0.2))
         self.play(GrowArrow(v1),GrowArrow(v2))
         self.wait(5)
-        self.play(v2.animate.move_to([3.15,-1.07,0]))
+        self.play(v2.animate.move_to([3.16,-1.08,0]))
         self.wait(2)
         self.play(GrowArrow(v3_5))
         self.wait()
@@ -1148,14 +1284,16 @@ class KraftaddierenBeispiele(Scene):
                   schiffziehen2.animate.rotate(-0.05*PI).move_to([2.2,-2.9,0]),
                   seil1.animate.rotate(-0.06*PI).move_to([0.35,0.2,0]),
                   schiffziehen1.animate.rotate(-0.06*PI).move_to([2.7,0.8,0]),
-                  Transform(v3_5,v3_6)
+                  Transform(v3_5,v3_6),
+                  run_time=2
                   )
         self.wait(3)
         self.play(seil2.animate.rotate(0.195*PI).move_to([0.35,-0.3,0]),
                   schiffziehen2.animate.rotate(0.175*PI).move_to([2.8,-0.3,0]),
                   seil1.animate.rotate(0.1*PI).move_to([0.1,0.65,0]),
                   schiffziehen1.animate.rotate(0.1*PI).move_to([2.2,2,0]),
-                  Transform(v3_5,v3_7)
+                  Transform(v3_5,v3_7),
+                  run_time=2
                   )
         self.wait()
 
@@ -1599,5 +1737,5 @@ class Axiom3lösung(Scene):
 # ("#F5B176") orange
 # ("#86CFF9") blau
 
-#KRAFT MESSEN, DARSTELLEN, AXION2, EINHEITEN, AXIOM1, KRAFTADDIEREN, ADDITIONRECHNEN, KRÄFTEPARRALELOGRAMM, KRÄFTEGLEICHGEWICHT, AXIOM3, AXIOM3LÖSUNG   : GESTRECHT
+#KRAFT MESSEN, DARSTELLEN, AXION2, EINHEITEN, AXIOM1, KRAFTADDIEREN, ADDITIONRECHNEN, KRÄFTEPARRALELOGRAMM, KRÄFTEGLEICHGEWICHT, AXIOM3, AXIOM3LÖSUNG, GEWICHTSKRAFT   : GESTRECHT
 #ALLE ANIMATIONEN IN DER PP (aber ungestecht und bissle anders und pql(schlechte quali)...)
