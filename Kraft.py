@@ -644,8 +644,108 @@ class Gewichtskraft(Scene):
         
         self.wait()
 
-class GewichtskraftWagen(Scene):
+class GewichtskraftWaagen(Scene):
     def construct(self):
+
+        #texte
+        gewichtskraft = Tex("Gewichtskraft - Waagen").scale(1.2)
+        ul1 = Underline(gewichtskraft)
+        gewichtskraftgruppe = VGroup(gewichtskraft,ul1)
+
+        formel1 = MathTex(r"F = m \cdot g")
+        #hehe.....
+        formel2 = MathTex(r" F = m \cdot g \mid \div g")
+        formel3 = MathTex(r"\frac{F}{g} = \frac{m \cdot g}{g}")
+        formel4 = MathTex(r"\frac{F}{g} = m")
+        formel5 = MathTex(r"m = \frac{F}{g}")
+        formel6 = MathTex(r"m = \frac{F}{9.81 \frac{Meter}{Sekunde^{2}}}")
+        formel7 = MathTex(r"m = \frac{1962N}{9.81 \frac{Meter}{Sekunde^{2}}}")
+        formel8 = MathTex(r"200kg = \frac{1962N}{9.81 \frac{Meter}{Sekunde^{2}}}")
+        #-_
+
+        iss1 = MathTex(r"m = \frac{F}{0}")
+        iss2 = MathTex(r"m = \frac{F}{a}")
+        iss3 = MathTex(r"m = \frac{5N}{a}")
+        iss4 = MathTex(r"m = \frac{5N}{0.025 \frac{Meter}{Sekunde^{2}}}}")
+        iss5 = MathTex(r"200kg \approx \frac{5N}{0.025 \frac{Meter}{Sekunde^{2}}}}")
+
+        formelgruppe = VGroup(formel1,formel2,formel3,formel4,formel5,formel6,formel7,formel8,iss1,iss2,iss3,iss4,iss5)
+        #andere mobjects
+        waage = ImageMobject("waage.png").scale(0.3)
+        ax = NumberLine(x_range=[0,15,1])
+        stone = ImageMobject("stone.png").scale(0.8)
+        v1 = Vector([0,-2,0]).set_color(ORANGE)
+        newton = Tex("1962N")
+        newton2 = Tex("5N")
+        v2 = Vector([2,0,0]).set_color(ORANGE)
+
+
+        #animationen
+        self.add(gewichtskraftgruppe)
+        self.wait()
+        self.play(gewichtskraftgruppe.animate.to_corner(UL))
+        self.wait(4)
+        ax.shift(2.7*DOWN)
+        waage.shift(2.15*DOWN)
+        stone.shift(DOWN)
+        self.play(Create(ax))
+        self.play(FadeIn(waage))
+        v1.shift(1.9*DOWN)
+        self.play(FadeIn(stone),GrowArrow(v1))
+        newton.next_to(v1,RIGHT)
+        newton.shift(0.2*DL)
+        newton.shift(0.2*DOWN)
+        self.play(Write(newton))
+        self.wait(8)
+        #formel1.next_to(gewichtskraftgruppe, DOWN).to_edge(LEFT)
+        formelgruppe.shift(UP)
+        self.play(Write(formel1))
+        self.wait(5)
+        self.play(Circumscribe(formel1[0][2]),run_time=1.4)
+        self.wait(4)
+        self.play(ReplacementTransform(formel1,formel2))
+        self.wait(4)
+        self.play(ReplacementTransform(formel2,formel3))
+        self.wait(10)
+        self.play(ReplacementTransform(formel3,formel4))
+        self.wait(5)
+        self.play(ReplacementTransform(formel4,formel5))
+        self.wait(6)
+        self.play(ReplacementTransform(formel5,formel6))
+        self.wait(6)
+        self.play(ReplacementTransform(formel6,formel7))
+        self.wait(6)
+        self.play(ReplacementTransform(formel7,formel8))
+        self.wait(4)
+        self.play(Circumscribe(formel8[0][0:5]),run_time=1.4)
+        self.wait()
+        self.play(formel8.animate.next_to(gewichtskraftgruppe, DOWN).to_edge(LEFT).shift(0.1*UL))
+        self.wait(3)
+        self.play(Write(formel5))
+        self.wait(1)
+        self.play(ax.animate.shift(3*DOWN),
+                  waage.animate.shift(3*DOWN),
+                  v1.animate.shift(3*DOWN),
+                  newton.animate.shift(3*DOWN),
+                  stone.animate.shift(0.6*DL),)
+        self.wait(2)
+        self.play(ReplacementTransform(formel5,iss1))
+        self.play(stone.animate.shift(0.12*DL),run_time=5)
+        self.play(ReplacementTransform(iss1,iss2))
+        self.play(stone.animate.shift(0.12*UL),run_time=5)
+        self.play(ReplacementTransform(iss2,iss3))
+
+        v2.add_updater(lambda mob : mob.next_to(stone,RIGHT).shift(0.3*LEFT))
+        newton2.add_updater(lambda mob : mob.next_to(v2,DOWN).shift(0.2*UP))
+        self.play(FadeIn(v2,newton2))
+        self.wait(4)
+        self.play(ReplacementTransform(iss3,iss4))
+        self.wait(4)
+        self.play(ReplacementTransform(iss4,iss5))
+        self.wait(4)
+        self.play(Circumscribe(iss5[0][0:5]),run_time=1.4)
+        self.wait()
+        self.play(iss5.animate.next_to(formel8, DOWN).to_edge(LEFT))
         self.wait()
 
 class Axiom1(Scene):
