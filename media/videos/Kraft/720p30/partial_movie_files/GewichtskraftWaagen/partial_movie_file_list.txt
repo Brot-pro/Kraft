@@ -1,0 +1,3 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/720p30/partial_movie_files/GewichtskraftWaagen/1987512680_1754310298_3103398211.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/720p30/partial_movie_files/GewichtskraftWaagen/2538612922_3587228365_2375220172.mp4'

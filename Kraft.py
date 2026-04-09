@@ -2,16 +2,18 @@ from manim import *
 
 class Test(Scene):
     def construct(self):
-        t = ValueTracker(-2)
-        a = MathTex(r"\begin{bmatrix}12 \\34\end{bmatrix}")
-        #  vektor = Vector([1,t.get_value()],color=ORANGE)
-        # #achsen = Axes(y_range=[-2.999,2.999,1],x_range=[-4.5,4.5,1],x_length=9,y_length=6,axis_config={'tip_shape': StealthTip})
-        # nupl = NumberPlane().set_opacity(0.5)
-        # self.add(nupl,vektor)
-        # vektor.add_updater(lambda x : x.become(Vector([1,t.get_value()],color=ORANGE).move_to([t.get_value(),0,0])))
-        # self.play(t.animate.set_value(3),run_time=2,)
-        # self.wait()
-        self.add(a)
+        # t = ValueTracker(-2)
+        # a = MathTex(r"\begin{bmatrix}12 \\34\end{bmatrix}")
+        # #  vektor = Vector([1,t.get_value()],color=ORANGE)
+        # # #achsen = Axes(y_range=[-2.999,2.999,1],x_range=[-4.5,4.5,1],x_length=9,y_length=6,axis_config={'tip_shape': StealthTip})
+        # # nupl = NumberPlane().set_opacity(0.5)
+        # # self.add(nupl,vektor)
+        # # vektor.add_updater(lambda x : x.become(Vector([1,t.get_value()],color=ORANGE).move_to([t.get_value(),0,0])))
+        # # self.play(t.animate.set_value(3),run_time=2,)
+        # # self.wait()
+        # self.add(a)
+
+        self.add(NumberPlane())
 
 class Wasistkraft(Scene):
     def construct(self):
@@ -172,6 +174,51 @@ class Kraftmessen(Scene):
         self.play(Write(kraftmesser))
         self.wait(2)
         self.play(FadeIn(kraftbild),FadeOut(feder))
+        self.wait()
+
+class Newtonfoliebild(Scene):
+    def construct(self):
+
+        #texte
+        newton = Tex("Isaac Newtons Geschichte").scale(1.2)
+        ul1 = Underline(newton)
+        newtongruppe = VGroup(newton,ul1)
+        self.add(newtongruppe)
+
+        eins = Tex("1643 - 1727").scale(0.9)
+        zwei = Tex("Vater starb vor Geburt").scale(0.9)
+        drei = Tex("Mutter lässt Isaac bei Großeltern").scale(0.9)
+        fragetext = Tex("Misstrauisch").scale(0.9)
+        fragetext2 = Tex("Einzelgänger").scale(0.9)
+        fragetext3 = MathTex(r"\rightarrow").scale(0.9)
+        vier = Tex("Studium in Cambridge").scale(0.9)
+        fünf = Tex("Lucasischer Professor für Mathematik mit 26").scale(0.9)
+        sechs = Tex("Drei Newtonschen Gesetze").scale(0.9)
+        sieben = Tex("Die berühmte Geschichte des Apfels").scale(0.9)
+
+        #andere Mobjects
+        newtonbild = ImageMobject("newton.png")
+        newtonbild.shift(10*RIGHT)
+
+        #animationen
+        self.wait()
+        self.play(newtongruppe.animate.to_corner(UL))
+        eins.next_to(newtongruppe, DOWN).to_edge(LEFT)
+        zwei.next_to(eins, DOWN).to_edge(LEFT)
+        drei.next_to(zwei, DOWN).to_edge(LEFT)
+        fragetext.next_to(drei, DOWN).to_edge(LEFT)
+        fragetext3.next_to(fragetext,RIGHT)
+        fragetext2.next_to(fragetext3,RIGHT)
+        fragetext2.shift(0.03*DOWN)
+        vier.next_to(fragetext, DOWN).to_edge(LEFT)
+        fünf.next_to(vier, DOWN).to_edge(LEFT)
+        sechs.next_to(fünf, DOWN).to_edge(LEFT)
+        sieben.next_to(sechs, DOWN).to_edge(LEFT)
+        self.wait(2)
+        self.add(newtonbild)
+        self.play(newtonbild.animate.shift(5.5*LEFT),run_time=2)
+        self.wait(3)
+        self.play(FadeIn(eins,zwei,drei,fragetext,fragetext2,fragetext3,vier,fünf,sechs,sieben))
         self.wait()
 
 class Kraftdarstellen(Scene):
@@ -652,6 +699,8 @@ class GewichtskraftWaagen(Scene):
         ul1 = Underline(gewichtskraft)
         gewichtskraftgruppe = VGroup(gewichtskraft,ul1)
 
+        fragezeichen = Tex("?")
+
         formel1 = MathTex(r"F = m \cdot g")
         #hehe.....
         formel2 = MathTex(r" F = m \cdot g \mid \div g")
@@ -670,8 +719,12 @@ class GewichtskraftWaagen(Scene):
         iss5 = MathTex(r"200kg \approx \frac{5N}{0.025 \frac{Meter}{Sekunde^{2}}}}")
 
         formelgruppe = VGroup(formel1,formel2,formel3,formel4,formel5,formel6,formel7,formel8,iss1,iss2,iss3,iss4,iss5)
+
+        waagezahl1 = Tex("0.0").scale(0.7).set_color(BLACK)
+        waagezahl2 = Tex("200.0").scale(0.7).set_color(BLACK)
+
         #andere mobjects
-        waage = ImageMobject("waage.png").scale(0.3)
+        waage = ImageMobject("waage.png").scale(0.5)
         ax = NumberLine(x_range=[0,15,1])
         stone = ImageMobject("stone.png").scale(0.8)
         v1 = Vector([0,-2,0]).set_color(ORANGE)
@@ -687,17 +740,19 @@ class GewichtskraftWaagen(Scene):
         self.wait(4)
         ax.shift(2.7*DOWN)
         waage.shift(2.15*DOWN)
+        waagezahl1.move_to([0.5,-2.2,0])
+        waagezahl2.move_to([0.4,-2.2,0])
         stone.shift(DOWN)
         self.play(Create(ax))
-        self.play(FadeIn(waage))
+        self.play(FadeIn(waage,waagezahl1))
         v1.shift(1.9*DOWN)
-        self.play(FadeIn(stone),GrowArrow(v1))
+        self.play(FadeIn(stone),GrowArrow(v1),ReplacementTransform(waagezahl1,waagezahl2))
         newton.next_to(v1,RIGHT)
         newton.shift(0.2*DL)
         newton.shift(0.2*DOWN)
         self.play(Write(newton))
         self.wait(8)
-        #formel1.next_to(gewichtskraftgruppe, DOWN).to_edge(LEFT)
+        # formel1.next_to(gewichtskraftgruppe, DOWN).to_edge(LEFT)
         formelgruppe.shift(UP)
         self.play(Write(formel1))
         self.wait(5)
@@ -709,7 +764,7 @@ class GewichtskraftWaagen(Scene):
         self.wait(10)
         self.play(ReplacementTransform(formel3,formel4))
         self.wait(5)
-        self.play(ReplacementTransform(formel4,formel5))
+        self.play(TransformMatchingShapes(formel4,formel5))
         self.wait(6)
         self.play(ReplacementTransform(formel5,formel6))
         self.wait(6)
@@ -721,31 +776,108 @@ class GewichtskraftWaagen(Scene):
         self.wait()
         self.play(formel8.animate.next_to(gewichtskraftgruppe, DOWN).to_edge(LEFT).shift(0.1*UL))
         self.wait(3)
-        self.play(Write(formel5))
-        self.wait(1)
+        self.play(Write(formel4))
+        self.wait()
         self.play(ax.animate.shift(3*DOWN),
                   waage.animate.shift(3*DOWN),
+                  waagezahl2.animate.shift(3*DOWN),
                   v1.animate.shift(3*DOWN),
                   newton.animate.shift(3*DOWN),
-                  stone.animate.shift(0.6*DL),)
+                  stone.animate.shift(0.6*DOWN),)
         self.wait(2)
-        self.play(ReplacementTransform(formel5,iss1))
-        self.play(stone.animate.shift(0.12*DL),run_time=5)
+        self.play(ReplacementTransform(formel4,iss1))
+        self.wait(5)
+        self.play(Write(fragezeichen))
+        self.wait(2)
+        self.play(FadeOut(fragezeichen))
         self.play(ReplacementTransform(iss1,iss2))
-        self.play(stone.animate.shift(0.12*UL),run_time=5)
+        self.wait(5)
         self.play(ReplacementTransform(iss2,iss3))
-
+        m = 200
+        f = 5
+        t = ValueTracker(0)
+        self.add(t)
+        t.add_updater(lambda mob : mob.increment_value(0.02))
+        stone.add_updater(lambda mob : mob.move_to([((f/m)* (t.get_value())**2),-1.6,0]))
         v2.add_updater(lambda mob : mob.next_to(stone,RIGHT).shift(0.3*LEFT))
         newton2.add_updater(lambda mob : mob.next_to(v2,DOWN).shift(0.2*UP))
         self.play(FadeIn(v2,newton2))
-        self.wait(4)
+        self.wait(4,frozen_frame=False)
         self.play(ReplacementTransform(iss3,iss4))
-        self.wait(4)
+        self.wait(4,frozen_frame=False)
         self.play(ReplacementTransform(iss4,iss5))
-        self.wait(4)
+        self.wait(4,frozen_frame=False)
         self.play(Circumscribe(iss5[0][0:5]),run_time=1.4)
-        self.wait()
+        self.wait(1, frozen_frame=False)
         self.play(iss5.animate.next_to(formel8, DOWN).to_edge(LEFT))
+        self.wait(1, frozen_frame=False)
+
+class Gewichtskraftexperiment(Scene):
+    def construct(self):
+
+        #texte
+        gewicht = Tex("Gewichtskraft - Experiment").scale(1.2)
+        ul1 = Underline(gewicht)
+        gewichtgruppe = VGroup(gewicht,ul1)
+
+        newton = MathTex(r"\approx 1N")
+        newton2 = MathTex(r"0.981N \approx 1N")
+        gramm = Tex("100g")
+        gramm2 = Tex("100g = 0.1 kg")
+
+        formel1 = MathTex(r"F = m \cdot g")
+        formel2 = MathTex(r"F = m \cdot 9.81 \frac{Meter}{Sekunde^{2}}")
+        formel3 = MathTex(r"F = 0.1 kg \cdot 9.81 \frac{Meter}{Sekunde^{2}}")
+        formel4 = MathTex(r"0.981N = 0.1 kg \cdot 9.81 \frac{Meter}{Sekunde^{2}}")
+        formel5 = MathTex(r"1N \approx 0.1 kg \cdot 9.81 \frac{Meter}{Sekunde^{2}}")
+        formelgruppe = VGroup(formel1,formel2,formel3,formel5)
+
+        #andere mobjects
+        kraftmesser = ImageMobject("kraftmesser.png").scale(0.5)
+
+
+        #animationen
+        self.add(gewichtgruppe)
+        self.wait()
+        self.play(gewichtgruppe.animate.to_corner(UL))
+        self.wait(2)
+        kraftmesser.shift(0.2*DOWN)
+        self.play(FadeIn(kraftmesser))
+        self.wait(4)
+        gramm.shift(3.2*DOWN)
+        gramm2.shift(3.2*DOWN)
+        gramm2.shift(5*RIGHT)
+        self.play(Write(gramm))
+        self.wait(6)
+        newton.move_to([1.2,-1.1,0])
+        newton2.move_to([5.2,-1.1,0])
+        self.play(Write(newton))
+        self.wait(5)
+        kraftmessergruppe = VGroup(newton,gramm)
+        self.play(kraftmessergruppe.animate.shift(5*RIGHT),
+                  kraftmesser.animate.shift(5*RIGHT))
+        self.wait(3)
+        self.play(Write(formel1))
+        self.wait(5)
+        self.play(ReplacementTransform(formel1,formel2))
+        self.wait(5)
+        self.play(ReplacementTransform(formel2,formel3))
+        self.wait(6)
+        self.play(ReplacementTransform(gramm,gramm2))
+        self.wait(5)
+        self.play(ReplacementTransform(formel3,formel4))
+        self.wait(8)
+        self.play(ReplacementTransform(newton,newton2),
+                  kraftmesser.animate.shift(2*LEFT),
+                  formel4.animate.shift(2*LEFT),
+                  gramm2.animate.shift(2*LEFT))
+        self.wait(6)
+        formelgruppe.shift(2*LEFT)
+        self.play(ReplacementTransform(formel4,formel5))
+        self.wait(6)
+        self.play(Circumscribe(formel5))
+        self.wait(2)
+        self.play(formel5.animate.next_to(gewichtgruppe, DOWN).to_edge(LEFT))
         self.wait()
 
 class Axiom1(Scene):
@@ -1469,14 +1601,22 @@ class Kräfteparalellogramm(Scene):
         self.play(spieglunggruppe.animate.move_to([-4.5,1.6,1]).set_opacity(0))
         spieglungfullgruppe.next_to(additionbasisfullgruppe, DOWN).to_edge(LEFT)
         self.play(FadeIn(spieglungfullgruppe))
-        
+
+        kommu = Tex("Kommutativgesetz")
+        blackbox7 = SurroundingRectangle(kommu, buff=0, color=BLACK,fill_opacity=1)
+        kommugruppe = VGroup(blackbox7,kommu)
+
+        self.wait(2)
+        kommugruppe.next_to(spieglungfullgruppe, DOWN).to_edge(LEFT)
+        self.play(Write(kommugruppe))
+        self.wait(5)
         vector1.become(nupl.get_vector([vector1x,vector1y]))
         vector4.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE))
         vector4.shift(vector1y*UP).shift(vector1x*RIGHT)
         vector5.become(nupl.get_vector([vector1x,vector1y]).set_color(ORANGE))
         vector1.shift(vector2y*UP).shift(vector2x*RIGHT).set_color(ORANGE)
         vector2.become(nupl.get_vector([vector2x,vector2y]).set_color(BLUE))
-        self.wait()
+        self.wait(2)
         self.play(vector3.animate.become(nupl.get_vector([vector1x+vector2x,vector1y+vector2y,0]).set_color(WHITE)))
 
         self.wait(2)
@@ -1534,6 +1674,27 @@ class Kräftegleichgewicht(Scene):
         blackbox1 = SurroundingRectangle(Kräftegleichgewicht, buff=0, color=BLACK,fill_opacity=1)
         Kräftegleichgewichtgruppe = VGroup(blackbox1,Kräftegleichgewicht,ul1)
 
+        keinebeschleunigung = Tex("Keine Beschleunigung")
+        blackbox2 = SurroundingRectangle(keinebeschleunigung, buff=0, color=BLACK,fill_opacity=1)
+        keinebeschleunigunggruppe = VGroup(blackbox2,keinebeschleunigung)
+        punkt = Dot([0,0,0]).set_color(RED).scale(2)
+
+        keinekraft = Tex("Keine resultierende Kraft")
+        blackbox3 = SurroundingRectangle(keinekraft, buff=0, color=BLACK,fill_opacity=1)
+        keinekraftgruppe = VGroup(blackbox3,keinekraft)
+
+        keinekraftfull = Tex("Resultierende Kraft = 0")
+        blackbox4 = SurroundingRectangle(keinekraftfull, buff=0, color=BLACK,fill_opacity=1)
+        keinekraftfullgruppe = VGroup(blackbox4,keinekraftfull)
+
+        formel1 = MathTex(r"a = \frac{F}{m}")
+        blackbox5 = SurroundingRectangle(formel1, buff=0, color=BLACK,fill_opacity=1)
+        formel1gruppe = VGroup(blackbox5,formel1)
+
+        formel2 = MathTex(r"0 = \frac{0}{m}")
+        blackbox6 = SurroundingRectangle(formel2, buff=0, color=BLACK,fill_opacity=1)
+        formel2gruppe = VGroup(blackbox6,formel2)
+
         #andere mobjects
         nupl = NumberPlane(x_range=(-10,10,1.5),y_range=(-6,6,1.5)).set_opacity(0.5)
 
@@ -1544,18 +1705,6 @@ class Kräftegleichgewicht(Scene):
         ball = ImageMobject("ball.png")
         ball.scale(0.4)
 
-        keinebeschleunigung = Tex("Keine Beschleunigung")
-        blackbox2 = SurroundingRectangle(keinebeschleunigung, buff=0, color=BLACK,fill_opacity=1)
-        keinebeschleunigunggruppe = VGroup(blackbox2,keinebeschleunigung)
-        punkt = Dot([0,0,0]).set_color(RED).scale(2)
-
-        keinekraft = Tex("Keine resultierende Kraft")
-        blackbox3 = SurroundingRectangle(keinekraft, buff=0, color=BLACK,fill_opacity=1)
-        keinekraftgruppe = VGroup(blackbox3,keinekraft)
-
-        keinekraftfull = Tex("resultierende Kraft = 0")
-        blackbox4 = SurroundingRectangle(keinekraftfull, buff=0, color=BLACK,fill_opacity=1)
-        keinekraftfullgruppe = VGroup(blackbox4,keinekraftfull)
 
         #animationen:
         self.add(Kräftegleichgewichtgruppe)
@@ -1581,7 +1730,8 @@ class Kräftegleichgewicht(Scene):
             FadeIn(punkt),
             v1.animate.shift(0.4*UR),
             v2.animate.shift(0.4*DL))
-        self.wait(2)
+        self.wait(3)
+
         self.play(v2.animate.move_to([-0.6,-0.8,0]))
         self.wait()
         keinekraftgruppe.move_to([-3,0.5,0])
@@ -1590,6 +1740,16 @@ class Kräftegleichgewicht(Scene):
         self.play(keinekraftgruppe.animate.next_to(keinebeschleunigunggruppe, DOWN).to_edge(LEFT).set_opacity(0))
         keinekraftfullgruppe.next_to(keinebeschleunigunggruppe, DOWN).to_edge(LEFT)
         self.play(FadeIn(keinekraftfullgruppe))
+
+        self.wait(4)
+        self.play(Circumscribe(keinebeschleunigunggruppe))
+        formel1gruppe.next_to(keinekraftfullgruppe, DOWN).to_edge(LEFT)
+        formel2gruppe.next_to(keinekraftfullgruppe, DOWN).to_edge(LEFT)
+        self.wait(2)
+        self.play(Write(formel1gruppe))
+        self.wait(5)
+        self.play(ReplacementTransform(formel1gruppe,formel2gruppe))
+        self.wait(10)
         self.play(v2.animate.move_to([0.8,0.8,0]))
         self.wait(6)
         #selber herausgefunden :) (dieses cosinus/sinus kaack unten) (mathe boss)

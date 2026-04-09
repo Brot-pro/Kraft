@@ -1,0 +1,8 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/1080p60/partial_movie_files/Newtonfoliebild/2257293077_1754310298_1133384257.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/1080p60/partial_movie_files/Newtonfoliebild/2135761390_4210443652_2375220172.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/1080p60/partial_movie_files/Newtonfoliebild/2135761390_2408024828_993280754.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/1080p60/partial_movie_files/Newtonfoliebild/2135761390_374020382_1562301686.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/1080p60/partial_movie_files/Newtonfoliebild/2135761390_1734327179_3036986597.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/1080p60/partial_movie_files/Newtonfoliebild/2135761390_753229334_2562523751.mp4'
+file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/1080p60/partial_movie_files/Newtonfoliebild/2135761390_1754310298_3681221221.mp4'
