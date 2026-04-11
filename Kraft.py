@@ -597,6 +597,122 @@ class Einheiten(Scene):
         self.play(TransformMatchingShapes(lösung1,lösung2))
         self.wait(10)
 
+class Axiom2beispiele(Scene):
+    def construct(self):
+
+        #texte
+        axiom2 = Tex("Newton's zweites Axiom - Beispiele").scale(1.2)
+        ul1 = Underline(axiom2)
+        axiom2gruppe = VGroup(axiom2,ul1)
+
+        mtext = Tex("m = 200kg")
+        atext = MathTex(r"a = 1 \cdot \frac{Meter}{Sekunde^{2}}")
+
+        mtext = Tex("m = 200kg")
+        atext = MathTex(r"a = 1 \cdot \frac{Meter}{Sekunde^{2}}")
+        mtext2 = Tex("m = 20kg")
+        atext2 = MathTex(r"a = 5 \cdot \frac{Meter}{Sekunde^{2}}")
+
+        formel1 = MathTex(r"F = m \cdot a")
+        formel2 = MathTex(r"F = 200kg \cdot a")
+        formel3 = MathTex(r"F = 200kg \cdot 1 \frac{Meter}{Sekunde^{2}}")
+        formel4 = MathTex(r"200N = 200kg \cdot 1 \frac{Meter}{Sekunde^{2}}")
+
+        formel1_2 = MathTex(r"F = m \cdot a")
+        formel2_2 = MathTex(r"F = 20kg \cdot a")
+        formel3_2 = MathTex(r"F = 20kg \cdot 5 \frac{Meter}{Sekunde^{2}}")
+        formel4_2 = MathTex(r"100N = 20kg \cdot 5 \frac{Meter}{Sekunde^{2}}")
+
+        wievielnewton = Tex("?N")
+        sovielnewton = Tex("200N")
+
+        #andere Mobjects
+        ax = NumberLine(x_range=[0,15,1])
+        ice = ImageMobject("ice.png").scale(0.6)
+        v1 = Vector([2,0]).set_color(ORANGE)
+
+
+        #animationen
+        self.add(axiom2gruppe)
+        self.wait()
+        self.play(axiom2gruppe.animate.to_corner(UL))
+        self.wait(3)
+        ax.shift(2.7*DOWN)
+        ice.move_to([-1,-2.2,0])
+        self.play(Create(ax))
+        self.play(FadeIn(ice))
+        self.wait(3)
+        mtext.next_to(axiom2gruppe, DOWN).to_edge(LEFT)
+        atext.next_to(mtext, DOWN).to_edge(LEFT)
+        self.play(Write(mtext))
+        self.wait(6)
+        self.play(Write(atext))
+        self.wait(7)
+        m = 200
+        f = 200
+        t = ValueTracker(0)
+        offset = ValueTracker(-1)
+        v1.add_updater(lambda mob : mob.next_to(ice,RIGHT).shift(0.3*LEFT))
+        wievielnewton.add_updater(lambda mob : mob.next_to(v1,UP).shift(0.3*DL))
+        ice.add_updater(lambda mob : mob.move_to([(0.5*(f/m)* (t.get_value())**2) + offset.get_value(),-2.2,0]))
+        self.play(FadeIn(v1,wievielnewton),t.animate.set_value(1),rate_func=linear, run_time=1)
+        self.play(t.animate.set_value(6), rate_func=linear, run_time=5)
+        self.play(FadeOut(ice,wievielnewton,v1))
+        t.set_value(0)
+        self.wait(2)
+        self.play(Write(formel1))
+        self.wait(6)
+        self.play(ReplacementTransform(formel1,formel2))
+        self.wait(6)
+        self.play(ReplacementTransform(formel2,formel3))
+        self.wait(6)
+        self.play(ReplacementTransform(formel3,formel4))
+        self.wait(6)
+        self.play(Circumscribe(formel4[0][0:4]))
+        self.wait(2)
+        self.play(formel4.animate.next_to(atext, DOWN).to_edge(LEFT),FadeIn(ice))
+        self.wait(2)
+        sovielnewton.add_updater(lambda mob : mob.next_to(v1,UP).shift(0.3*DL))
+        self.play(FadeIn(v1,sovielnewton),t.animate.set_value(1),rate_func=linear, run_time=1)
+        self.play(t.animate.set_value(6), rate_func=linear, run_time=5)
+        self.play(FadeOut(ice,sovielnewton,v1))
+        t.set_value(0)
+        self.wait(4)
+
+        #zweites Beispiel
+        self.play(atext.animate.shift(7*LEFT),
+                  mtext.animate.shift(7*LEFT),
+                  formel4.animate.shift(7*LEFT))
+        self.wait(2)
+        self.play(FadeIn(ice))
+        self.wait(3)
+        mtext2.next_to(axiom2gruppe, DOWN).to_edge(LEFT)
+        atext2.next_to(mtext2, DOWN).to_edge(LEFT)
+        self.play(Write(mtext2))
+        self.wait(6)
+        self.play(Write(atext2))
+        self.wait(7)
+        m = 20
+        f = 60
+        self.play(FadeIn(v1,wievielnewton),t.animate.set_value(1),rate_func=linear, run_time=1)
+        self.play(t.animate.set_value(6), rate_func=linear, run_time=5)
+        self.play(FadeOut(ice,wievielnewton,v1))
+        t.set_value(0)
+        self.wait()
+        self.wait(2)
+        self.play(Write(formel1_2))
+        self.wait(6)
+        self.play(ReplacementTransform(formel1_2,formel2_2))
+        self.wait(6)
+        self.play(ReplacementTransform(formel2_2,formel3_2))
+        self.wait(6)
+        self.play(ReplacementTransform(formel3_2,formel4_2))
+        self.wait(6)
+        self.play(Circumscribe(formel4_2[0][0:4]))
+        self.wait(2)
+        self.play(formel4_2.animate.next_to(atext2, DOWN).to_edge(LEFT))
+        self.wait()
+
 class Gewichtskraft(Scene):
     def construct(self):
 
@@ -1996,6 +2112,8 @@ class Axiom3lösung(Scene):
 #für text farben:
 # ("#F5B176") orange
 # ("#86CFF9") blau
+
+#_.next_to(_, DOWN).to_edge(LEFT)
 
 #KRAFT MESSEN, DARSTELLEN, AXION2, EINHEITEN, AXIOM1, KRAFTADDIEREN, ADDITIONRECHNEN, KRÄFTEPARRALELOGRAMM, KRÄFTEGLEICHGEWICHT, AXIOM3, AXIOM3LÖSUNG, GEWICHTSKRAFT   : GESTRECHT
 #ALLE ANIMATIONEN IN DER PP (aber ungestecht und bissle anders und pql(schlechte quali)...)
