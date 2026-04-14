@@ -15,6 +15,40 @@ class Test(Scene):
 
         self.add(NumberPlane())
 
+class Opening(Scene):
+    def construct(self):
+
+        #texte
+        kraft = Tex("Kraft").scale(2)
+        von = Tex("von Daniel und Cedric")
+
+        #andere Mobjects
+        vrechts = Vector([1.66,0])
+        vlinks = Vector([-3.33,0])
+        vrechts2 = Vector([1,0])
+        vunten = Vector([1.66,-1])
+
+        #animationen:
+        self.add(kraft)
+        self.wait(2)
+        von.shift(2.4*DOWN)
+        self.play(Write(von))
+        self.wait()
+        vunten.add_updater(lambda mob : mob.next_to(von,DOWN))
+        fvon = 5
+        mvon = 5
+        offsetvon = ValueTracker(2.4)
+        f = ValueTracker(2)
+        m = 5
+        offset = ValueTracker(0)
+        t = ValueTracker(0)
+        von.add_updater(lambda mob : mob.move_to([0,0-((0.5*(fvon/mvon)* (t.get_value())**2) + offsetvon.get_value()),0]))
+        kraft.add_updater(lambda mob : mob.move_to([(0.5*(f.get_value()/m)* (t.get_value())**2) + offset.get_value(),0,0]))
+        self.play(t.animate.set_value(3.5), rate_func=linear, run_time=3.5)
+        self.remove(von)
+        self.play(t.animate.set_value(9.5),f.animate.set_value(0), rate_func=linear, run_time=4)
+        self.play(t.animate.set_value(13.5),f.animate.set_value(0.3), rate_func=linear, run_time=4)
+
 class Wasistkraft(Scene):
     def construct(self):
 
@@ -219,6 +253,126 @@ class Newtonfoliebild(Scene):
         self.play(newtonbild.animate.shift(5.5*LEFT),run_time=2)
         self.wait(3)
         self.play(FadeIn(eins,zwei,drei,fragetext,fragetext2,fragetext3,vier,fünf,sechs,sieben))
+        self.wait()
+
+class Kraftaufteilung(Scene):
+    def construct(self):
+
+        #Texte
+        kraftdarstellen = Tex("Kraftaufteilung").scale(1.2)
+        ul1 = Underline(kraftdarstellen)
+        kraftdarstellengruppe = VGroup(kraftdarstellen,ul1)
+
+        mitte1 = Tex("6N")
+        mitte1.move_to([2.3,-0.8,0])
+        unten1 = Tex("?N")
+        unten1.move_to([6,-1.3,0])
+        oben1 = Tex("?N")
+        oben1.move_to([6,1.3,0])
+        unten2 = Tex("3N")
+        unten2.move_to([6,-1.3,0])
+        oben2 = Tex("3N")
+        oben2.move_to([6,1.3,0])
+
+        mitte1_2 = Tex("9N")
+        mitte1_2.move_to([2.3,-0.8,0])
+        unten1_2 = Tex("?N")
+        unten1_2.move_to([6,-1.3,0])
+        unten2_2 = Tex("4.5N")
+        unten2_2.move_to([6,-1.3,0])
+        oben1_2 = Tex("?N")
+        oben1_2.move_to([6,1.3,0])
+        oben2_2 = Tex("4.5N")
+        oben2_2.move_to([6,1.3,0])
+
+        mitte1_3 = Tex("12N")
+        mitte1_3.move_to([2.3,-0.8,0])
+        unten1_3 = Tex("?N")
+        unten1_3.move_to([6,-1.9,0])
+        unten2_3 = Tex("4N")
+        unten2_3.move_to([6,-1.9,0])
+        oben1_3 = Tex("?N")
+        oben1_3.move_to([6,1.9,0])
+        oben2_3 = Tex("4N")
+        oben2_3.move_to([6,1.9,0])
+        k41_3 = Tex("?N")
+        k41_3.move_to([6,-0.7,0])
+        k42_3 = Tex("4N")
+        k42_3.move_to([6,-0.7,0])
+
+        #andere Mobjects
+        stock = ImageMobject("stock.png").scale(0.7)
+        stock.rotate(-0.25*PI)
+        stock.move_to([3.45,7,0])
+        kraftmesser = ImageMobject("Kraftmesser.png").scale(0.4)
+
+        kraftmesser2 = ImageMobject("Kraftmesser.png").scale(0.4)
+        kraftmesser2griff = ImageMobject("Kraftmessergriff.png").scale(0.4)
+        kraftmesser2.rotate(0.5*PI)
+        kraftmesser2griff.rotate(0.5*PI)
+        kraftmesser2.move_to([5.5,-2,0])
+        kraftmesser2griff.move_to([5.5,-2,0])
+
+        kraftmesser3 = ImageMobject("Kraftmesser.png").scale(0.4)
+        kraftmesser3griff = ImageMobject("Kraftmessergriff.png").scale(0.4)
+        kraftmesser3.rotate(0.5*PI)
+        kraftmesser3griff.rotate(0.5*PI)
+        kraftmesser3.move_to([5.5,2,0])
+        kraftmesser3griff.move_to([5.5,2,0])
+
+        kraftmesser4 = ImageMobject("Kraftmesser.png").scale(0.4)
+        kraftmesser4.rotate(0.5*PI)
+        kraftmesser4.move_to([5.5,0,0])
+        kraftmesser4griff = ImageMobject("Kraftmessergriff.png").scale(0.4)
+        kraftmesser4griff.rotate(0.5*PI)
+        kraftmesser4griff.move_to([5.5,0,0])
+
+        #animationen 
+        self.add(kraftdarstellengruppe)
+        self.wait()
+        self.play(kraftdarstellengruppe.animate.to_corner(UL))
+        self.wait()
+        self.play(FadeIn(kraftmesser))
+        self.wait(3)
+        self.play(kraftmesser.animate.rotate(0.5*PI))
+        self.play(kraftmesser.animate.shift(1.7*RIGHT))
+        self.wait()
+        self.play(FadeIn(kraftmesser2,kraftmesser3,stock))
+        self.add(kraftmesser2griff,kraftmesser3griff)
+        self.wait()
+        self.play(stock.animate.shift(7*DOWN))
+        self.wait(6)
+        self.play(Write(mitte1))
+        self.wait()
+        self.play(Write(unten1),Write(oben1))
+        self.wait(8)
+        self.play(ReplacementTransform(unten1,unten2),ReplacementTransform(oben1,oben2))
+        self.wait(9)
+        self.play(ReplacementTransform(mitte1,mitte1_2),ReplacementTransform(unten2,unten1_2),ReplacementTransform(oben2,oben1_2))
+        self.wait(9)
+        self.play(ReplacementTransform(unten1_2,unten2_2),ReplacementTransform(oben1_2,oben2_2))
+        self.wait(8)
+
+        kraftmesser2.shift(0.6*DOWN)
+        kraftmesser2griff.shift(0.6*DOWN)
+        kraftmesser3.shift(0.6*UP)
+        kraftmesser3griff.shift(0.6*UP)
+        self.play(FadeIn(kraftmesser,
+                         kraftmesser2,
+                         kraftmesser3,
+                         kraftmesser4,
+                         stock,
+                         kraftmesser2griff,
+                         kraftmesser3griff,
+                         kraftmesser4griff,
+                         unten1_3,
+                         oben1_3,
+                         k41_3,
+                         mitte1_3),
+                    FadeOut(unten2_2,oben2_2,mitte1_2)
+                 )
+        self.wait(9)
+        self.play(ReplacementTransform(unten1_3,unten2_3),ReplacementTransform(oben1_3,oben2_3),ReplacementTransform(k41_3,k42_3))
         self.wait()
 
 class Kraftdarstellen(Scene):
@@ -949,7 +1103,7 @@ class Gewichtskraftexperiment(Scene):
         formelgruppe = VGroup(formel1,formel2,formel3,formel5)
 
         #andere mobjects
-        kraftmesser = ImageMobject("kraftmesser.png").scale(0.5)
+        kraftmesser = ImageMobject("kraftmessergewicht.png").scale(0.5)
 
 
         #animationen
@@ -2116,4 +2270,4 @@ class Axiom3lösung(Scene):
 #_.next_to(_, DOWN).to_edge(LEFT)
 
 #KRAFT MESSEN, DARSTELLEN, AXION2, EINHEITEN, AXIOM1, KRAFTADDIEREN, ADDITIONRECHNEN, KRÄFTEPARRALELOGRAMM, KRÄFTEGLEICHGEWICHT, AXIOM3, AXIOM3LÖSUNG, GEWICHTSKRAFT   : GESTRECHT
-#ALLE ANIMATIONEN IN DER PP (aber ungestecht und bissle anders und pql(schlechte quali)...)
+#ALLE ANIMATIONEN IN DER PP (aber ungestrecht und bissle anders und pql(schlechte quali)...)
