@@ -18,36 +18,9 @@ class Test(Scene):
 class Opening(Scene):
     def construct(self):
 
-        #texte
-        kraft = Tex("Kraft").scale(2)
-        von = Tex("von Daniel und Cedric")
-
-        #andere Mobjects
-        vrechts = Vector([1.66,0])
-        vlinks = Vector([-3.33,0])
-        vrechts2 = Vector([1,0])
-        vunten = Vector([1.66,-1])
-
-        #animationen:
-        self.add(kraft)
-        self.wait(2)
-        von.shift(2.4*DOWN)
-        self.play(Write(von))
-        self.wait()
-        vunten.add_updater(lambda mob : mob.next_to(von,DOWN))
-        fvon = 5
-        mvon = 5
-        offsetvon = ValueTracker(2.4)
-        f = ValueTracker(2)
-        m = 5
-        offset = ValueTracker(0)
-        t = ValueTracker(0)
-        von.add_updater(lambda mob : mob.move_to([0,0-((0.5*(fvon/mvon)* (t.get_value())**2) + offsetvon.get_value()),0]))
-        kraft.add_updater(lambda mob : mob.move_to([(0.5*(f.get_value()/m)* (t.get_value())**2) + offset.get_value(),0,0]))
-        self.play(t.animate.set_value(3.5), rate_func=linear, run_time=3.5)
-        self.remove(von)
-        self.play(t.animate.set_value(9.5),f.animate.set_value(0), rate_func=linear, run_time=4)
-        self.play(t.animate.set_value(13.5),f.animate.set_value(0.3), rate_func=linear, run_time=4)
+        apfel = ImageMobject("apfel.png").scale(0.2)
+        self.add(apfel)
+        self.add(Tex("asfuzgswerzu").to_edge(UP))
 
 class Wasistkraft(Scene):
     def construct(self):
@@ -300,32 +273,54 @@ class Kraftaufteilung(Scene):
         k42_3 = Tex("4N")
         k42_3.move_to([6,-0.7,0])
 
+        f1 = MathTex(r"F_{1}")
+        f2 = MathTex(r"F_{2}")
+        f3 = MathTex(r"F_{3}")
+        f4 = MathTex(r"F_{4}")
+        f1.move_to([2.3,-0.8,0])
+        f2.move_to([6,-1.9,0])
+        f3.move_to([6,-0.7,0])
+        f4.move_to([6,1.9,0])
+
+        f1wert = mitte1_3.copy()
+        f2wert = unten2_3.copy()
+
+
+        fformel = MathTex(r"F_{Teilst \ddot{a} rke} = \frac{F_{Gesamtst \ddot{a} rke}} {Teilanzahl}")
+        fformel_2 = MathTex(r"F_{2} = \frac{12N}{3N}")
+        fformel_3 = MathTex(r"4N = \frac{12N}{3N}")
+
+        
+
         #andere Mobjects
         stock = ImageMobject("stock.png").scale(0.7)
         stock.rotate(-0.25*PI)
-        stock.move_to([3.45,7,0])
+        stock.move_to([3.35,7,0])        
+        stock2 = ImageMobject("stock.png").scale(1.1)
+        stock2.rotate(-0.25*PI)
+        stock2.move_to([7.05,0,0])
         kraftmesser = ImageMobject("Kraftmesser.png").scale(0.4)
 
         kraftmesser2 = ImageMobject("Kraftmesser.png").scale(0.4)
         kraftmesser2griff = ImageMobject("Kraftmessergriff.png").scale(0.4)
         kraftmesser2.rotate(0.5*PI)
         kraftmesser2griff.rotate(0.5*PI)
-        kraftmesser2.move_to([5.5,-2,0])
-        kraftmesser2griff.move_to([5.5,-2,0])
+        kraftmesser2.move_to([5.4,-2,0])
+        kraftmesser2griff.move_to([5.4,-2,0])
 
         kraftmesser3 = ImageMobject("Kraftmesser.png").scale(0.4)
         kraftmesser3griff = ImageMobject("Kraftmessergriff.png").scale(0.4)
         kraftmesser3.rotate(0.5*PI)
         kraftmesser3griff.rotate(0.5*PI)
-        kraftmesser3.move_to([5.5,2,0])
-        kraftmesser3griff.move_to([5.5,2,0])
+        kraftmesser3.move_to([5.4,2,0])
+        kraftmesser3griff.move_to([5.4,2,0])
 
         kraftmesser4 = ImageMobject("Kraftmesser.png").scale(0.4)
         kraftmesser4.rotate(0.5*PI)
-        kraftmesser4.move_to([5.5,0,0])
+        kraftmesser4.move_to([5.4,0,0])
         kraftmesser4griff = ImageMobject("Kraftmessergriff.png").scale(0.4)
         kraftmesser4griff.rotate(0.5*PI)
-        kraftmesser4griff.move_to([5.5,0,0])
+        kraftmesser4griff.move_to([5.4,0,0])
 
         #animationen 
         self.add(kraftdarstellengruppe)
@@ -337,7 +332,7 @@ class Kraftaufteilung(Scene):
         self.play(kraftmesser.animate.rotate(0.5*PI))
         self.play(kraftmesser.animate.shift(1.7*RIGHT))
         self.wait()
-        self.play(FadeIn(kraftmesser2,kraftmesser3,stock))
+        self.play(FadeIn(kraftmesser2,kraftmesser3,stock,stock2))
         self.add(kraftmesser2griff,kraftmesser3griff)
         self.wait()
         self.play(stock.animate.shift(7*DOWN))
@@ -368,11 +363,28 @@ class Kraftaufteilung(Scene):
                          unten1_3,
                          oben1_3,
                          k41_3,
-                         mitte1_3),
+                         mitte1_3,
+                         stock2),
                     FadeOut(unten2_2,oben2_2,mitte1_2)
                  )
         self.wait(9)
         self.play(ReplacementTransform(unten1_3,unten2_3),ReplacementTransform(oben1_3,oben2_3),ReplacementTransform(k41_3,k42_3))
+        self.wait(14)
+        self.play(FadeOut(unten2_3,oben2_3,k42_3,mitte1_3))
+        self.play(FadeIn(f1,f2,f3,f4))
+        self.wait(6)
+        fformel.next_to(kraftdarstellen, DOWN).to_edge(LEFT)
+        self.play(Write(fformel))
+        self.wait(11)
+        fformel_2.next_to(fformel, DOWN).to_edge(LEFT)
+        self.play(Write(fformel_2),ReplacementTransform(f1,f1wert))
+        self.wait(2)
+        self.play(Circumscribe(f2))
+        self.wait(6)
+        fformel_3.move_to(fformel_2)
+        self.play(ReplacementTransform(fformel_2,fformel_3))
+        self.wait(4)
+        self.play(ReplacementTransform(f2,f2wert))
         self.wait()
 
 class Kraftdarstellen(Scene):
@@ -1572,7 +1584,7 @@ class Additionrechnen(Scene):
         v2zahlrichtiggruppe = VGroup(blackbox12,v2zahlrichtig)
 
         lösungrichtig = MathTex(r" =\begin{bmatrix} a + c \\ b + d \end{bmatrix}").scale(1.5)
-        blackbox7 = SurroundingRectangle(lösungrichtig, color=BLACK,fill_opacity=1,buff=0)
+        blackbox7 = SurroundingRectangle(lösungrichtig[0][2:11], color=BLACK,fill_opacity=1,buff=0)
         lösungrichtiggruppe = VGroup(blackbox7,lösungrichtig)
         lösungrichtig[0][2].set_color("#F5B176")
         lösungrichtig[0][4].set_color("#86CFF9")
@@ -1595,6 +1607,17 @@ class Additionrechnen(Scene):
         kommu = Tex("Kommutativgesetz")
         blackbox15 = SurroundingRectangle(kommu, color=BLACK,fill_opacity=1,buff=0)
         kommugruppe = VGroup(blackbox15,kommu)
+
+
+        zwischenoben = MathTex("a + c").scale(1.5)
+        blackbox16 = SurroundingRectangle(zwischenoben, color=BLACK,fill_opacity=1,buff=0)
+        zwischenoben[0][0].set_color("#F5B176")
+        zwischenoben[0][2].set_color("#86CFF9")
+
+        zwischenunten = MathTex("b + d").scale(1.5)
+        blackbox17 = SurroundingRectangle(zwischenunten, color=BLACK,fill_opacity=1,buff=0)
+        zwischenunten[0][0].set_color("#F5B176")
+        zwischenunten[0][2].set_color("#86CFF9")
 
         #andere mobjects
         nupl = NumberPlane(x_range=(0,20,1.5),y_range=(0,12,1.5)).set_opacity(0.5)
@@ -1685,13 +1708,39 @@ class Additionrechnen(Scene):
         v2zahlrichtiggruppe.move_to([1,0,0])
         lösungrichtiggruppe.move_to([3.4,0,0])
         plusrichtiggruppe.move_to([0,0,0])
-        richtiggruppe = VGroup(v1zahlrichtiggruppe,v2zahlrichtiggruppe,lösungrichtiggruppe,plusrichtiggruppe)
+        richtiggruppe = VGroup(v1zahlrichtiggruppe,v2zahlrichtiggruppe,plusrichtiggruppe)
         richtig2gruppe = VGroup(v1zahlrichtiggruppe,v2zahlrichtiggruppe,plusrichtiggruppe)
         richtiggruppe.shift(1.75 * LEFT)   
-        self.play(FadeIn(richtiggruppe),FadeOut(gruppe))
-        self.wait(5)
-        self.play(Circumscribe(richtiggruppe))
-        self.wait(2)
+        lösungrichtig.shift(1.75 * LEFT)   
+        blackbox7.shift(1.75 * LEFT)   
+        self.play(FadeIn(richtiggruppe,lösungrichtig[0][0],lösungrichtig[0][-1],lösungrichtig[0][1]),FadeOut(gruppe))
+        self.wait(4)
+
+        oben1 = v1zahlrichtig[0][1].copy()
+        oben2 = plusrichtiggruppe.copy()
+        oben3 = v2zahlrichtig[0][1].copy()
+        obengruppe = VGroup(oben1,oben2,oben3)
+        zwischenoben.move_to([0,1.5,0])
+
+        self.play(TransformMatchingShapes(obengruppe,zwischenoben))
+        self.wait(4)
+        self.play(zwischenoben.animate.move_to([2.13,0.45,0]))
+        self.wait(3)
+
+        unten1 = v1zahlrichtig[0][2].copy()
+        unten2 = plusrichtiggruppe.copy()
+        unten3 = v2zahlrichtig[0][2].copy()
+        untengruppe = VGroup(unten1,unten2,unten3)
+        zwischenunten.move_to([0,-1.5,0])
+
+        self.play(TransformMatchingShapes(untengruppe,zwischenunten))
+        self.wait(4)
+        self.play(zwischenunten.animate.move_to([2.13,-0.4,0]))
+
+        self.add(blackbox7,lösungrichtig[0][2:9])
+        self.remove(zwischenunten,zwischenoben)
+        
+        self.wait(9)
         lösungrichtig2gruppe.shift(2.5*RIGHT)
         v3zahlrichtiggruppe.shift(0.6*LEFT)
         plusrichti2ggruppe.shift(1.6*LEFT)
