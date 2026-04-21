@@ -902,9 +902,7 @@ class Axiom2beispiele(Scene):
         self.wait(2)
         self.play(formel4_2.animate.next_to(atext2, DOWN).to_edge(LEFT))
         self.wait()
-
 #^^ nicht fertig fehlt noch am ende ein durchlauf
-
 class Gewichtskraft(Scene):
     def construct(self):
 
@@ -1047,13 +1045,13 @@ class GewichtskraftWaagen(Scene):
         self.play(gewichtskraftgruppe.animate.to_corner(UL))
         self.wait(4)
         ax.shift(2.7*DOWN)
-        waage.shift(2.15*DOWN)
+        waage.shift(2.2*DOWN)
         waagezahl1.move_to([0.5,-2.2,0])
         waagezahl2.move_to([0.4,-2.2,0])
-        stone.shift(DOWN)
+        stone.shift(1.15*DOWN)
         self.play(Create(ax))
         self.play(FadeIn(waage,waagezahl1))
-        v1.shift(1.9*DOWN)
+        v1.shift(2*DOWN)
         self.play(FadeIn(stone),GrowArrow(v1),ReplacementTransform(waagezahl1,waagezahl2))
         newton.next_to(v1,RIGHT)
         newton.shift(0.2*DL)
@@ -1084,7 +1082,7 @@ class GewichtskraftWaagen(Scene):
         self.wait()
         self.play(formel8.animate.next_to(gewichtskraftgruppe, DOWN).to_edge(LEFT).shift(0.1*UL))
         self.wait(3)
-        self.play(Write(formel4))
+        self.play(Write(formel5))
         self.wait()
         self.play(ax.animate.shift(3*DOWN),
                   waage.animate.shift(3*DOWN),
@@ -1093,7 +1091,7 @@ class GewichtskraftWaagen(Scene):
                   newton.animate.shift(3*DOWN),
                   stone.animate.shift(0.6*DOWN),)
         self.wait(2)
-        self.play(ReplacementTransform(formel4,iss1))
+        self.play(ReplacementTransform(formel5,iss1))
         self.wait(5)
         self.play(Write(fragezeichen))
         self.wait(2)
@@ -1217,6 +1215,7 @@ class Axiom1(Scene):
         vtext = Tex("v = Geschwindigkeit")
 
         vaddon = Tex("v = ")
+        einheitaddon = MathTex(r"\frac{Meter}{Sekunde}").scale(0.7)
 
         #andere mobjects
         iceblock = ImageMobject("ice.png").scale(0.6)
@@ -1304,7 +1303,8 @@ class Axiom1(Scene):
         self.wait(3)
         iceblock.add_updater(lambda mob : mob.move_to([(0.5*(f/m)* (t.get_value())**2) + offset.get_value(),-2.2,0]))
         vaddon.add_updater(lambda mob : mob.next_to(geschwindigkeit, LEFT))
-        self.play(FadeIn(vaddon,geschwindigkeit),run_time=0.1)
+        einheitaddon.add_updater(lambda mob : mob.next_to(geschwindigkeit, RIGHT))
+        self.play(FadeIn(vaddon,einheitaddon,geschwindigkeit),run_time=0.1)
         self.wait(0.6)
         self.play(FadeIn(v1))
         self.play(t.animate.set_value(2),FadeOut(v1), rate_func=linear, run_time=2)
@@ -1316,7 +1316,7 @@ class Axiom1(Scene):
         mark2.move_to([-2.6,-0.5,0])
         line.add_updater(lambda mob : mob.become(Line(2.6*LEFT, RIGHT*(t.get_value()-2.6))).shift(0.5*DOWN))
         self.play(iceblock.animate.move_to([8.5,-2.2,0]),t.animate.set_value(11),FadeIn(mark2), rate_func=linear, run_time=5.6)
-        self.remove(vaddon,geschwindigkeit)
+        self.remove(vaddon,geschwindigkeit,einheitaddon)
         self.wait(3)
         self.play(Circumscribe(axiom1textkurzgruppe))
         self.wait()
@@ -1334,7 +1334,7 @@ class Axiom1(Scene):
         self.wait(3)
         iceblock.add_updater(lambda mob : mob.move_to([(0.5*(f/m)* (t.get_value())**2) + offset.get_value(),-2.2,0]))
         vaddon.add_updater(lambda mob : mob.next_to(geschwindigkeit, LEFT))
-        self.play(FadeIn(vaddon,geschwindigkeit),run_time=0.1)
+        self.play(FadeIn(vaddon,geschwindigkeit,einheitaddon),run_time=0.1)
         self.play(FadeIn(v1))
         self.play(t.animate.set_value(2),FadeOut(v1), rate_func=linear, run_time=2)
         iceblock.clear_updaters()
@@ -1345,7 +1345,7 @@ class Axiom1(Scene):
         mark3.move_to([-2.6,-0.5,0])
         line.add_updater(lambda mob : mob.become(Line(2.6*LEFT, RIGHT*(t.get_value()-2.6))).shift(0.5*DOWN))
         self.play(iceblock.animate.move_to([8.5,-2.2,0]),t.animate.set_value(11),FadeIn(mark3), rate_func=linear, run_time=5.6)
-        self.remove(vaddon,geschwindigkeit)
+        self.remove(vaddon,geschwindigkeit,einheitaddon)
         self.wait(2)
         self.play(Circumscribe(axiom1textkurzgruppe))
         self.wait()
@@ -1401,7 +1401,7 @@ class Kraftaddieren(Scene):
         self.wait(2)
 
         vektorverbindung = Tex("Verbindung")
-        vektorverbindungfull = Tex("Vektoren werden Verbunden")
+        vektorverbindungfull = Tex("Kraft-Vektoren werden Verbunden")
         blackbox7 = SurroundingRectangle(vektorverbindungfull, color=BLACK,fill_opacity=1,buff=0)
         vektorverbindungfullgruppe = VGroup(blackbox7,vektorverbindungfull)
         blackbox8 = SurroundingRectangle(vektorverbindung, color=BLACK,fill_opacity=1,buff=0)
@@ -1750,6 +1750,19 @@ class KraftaddierenBeispiele(Scene):
         bspgruppe = VGroup(blackbox1,bsp,ul1)
         fragezeichen = Tex("?" , color = WHITE)
         fragezeichen.add_updater(lambda mob : mob.next_to(v3_1, UR).shift(0.2 *DL))
+        
+        v1newton = MathTex(r"\approx 2.2N").set_color("#F5B176")
+        blackbox2 = SurroundingRectangle(v1newton, color=BLACK,fill_opacity=1,buff=0)
+        v1newtongruppe = VGroup(blackbox2,v1newton)
+
+        v2newton = MathTex(r"\approx 2.2N").set_color("#86CFF9")
+        blackbox3 = SurroundingRectangle(v2newton, color=BLACK,fill_opacity=1,buff=0)
+        v2newtongruppe = VGroup(blackbox3,v2newton)
+
+        v3newton = MathTex(r"4N")
+        blackbox4 = SurroundingRectangle(v3newton, color=BLACK,fill_opacity=1,buff=0)
+        v3newtongruppe = VGroup(blackbox4,v3newton)
+
 
         #andere Mobjects
         schiffgezogen = ImageMobject("schiffgezogen.png").scale(0.5)
@@ -1804,21 +1817,23 @@ class KraftaddierenBeispiele(Scene):
                   schiffgezogen.animate.set_opacity(0.2),
                   schiffziehen1.animate.set_opacity(0.2),
                   schiffziehen2.animate.set_opacity(0.2))
-        self.play(GrowArrow(v1),GrowArrow(v2))
+        v1newtongruppe.move_to([0.5,-2,0])
+        v2newtongruppe.move_to([0.5,1.3,0])
+        self.play(GrowArrow(v1),GrowArrow(v2),FadeIn(v1newtongruppe,v2newtongruppe))
         self.wait(5)
-        self.play(v2.animate.move_to([3.16,-1.08,0]))
+        self.play(v2.animate.move_to([3.16,-1.08,0]),v2newtongruppe.animate.move_to([2.5,-0.8,0]))
         self.wait(2)
-        self.play(GrowArrow(v3_5))
+        v3newtongruppe.move_to([2,0,0])
+        self.play(GrowArrow(v3_5),FadeIn(v3newtongruppe))
         self.wait()
-        self.play(v2.animate.move_to([0.2,0.45,0]))
+        self.play(v2.animate.move_to([0.2,0.45,0]),v2newtongruppe.animate.move_to([0.5,1.3,0]))
         self.wait(5)
         self.play(seil1.animate.set_opacity(1),
                   seil2.animate.set_opacity(1),
                   schiffgezogen.animate.set_opacity(1),
                   schiffziehen1.animate.set_opacity(1),
                   schiffziehen2.animate.set_opacity(1),
-                  FadeOut(v1),
-                  FadeOut(v2))
+                  FadeOut(v1,v2,v1newtongruppe,v2newtongruppe,v3newtongruppe))
         self.wait(2)
         self.play(seil2.animate.rotate(-0.05*PI).move_to([0.1,-1.4,0]),
                   schiffziehen2.animate.rotate(-0.05*PI).move_to([2.2,-2.9,0]),

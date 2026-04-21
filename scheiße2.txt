@@ -6,141 +6,15 @@ zieh das richtig imb pp rien da sind so weise strisfen anden rändern
 wo ending und zusammenfassung? 
 mach mal die quellenliste
 
-
-was ist kraft:
-der ball dreht sicvh nicht, es fehlt roatation neben scale and translation im unity trnasorm.
-
-wie misst man kraft:
-warum ist heir rl ball und vorher iein andere?
-die striche bei der feder sind nicht ganz an der feder ende, leg doch da mal ein lineale an
-der kraftmesser ist links abgescnitten.
-mach doch Kraft ~ Länge.
-
-issacs story:
- kann vor kraft messen, man sieht halt was kraft ist dann guckt man wer krtaft eigentlich entdeckt hat und was er damit gemacht hat und dann genaueer wie man etwas mit kraft macht, so wie das jz ist ist das so man guckt kraft normal aber dann aufd einmal kommt da son random typ an und und das wirft einem so ausm flow und so
-
-kraftauftrielunf:
-das setzt doch schon voraus man weiß hut was newton sind aber einheiten kommen erst später, auch schon bei kraft messen oist das problem,
-und mach doch das die sich aiseinander ziehen das seiht komisvh aus, der stab rechts siehst dünn und werid aus nicht wie eine wand und der beamer kann den rechts auch verschwinden lassen je nach einstellung und tafel und rails,
-der transform von 9 zu 12 N ist komiscvh auf den messern
-die fromel von f2 ist falch da musss 3 nicht 3N hin, ist ein skalar
-
-kraft darstellen:
-vec v ist eher geschwoindigkeit mach deoch vec F.
-acuh hier N aber man kennt das noch nicht so gut 
-angriffspunbkt mach doch wirgklihc da nen punkt hin und nicht nur circumscribe.
-richtungsvekrot f dach ist nicht drin nur länge also betrag und angriffdpunkt.
-
 2. ax:
 sag F hießrt force. f ist die größe, n die einheit
-die ist eher schnell dummusst also präzise gut überlegenb wie du das gut saggst so das dsaas sinn machtr,
-
-2. ax beispiel:
-warum ist das n? so 1 frame hinterher aber nur am anfang son sprunf häh.
-wenn der eis weitwsre limnks wäre könnte man die bewegung länger und so besser sehgen
-wenn dann das 2. bsp kommt ist ja copy paste also geht das schneller das zieht sich schon und mann kann dann auch mal auf m/s^2 wechsel.
-
-gewichtkraft:
-sinvoll wäre ne eigene scene was ist beschleunigung
-acuh hier ne einsetzung wieder also schnelle, sag sowas man fühlt ja auch das schwerere saxchen meht ktaft auf die hand ausüben obwohl die g gleivht ist.
-
-gewichtskraft waagewn:
-die ist nicht ganz auf dem boden.
-das ist schnell um den neuen zustand zu erklären wo der stein drin ist in schwerelos, und warum ist dann a=0? g wirgt auch noch im weltraumn also dage das keine kraft relativ zu zb den umliegenden sachen wirkt.
-lass mehr zeit oder mach nen nasa längen mess hintergrund damit man auch sieht wenn man nicht so genau hinguckt das sich der stein bnewegt.
-
-iss:
-warum kommrt dancxh nicht nochmal ne scene!!!! wo dann der aufbau gezeigt wird und nochmnal kurz erläutert der tzeil in der scene davor nur is etwas wenig.
 
 gewichtskraft experimetm:
-es verwirrt das man nicht am kraftmesser ablesen kann auch am anfang schon nicht, mach die skalierung doch mal selber und lass den ziehgen,
-m/s^2!
 man hat ganz am anfang kraft darstellen mit vecs aber das kommt dann nur so selten genau so vor immer nur ein pfeil aber nicht mit der schrift vec F oder so erst bei den adddittionen und so wieder
 
-tabeell:
-mach diw doch in manim die sieht schon etwas seltsam aus und anders, benutze vgroup.arrangeingrid
-misst die erdwage wirklich die kraft? such mal ne quelle und pack die rein
-
-1. ax:
-bei v fehlt die einheit
-auch hier mach ein beipiel mit rotationen
-
-kraft addieren:
-sage kraftvektoren statt vektroen, ist sonst zu mathe
-sag das das nur geht, wenn der angriffspunkt gleich ist, suche mal nach einer vernunftigen überstzung für add tip to tail, das wichtig für die verbindungen.
-die res f ist bei den 3 vecs nicht ganz oben
-
-kraft rechen:
-hier ist auch der wieße hinten.
-zeig die problematilk das wenn man nur f=1, f=2 hat die nur addieren kann wenn der winkel 0 oder 180 ist und sonst nicht, deswegen braucht man vektoren, pytagoras oder cos. 
-
-krFTddirtiub BEispuel:
-immer noch seil längen problem lös das doch im video, war in 1 auch schon drin.
-und wo sind dann werte und das wasser und man siht auch nicht wie die boote dann fahren würden.
-
-kraftparalrlelrlgermam:
-du hast schon bei rechen das kommutative also mach danch diese scene bevor den booten
-layering ist weird
-
 3. ax:
-das rad dreht sich nicht und die kugel beshcleinig ind der kanaone und spawnt nicht ausßen
 mach noch rückstoß und gegenkraft, mind als wörter mal irgentwo auftauchen und noch andere beispiele erwähenen wie laufen, rakete, propeller, akku borer
 
 kräftegelcigewicht:
-man kann denken, das das falsch ist weil der angriffpunkt nicht gleich ist.
 schreib doch mal an doe vecs sowas wie f wenn kaum was da ist, auch bei den anderen scenen das sieht so komisch mathe und abstract aus.
 dann aucg die fomrl aufschriben F1+F2+...+Fn=0
-
-fazit:
-sehr sasig
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
