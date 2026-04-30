@@ -152,6 +152,7 @@ class Inhaltsverzeichnes(Scene):
                   path_arc=1.2,
                   run_time= 2)
         self.wait()
+
 class Wasistkraft(Scene):
     def construct(self):
 
@@ -637,7 +638,7 @@ class Axiom2(Scene):
     def construct(self):
 
         #texte
-        axiom2 = Tex("Newton's zweites Axiom").scale(1.2)
+        axiom2 = Tex("Newtons zweites Axiom").scale(1.2)
         ul1 = Underline(axiom2)
         blackbox1 = SurroundingRectangle(axiom2, buff=0, color=BLACK,fill_opacity=1)
         axiom2gruppe = VGroup(blackbox1,axiom2,ul1)
@@ -678,6 +679,10 @@ class Axiom2(Scene):
         blackbox8 = SurroundingRectangle(n3, color=BLACK,fill_opacity=1,buff=0)
         n3gruppe = VGroup(blackbox8,n3)
 
+        f = Tex("F = Kraft")
+        blackbox8 = SurroundingRectangle(f, color=BLACK,fill_opacity=1,buff=0)
+        fgruppe = VGroup(blackbox8,f)
+
         m = Tex("m = Masse")
         blackbox8 = SurroundingRectangle(m, color=BLACK,fill_opacity=1,buff=0)
         mgruppe = VGroup(blackbox8,m)
@@ -717,6 +722,9 @@ class Axiom2(Scene):
         self.wait(6)
         self.play(ReplacementTransform(beschreibunggruppe,beschreibung2gruppe))
         self.wait(4)
+        fgruppe.next_to(beschreibunggruppe, DOWN).to_edge(LEFT)
+        self.play(Write(fgruppe))
+        self.wait(4)
         formel1gruppe.move_to([0,1,0])
         formel2gruppe.move_to([0,1,0])
         formel3gruppe.move_to([0,1,0])
@@ -752,7 +760,7 @@ class Axiom2(Scene):
         self.play(t.animate.set_value(5.5), rate_func=linear, run_time=5.5)
         self.wait()
         self.play(ReplacementTransform(formel1gruppe,formel2gruppe))
-        agruppe.next_to(beschreibunggruppe, DOWN).to_edge(LEFT)
+        agruppe.next_to(fgruppe, DOWN).to_edge(LEFT)
         self.wait()
         self.play(Write(agruppe))
 
@@ -797,10 +805,6 @@ class Einheiten(Scene):
         formel = MathTex(r"F = m \cdot a")
         blackbox6 = SurroundingRectangle(formel, color=BLACK,fill_opacity=1,buff=0)
         formelgruppe = VGroup(blackbox6,formel)
-
-        f0 = MathTex("F : Kraft")
-        blackbox0 = SurroundingRectangle(f0, color=BLACK,fill_opacity=1,buff=0)
-        f0gruppe = VGroup(blackbox0,f0)
 
         f1 = MathTex("F : Newton (N)")
         blackbox2 = SurroundingRectangle(f1, color=BLACK,fill_opacity=1,buff=0)
@@ -851,12 +855,9 @@ class Einheiten(Scene):
         formelgruppe.next_to(axiom2gruppe, DOWN).to_edge(LEFT)
         self.play(Write(formelgruppe))
         self.wait(2)
-        f0gruppe.next_to(formelgruppe, DOWN).to_edge(LEFT)
-        f1gruppe.next_to(f0gruppe, DOWN).to_edge(LEFT)
+        f1gruppe.next_to(formelgruppe, DOWN).to_edge(LEFT)
         mgruppe.next_to(f1gruppe, DOWN).to_edge(LEFT)
         agruppe.next_to(mgruppe, DOWN).to_edge(LEFT)
-        self.play(FadeIn(f0gruppe))
-        self.wait(4)
         self.play(FadeIn(f1gruppe))
         self.wait(3)
         self.play(FadeIn(mgruppe))
@@ -921,6 +922,9 @@ class Einheiten(Scene):
         self.wait(7)
         self.play(TransformMatchingShapes(lösung1,lösung2))
         self.wait(10)
+        self.play(FadeOut(lösung2),
+                  gruppe.animate.set_color(WHITE),
+                  gkraft3.animate.next_to(agruppe, DOWN).to_edge(LEFT))
 
 class Axiom2beispiele(Scene):
     def construct(self):
@@ -2288,7 +2292,7 @@ class Axiom3lösung(Scene):
     def construct(self):
 
         #texte
-        axiom3 = Tex("Newton's drittes Axiom").scale(1.2)
+        axiom3 = Tex("Newtons drittes Axiom").scale(1.2)
         ul1 = Underline(axiom3)
         blackbox1 = SurroundingRectangle(axiom3, buff=0, color=BLACK,fill_opacity=1)
         axiom3gruppe = VGroup(blackbox1,axiom3,ul1)
