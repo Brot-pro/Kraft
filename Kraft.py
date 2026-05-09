@@ -2,6 +2,7 @@ from manim import *
 
 class Test(Scene):
     def construct(self):
+        abc = Tex("Kraft").scale(2.5)
         # t = ValueTracker(-2)
         # a = MathTex(r"\begin{bmatrix}12 \\34\end{bmatrix}")
         # #  vektor = Vector([1,t.get_value()],color=ORANGE)
@@ -13,7 +14,7 @@ class Test(Scene):
         # # self.wait()
         # self.add(a)
 
-        self.add(NumberPlane())
+        self.add(abc)
 
 class Opening(Scene):
     def construct(self): 
@@ -2473,6 +2474,36 @@ class Kräftegleichgewicht(Scene):
                 v4.animate.move_to([0.7,-0.5,0]),
                 v3.animate.move_to([-0.7,-0.7,0]),)
         self.wait()
+
+class Ending(Scene):
+    def construct(self):
+
+        tex1 = Text('Arbeitsblatt: "KRÄFTE UND ZUSAMMENWIRKEN VON KRÄFTEN"').scale(0.33)
+        tex2 = Text('Waagenmodell passend zur Präsentation: https://www.experimentis-shop.de/newton-und-kilogramm-federwaage-detail-677.html?').scale(0.33)
+        tex3 = Text('https://www.waagen-forum.de/index.php?title=Waage&utm').scale(0.33)
+        tex4 = Text('https://de.wikipedia.org/wiki/Gewichtskraft').scale(0.33)
+        tex5 = Text('https://de.wikipedia.org/wiki/Waage').scale(0.33)
+        tex6 = Text('https://www.leifiphysik.de/mechanik/kraft-und-kraftarten/grundwissen/wirkungen-von-kraeften').scale(0.33)
+        tex7 = Text('https://www.leifiphysik.de/mechanik/kraft-und-kraftarten/grundwissen/beschreibung-von-kraeften').scale(0.33)
+        tex8 = Text('https://www.leifiphysik.de/mechanik/kraft-und-kraftarten/grundwissen/gleichgewicht-von-kraeften-einfuehrung').scale(0.33)
+        tex9 = Text('https://sailer-gymnasium.de/images/Faecher/Physik/Grundwissen/Ph_7_M2.pdf').scale(0.33)
+        tex10 = Text('https://www.leifiphysik.de/mechanik/kraft-und-bewegungsaenderung/grundwissen/1-newtonsches-gesetz-traegheitsgesetz').scale(0.33)
+        tex11 = Text('https://www.leifiphysik.de/mechanik/kraft-und-bewegungsaenderung/grundwissen/2-newtonsches-gesetz-aktionsprinzip').scale(0.33)
+        tex12 = Text('https://www.leifiphysik.de/mechanik/kraft-und-bewegungsaenderung/grundwissen/3-newtonsches-gesetz-wechselwirkungsprinzip').scale(0.33)
+        tex13 = Text('https://studyflix.de/ingenieurwissenschaften/krafteparallelogramm-1501').scale(0.33)
+        tex14 = Text('https://studyflix.de/mathematik/vektor-2249').scale(0.33)
+        tex15 = Text('https://studyflix.de/mathematik/vektoren-addieren-und-subtrahieren-5654').scale(0.33)
+        tex16 = Text('https://de.wikipedia.org/wiki/Isaac_Newton').scale(0.33)
+        tex17 = Text('https://www.werwareigentlich.de/newton-isaac.shtml').scale(0.33)
+        tex18 = Text('https://www1.wdr.de/stichtag/stichtag5192.html').scale(0.33)
+        tex19 = Text('https://www.lernhelfer.de/schuelerlexikon/physik-abitur/artikel/kraefte-und-ihre-messung').scale(0.33)
+        tex20 = Text('https://www.leifiphysik.de/mechanik/kraefteaddition-und-zerlegung/grundwissen/kraefteaddition').scale(0.33)
+        texs = VGroup(tex1,tex2,tex3,tex4,tex5,tex6,tex7,tex8,tex9,tex10,tex11,tex12,tex13,tex14,tex15,tex16,tex17,tex18,tex19,tex20)
+        texs.arrange(DOWN, aligned_edge=LEFT)
+        texs.to_edge(LEFT)
+        texs.to_edge(UP)
+        texs.shift(UL*0.4)
+        self.add(texs)
 
 #für text farben:
 # ("#F5B176") orange

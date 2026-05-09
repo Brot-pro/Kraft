@@ -56,4 +56,3 @@ file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/1080p60/partial_mo
 file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/1080p60/partial_movie_files/Einheiten/uncached_00054.mp4'
 file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/1080p60/partial_movie_files/Einheiten/uncached_00055.mp4'
 file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/1080p60/partial_movie_files/Einheiten/uncached_00056.mp4'
-file 'file:C:/Users/PC/Desktop/Manim/Kraft/media/videos/Kraft/1080p60/partial_movie_files/Einheiten/uncached_00057.mp4'
