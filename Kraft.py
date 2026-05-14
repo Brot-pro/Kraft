@@ -392,7 +392,7 @@ class Kraftdarstellen(Scene):
         blackbox2 = SurroundingRectangle(pfeil, color=BLACK,fill_opacity=1,buff=0)
         pfeilgruppe = VGroup(blackbox2,pfeil)
 
-        newton = Tex("1 Kästchenlänge = 1 Newton (N)")
+        newton = Tex("1 Kästchenlänge = 1 Newton")
         blackbox3 = SurroundingRectangle(newton, color=BLACK,fill_opacity=1,buff=0)
         newtongruppe = VGroup(blackbox3,newton)
 
@@ -406,9 +406,25 @@ class Kraftdarstellen(Scene):
         blackbox7 = SurroundingRectangle(vectorzahlfull, color=BLACK,fill_opacity=1,buff=0)
         vectorzahlfullgruppe = VGroup(blackbox7,vectorzahlfull)
 
-        fünf = MathTex("F = 5N")
-        blackbox4 = SurroundingRectangle(fünf, color=BLACK,fill_opacity=1,buff=0)
-        fünfgruppe = VGroup(blackbox4,fünf)
+        vectorzahlfull2 = MathTex(r" \vec{F} = \begin{bmatrix} -2\\1 \end{bmatrix}")
+        blackbox10 = SurroundingRectangle(vectorzahlfull2, color=BLACK,fill_opacity=1,buff=0)
+        vectorzahlfull2gruppe = VGroup(blackbox10,vectorzahlfull2)
+        
+        vectorzahlfull3 = MathTex(r" \vec{F} = \begin{bmatrix} 3\\-1 \end{bmatrix}")
+        blackbox11 = SurroundingRectangle(vectorzahlfull3, color=BLACK,fill_opacity=1,buff=0)
+        vectorzahlfull3gruppe = VGroup(blackbox11,vectorzahlfull3)
+
+        länge = MathTex("F = 5N")
+        blackbox4 = SurroundingRectangle(länge, color=BLACK,fill_opacity=1,buff=0)
+        längegruppe = VGroup(blackbox4,länge)
+
+        länge1 = MathTex(r"F \approx 2.2N")
+        blackbox8 = SurroundingRectangle(länge1, color=BLACK,fill_opacity=1,buff=0)
+        länge1gruppe = VGroup(blackbox8,länge1)
+
+        länge2 = MathTex(r"F \approx 3.1N")
+        blackbox9 = SurroundingRectangle(länge2, color=BLACK,fill_opacity=1,buff=0)
+        länge2gruppe = VGroup(blackbox9,länge2)
 
         angriffspunkt = Tex("Angriffspunkt")
         blackbox5 = SurroundingRectangle(angriffspunkt, color=BLACK,fill_opacity=1,buff=0)
@@ -419,7 +435,7 @@ class Kraftdarstellen(Scene):
         v2 = nupl.get_vector([-3,1.5,0]).set_color(ORANGE)
         v2.shift(0.5 * DOWN)
         v2.shift(2.5 * RIGHT)
-        v3 = nupl.get_vector([4.5,-3,0]).set_color(ORANGE)
+        v3 = nupl.get_vector([4.5,-1.5,0]).set_color(ORANGE)
         v3.shift(3.5*LEFT)
         v3.shift(0.5*DOWN)
         punkt = Dot()
@@ -444,30 +460,34 @@ class Kraftdarstellen(Scene):
         self.wait(4)
         newtongruppe.next_to(vectorzahlfullgruppe, DOWN).to_edge(LEFT)
         newtongruppe.shift(1.6*UP)
-        fünfgruppe.move_to([0,0.4,0])
+        längegruppe.move_to([0,0.4,0])
         self.play(Write(v))
-        self.wait(7)
+        self.wait(9)
         vectorzahlgruppe.move_to([4,1.3,0])
         self.play(Write(vectorzahlgruppe))
         self.wait(11)
         self.play(vectorzahlgruppe.animate.next_to(pfeilgruppe, DOWN).to_edge(LEFT).set_opacity(0))
         vectorzahlfullgruppe.next_to(pfeilgruppe, DOWN).to_edge(LEFT)
+        vectorzahlfull2gruppe.next_to(pfeilgruppe, DOWN).to_edge(LEFT)
+        vectorzahlfull3gruppe.next_to(pfeilgruppe, DOWN).to_edge(LEFT)
         self.play(FadeIn(vectorzahlfullgruppe))
         self.wait(5)
         self.play(Write(newtongruppe))
         self.wait(3)
-        fünfgruppe.next_to(newtongruppe, DOWN).to_edge(LEFT)
-        self.play(Write(fünfgruppe))
+        längegruppe.next_to(newtongruppe, DOWN).to_edge(LEFT)
+        self.play(Write(längegruppe))
         self.wait(6)
         angriffspunktgruppe.move_to([-3.6,-1.6,0])
         self.play(Write(angriffspunktgruppe))
         self.play(Circumscribe(punkt,Circle))
         self.wait(4)
-        self.play(angriffspunktgruppe.animate.next_to(fünfgruppe, DOWN).to_edge(LEFT))
+        self.play(angriffspunktgruppe.animate.next_to(längegruppe, DOWN).to_edge(LEFT))
         self.wait(3)
-        self.play(ReplacementTransform(v1,v2),FadeOut(v),run_time=4)
+        länge1gruppe.next_to(newtongruppe, DOWN).to_edge(LEFT)
+        länge2gruppe.next_to(newtongruppe, DOWN).to_edge(LEFT)
+        self.play(ReplacementTransform(v1,v2),ReplacementTransform(längegruppe,länge1gruppe),ReplacementTransform(vectorzahlfullgruppe,vectorzahlfull2gruppe),FadeOut(v),run_time=2)
         self.wait()
-        self.play(ReplacementTransform(v2,v3),run_time=4)
+        self.play(ReplacementTransform(v2,v3),ReplacementTransform(länge1gruppe,länge2gruppe),ReplacementTransform(vectorzahlfull2gruppe,vectorzahlfull3gruppe),run_time=2)
         self.wait(0.3)    
 
 class Kraftaufteilung(Scene):
@@ -617,7 +637,7 @@ class Kraftaufteilung(Scene):
                          stock2))
         self.wait(9)
         self.play(ReplacementTransform(unten1_3,unten2_3),ReplacementTransform(oben1_3,oben2_3),ReplacementTransform(k41_3,k42_3))
-        self.wait(14)
+        self.wait(12)
         self.play(FadeOut(unten2_3,oben2_3,k42_3,mitte1_3))
         self.play(FadeIn(f1,f2,f3,f4))
         self.wait(6)
@@ -634,7 +654,7 @@ class Kraftaufteilung(Scene):
         self.wait(4)
         self.play(ReplacementTransform(f2,f2wert))
         self.wait()
-# verfrormung erwähnen
+
 class Axiom2(Scene):
     def construct(self):
 
@@ -1494,8 +1514,6 @@ class Axiom1(Scene):
         line.add_updater(lambda mob : mob.become(Line(2.6*LEFT, RIGHT*(t.get_value()-2.6))).shift(0.5*DOWN))
         self.play(iceblock.animate.move_to([8.5,-2.2,0]),t.animate.set_value(11),FadeIn(mark3), rate_func=linear, run_time=5.6)
         self.remove(vaddon,geschwindigkeit,einheitaddon)
-        self.wait(2)
-        self.play(Circumscribe(axiom1textkurzgruppe))
         self.wait()
 
 class Kraftaddieren(Scene):
@@ -1758,7 +1776,8 @@ class Additionrechnen(Scene):
         v2zahlrichtiggruppe = VGroup(blackbox12,v2zahlrichtig)
 
         lösungrichtig = MathTex(r" =\begin{bmatrix} a + c \\ b + d \end{bmatrix}").scale(1.5)
-        blackbox7 = SurroundingRectangle(lösungrichtig, color=BLACK,fill_opacity=1,buff=0)
+        blackbox7 = SurroundingRectangle(lösungrichtig[0][2:11], color=BLACK,fill_opacity=1,buff=0)
+        #blackbox7 = SurroundingRectangle(lösungrichtig, color=BLACK,fill_opacity=1,buff=0)
         lösungrichtiggruppe = VGroup(blackbox7,lösungrichtig)
         lösungrichtig[0][2].set_color("#F5B176")
         lösungrichtig[0][4].set_color("#86CFF9")
@@ -1781,6 +1800,17 @@ class Additionrechnen(Scene):
         kommu = Tex("Kommutativgesetz")
         blackbox15 = SurroundingRectangle(kommu, color=BLACK,fill_opacity=1,buff=0)
         kommugruppe = VGroup(blackbox15,kommu)
+
+
+        zwischenoben = MathTex("a + c").scale(1.5)
+        blackbox16 = SurroundingRectangle(zwischenoben, color=BLACK,fill_opacity=1,buff=0)
+        zwischenoben[0][0].set_color("#F5B176")
+        zwischenoben[0][2].set_color("#86CFF9")
+
+        zwischenunten = MathTex("b + d").scale(1.5)
+        blackbox17 = SurroundingRectangle(zwischenunten, color=BLACK,fill_opacity=1,buff=0)
+        zwischenunten[0][0].set_color("#F5B176")
+        zwischenunten[0][2].set_color("#86CFF9")
 
         #andere mobjects
         nupl = NumberPlane(x_range=(0,20,1.5),y_range=(0,12,1.5)).set_opacity(0.5)
@@ -1871,13 +1901,42 @@ class Additionrechnen(Scene):
         v2zahlrichtiggruppe.move_to([1,0,0])
         lösungrichtiggruppe.move_to([3.4,0,0])
         plusrichtiggruppe.move_to([0,0,0])
-        richtiggruppe = VGroup(v1zahlrichtiggruppe,v2zahlrichtiggruppe,lösungrichtiggruppe,plusrichtiggruppe)
+        richtiggruppe = VGroup(v1zahlrichtiggruppe,v2zahlrichtiggruppe,plusrichtiggruppe)
+        #richtiggruppe = VGroup(v1zahlrichtiggruppe,v2zahlrichtiggruppe,lösungrichtiggruppe,plusrichtiggruppe)
         richtig2gruppe = VGroup(v1zahlrichtiggruppe,v2zahlrichtiggruppe,plusrichtiggruppe)
         richtiggruppe.shift(1.75 * LEFT)   
-        self.play(FadeIn(richtiggruppe),FadeOut(gruppe))
-        self.wait(5)
-        self.play(Circumscribe(richtiggruppe))
-        self.wait(2)
+        lösungrichtig.shift(1.75 * LEFT)   
+        blackbox7.shift(1.75 * LEFT)   
+        self.play(FadeIn(richtiggruppe,lösungrichtig[0][0],lösungrichtig[0][-1],lösungrichtig[0][1]),FadeOut(gruppe))
+        self.wait(4)
+
+        oben1 = v1zahlrichtig[0][1].copy()
+        oben2 = plusrichtiggruppe.copy()
+        oben3 = v2zahlrichtig[0][1].copy()
+        obengruppe = VGroup(oben1,oben2,oben3)
+        zwischenoben.move_to([0,1.5,0])
+
+        self.play(TransformMatchingShapes(obengruppe,zwischenoben))
+        self.wait(4)
+        self.play(zwischenoben.animate.move_to([2.13,0.45,0]))
+        self.wait(3)
+
+        unten1 = v1zahlrichtig[0][2].copy()
+        unten2 = plusrichtiggruppe.copy()
+        unten3 = v2zahlrichtig[0][2].copy()
+        untengruppe = VGroup(unten1,unten2,unten3)
+        zwischenunten.move_to([0,-1.5,0])
+
+        self.play(TransformMatchingShapes(untengruppe,zwischenunten))
+        self.wait(4)
+        self.play(zwischenunten.animate.move_to([2.13,-0.4,0]))
+
+        self.add(blackbox7,lösungrichtig[0][2:9])
+        self.remove(zwischenunten,zwischenoben)
+        
+        self.wait(9)
+        self.add(richtiggruppe)
+        self.remove(gruppe)
         lösungrichtig2gruppe.shift(2.5*RIGHT)
         v3zahlrichtiggruppe.shift(0.6*LEFT)
         plusrichti2ggruppe.shift(1.6*LEFT)
@@ -1899,15 +1958,15 @@ class KraftaddierenBeispiele(Scene):
         fragezeichen = Tex("?" , color = WHITE)
         fragezeichen.add_updater(lambda mob : mob.next_to(v3_1, UR).shift(0.2 *DL))
         
-        v1newton = MathTex(r"\approx 2.2N").set_color("#F5B176")
+        v1newton = MathTex(r"\approx 220N").set_color("#F5B176")
         blackbox2 = SurroundingRectangle(v1newton, color=BLACK,fill_opacity=1,buff=0)
         v1newtongruppe = VGroup(blackbox2,v1newton)
 
-        v2newton = MathTex(r"\approx 2.2N").set_color("#86CFF9")
+        v2newton = MathTex(r"\approx 220N").set_color("#86CFF9")
         blackbox3 = SurroundingRectangle(v2newton, color=BLACK,fill_opacity=1,buff=0)
         v2newtongruppe = VGroup(blackbox3,v2newton)
 
-        v3newton = MathTex(r"4N")
+        v3newton = MathTex(r"400N")
         blackbox4 = SurroundingRectangle(v3newton, color=BLACK,fill_opacity=1,buff=0)
         v3newtongruppe = VGroup(blackbox4,v3newton)
 
@@ -1928,12 +1987,12 @@ class KraftaddierenBeispiele(Scene):
         v3_2 = nupl.get_vector([4,-0.1])
         v3_3 = nupl.get_vector([6,0.2])
         v3_4 = nupl.get_vector([3.5,-0.1])
-        v3_5 = nupl.get_vector([6,0])
-        v3_6 = nupl.get_vector([5.76,-0.8])
-        v3_7 = nupl.get_vector([5.6,1.5])
+        v3_5 = nupl.get_vector([3,0])
+        v3_6 = nupl.get_vector([2.88,-0.4])
+        v3_7 = nupl.get_vector([2.8,0.75])
         v3gruppe = VGroup(v3_1,v3_2,v3_3,v3_4,v3_5,v3_6,v3_7)
-        v1 = nupl.get_vector([3,-1.5]).set_color(ORANGE)
-        v2 = nupl.get_vector([3,1.5]).set_color(BLUE)
+        v1 = nupl.get_vector([1.5,-0.75]).set_color(ORANGE)
+        v2 = nupl.get_vector([1.5,0.75]).set_color(BLUE)
 
         #animation 
         self.add(bspgruppe)
@@ -1947,7 +2006,7 @@ class KraftaddierenBeispiele(Scene):
         self.wait(3)
         self.play(FadeIn(nupl)),self.add(bspgruppe,schiffgezogen,schiffziehen1,schiffziehen2,seil1,seil2)
         self.wait()
-        v3gruppe.move_to([2.2,0,0])
+        v3gruppe.move_to([2.2,-0.16,0])
         self.play(GrowArrow(v3_1),FadeIn(fragezeichen),run_time=2)
         self.wait()
         self.play(Transform(v3_1,v3_2),run_time=2)
@@ -1958,23 +2017,23 @@ class KraftaddierenBeispiele(Scene):
         self.wait()
         self.play(FadeOut(v3_1,fragezeichen))
         self.wait(2)
-        v1.move_to([0.2,-1.11,0])
-        v2.move_to([0.2,0.42,0])
+        v1.move_to([-0.5,-0.75,0])
+        v2.move_to([-0.5,0.07,0])
         self.play(seil1.animate.set_opacity(0.2),
                   seil2.animate.set_opacity(0.2),
                   schiffgezogen.animate.set_opacity(0.2),
                   schiffziehen1.animate.set_opacity(0.2),
                   schiffziehen2.animate.set_opacity(0.2))
-        v1newtongruppe.move_to([0.5,-2,0])
-        v2newtongruppe.move_to([0.5,1.3,0])
+        v1newtongruppe.move_to([0.3,-1.8,0])
+        v2newtongruppe.move_to([0.3,1.1,0])
         self.play(GrowArrow(v1),GrowArrow(v2),FadeIn(v1newtongruppe,v2newtongruppe))
         self.wait(5)
-        self.play(v2.animate.move_to([3.16,-1.08,0]),v2newtongruppe.animate.move_to([2.5,-0.8,0]))
+        self.play(v2.animate.move_to([1,-0.75,0]),v2newtongruppe.animate.move_to([2.5,-0.8,0]))
         self.wait(2)
-        v3newtongruppe.move_to([2,0,0])
+        v3newtongruppe.move_to([1.5,0.2,0])
         self.play(GrowArrow(v3_5),FadeIn(v3newtongruppe))
         self.wait()
-        self.play(v2.animate.move_to([0.2,0.45,0]),v2newtongruppe.animate.move_to([0.5,1.3,0]))
+        self.play(v2.animate.move_to([-0.5,0.07,0]),v2newtongruppe.animate.move_to([0.5,1.3,0]))
         self.wait(5)
         self.play(seil1.animate.set_opacity(1),
                   seil2.animate.set_opacity(1),
