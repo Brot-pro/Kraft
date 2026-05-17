@@ -1,40 +1,62 @@
 from manim import *
 
-class Test(Scene):
+class Settingcheck(Scene):
     def construct(self):
-        abc = Tex("Kraft").scale(2.5)
-        # t = ValueTracker(-2)
-        # a = MathTex(r"\begin{bmatrix}12 \\34\end{bmatrix}")
-        # #  vektor = Vector([1,t.get_value()],color=ORANGE)
-        # # #achsen = Axes(y_range=[-2.999,2.999,1],x_range=[-4.5,4.5,1],x_length=9,y_length=6,axis_config={'tip_shape': StealthTip})
-        # # nupl = NumberPlane().set_opacity(0.5)
-        # # self.add(nupl,vektor)
-        # # vektor.add_updater(lambda x : x.become(Vector([1,t.get_value()],color=ORANGE).move_to([t.get_value(),0,0])))
-        # # self.play(t.animate.set_value(3),run_time=2,)
-        # # self.wait()
-        # self.add(a)
 
-        self.add(abc)
+        s1 = FullScreenRectangle(color=PURE_RED)
+        s2 = FullScreenRectangle(color=PURE_GREEN).scale(0.99)
+        s3 = FullScreenRectangle(color=PURE_RED).scale(0.98)
+        s4 = FullScreenRectangle(color=PURE_GREEN).scale(0.97)
+        s5 = FullScreenRectangle(color=PURE_RED).scale(0.96)
+        s6 = FullScreenRectangle(color=PURE_GREEN).scale(0.95)
+        self.add(s1,s2,s3,s4,s5,s6)
 
-class Opening(Scene):
-    def construct(self): 
+        header = Tex("Bild/Soundcheck").scale(1.2)
+        ul1 = Underline(header)
+        headergruppe = VGroup(header,ul1)
+        headergruppe.move_to(UP*3)
 
-        apfel = ImageMobject("apfel.png").scale(0.2)
-        baum = ImageMobject("baum.png").scale(1.1)
-        mond = ImageMobject("mond.png").scale(0.15)
-        grass = ImageMobject("grass.png").scale(1.242)
-        kraft = Tex("Kraft").scale(2.5)
-        grass.move_to([0,-4,0])
-        baum.move_to([6.8,0,0])
-        apfel.move_to([5,0.4,0])
-        mond.move_to([-5.3,3,0])
-        self.add(baum,grass,kraft,apfel,mond)
 
-class Inhaltsverzeichnes(Scene):
+        t1_5 = MathTex(r"1.5 ^{2}").scale(1.5)
+        t1_4 = MathTex(r"1.4 ^{2}").scale(1.4)
+        t1_3 = MathTex(r"1.3 ^{2}").scale(1.3)
+        t1_2 = MathTex(r"1.2 ^{2}").scale(1.2)
+        t1_1 = MathTex(r"1.1 ^{2}").scale(1.1)
+        t1 = MathTex(r"1.0 ^{2}").scale(1)
+        t0_9 = MathTex(r"0.9 ^{2}").scale(0.9)
+        t0_8 = MathTex(r"0.8 ^{2}").scale(0.8)
+        t0_7 = MathTex(r"0.7 ^{2}").scale(0.7)
+        t0_6 = MathTex(r"0.6 ^{2}").scale(0.6)
+        t0_5 = MathTex(r"0.5 ^{2}").scale(0.5)
+        t0_4 = MathTex(r"0.4 ^{2}").scale(0.4)
+        t0_3 = MathTex(r"0.3 ^{2}").scale(0.3)
+
+        vec = MathTex(r"\vec{F}").scale(1.2)
+        vec.move_to([-6,0.5,0])
+
+        tgruppe = VGroup(t1_5, t1_4, t1_3, t1_2, t1_1, t1, t0_9, t0_8, t0_7, t0_6, t0_5, t0_4, t0_3)
+        tgruppe.arrange(LEFT, aligned_edge=LEFT, buff=0.6)
+        tgruppe.move_to(UP*2)
+
+        bruch = MathTex(r"a = \frac{00.0 \cdot \frac{A}{A^{0}}}{00.0 \cdot \frac{A}{A^{0}}}")
+        bruch.move_to([-3,0.5,0])
+
+        mark = Line(UP*0.1, DOWN*0.1)
+        mark.shift(0.4*LEFT)
+
+        laut = Tex("Alleine:").scale(1.2)
+        leise = Tex("Hintergrund:").scale(1.2)
+
+        laut.move_to([-3,-1.6,0])
+        leise.move_to([3,-1.6,0])
+
+        self.add(headergruppe,tgruppe,vec,bruch,mark,laut,leise)
+
+class Inhaltsverzeichnis(Scene):
     def construct(self): 
         
         #texte
-        inhalt = Tex("Inhaltsverzeichnes").scale(1.2)
+        inhalt = Tex("Inhaltsverzeichnis").scale(1.2)
         ul1 = Underline(inhalt)
         inhaltgruppe = VGroup(inhalt,ul1)
 
@@ -54,105 +76,110 @@ class Inhaltsverzeichnes(Scene):
 
         group = VGroup(waskraft,kraftmessen,newton,kraftdarstellen,kraftaufteilung,axiom2,gewichtskraft,axiom1,addition,kräfteparalellogramm,axiom3,kräftegleichgewicht,fazit)
 
+        #andere Mobjects
+        kreisi = Circle(stroke_width=10,z_index = -3).set_color(GRAY_E).scale(2.5)
+        kreisi.shift(LEFT*7.5)
+
 
         #animation
         self.add(inhaltgruppe)
         self.wait(1)
         self.play(inhaltgruppe.animate.to_corner(UL))
         self.wait(1)
-        group.move_to([-10,-1.7,0])
+        group.move_to([-10,-2,0])
         waskraft.move_to([-9,0,0])
         self.add(group)
         self.play(waskraft.animate.shift(4*RIGHT),
-                  kraftmessen.animate.shift(2*RIGHT))
-        self.wait()
-        self.play(CounterclockwiseTransform(waskraft,waskraft.copy().shift(1.6*UL)),
-                  CounterclockwiseTransform(kraftmessen,kraftmessen.copy().shift(1.6*UR,2*RIGHT)),
+                  kraftmessen.animate.shift(2*RIGHT),
+                  FadeIn(kreisi))
+        self.wait(2)
+        self.play(CounterclockwiseTransform(waskraft,waskraft.copy().shift(2*UL)),
+                  CounterclockwiseTransform(kraftmessen,kraftmessen.copy().shift(1.9*UR,2*RIGHT)),
                   newton.animate.shift(2*RIGHT),
                   path_arc=1.2,
                   run_time= 2)
-        self.wait()
-        self.play(CounterclockwiseTransform(kraftmessen,kraftmessen.copy().shift(1.6*UL,0.6*LEFT)),
-                  CounterclockwiseTransform(newton,newton.copy().shift(1.6*UR,2.2*RIGHT)),
-                  kraftdarstellen.animate.shift(2*RIGHT),
+        self.wait(2)
+        self.play(CounterclockwiseTransform(kraftmessen,kraftmessen.copy().shift(2*UL,0.6*LEFT)),
+                  CounterclockwiseTransform(newton,newton.copy().shift(1.9*UR,2.2*RIGHT)),
+                  kraftdarstellen.animate.shift(2.2*RIGHT),
                   waskraft.animate.shift(4*LEFT),
                   path_arc=1.2,
                   run_time= 2)
-        self.wait()
-        self.play(CounterclockwiseTransform(newton,newton.copy().shift(1.6*UL,LEFT)),
-                  CounterclockwiseTransform(kraftdarstellen,kraftdarstellen.copy().shift(1.6*UR,1*RIGHT)),
+        self.wait(2)
+        self.play(CounterclockwiseTransform(newton,newton.copy().shift(2*UL,LEFT)),
+                  CounterclockwiseTransform(kraftdarstellen,kraftdarstellen.copy().shift(1.9*UR,1*RIGHT)),
                   kraftaufteilung.animate.shift(2*RIGHT),
                   kraftmessen.animate.shift(4*LEFT),
                   path_arc=1.2,
                   run_time= 2)
-        self.wait()
-        self.play(CounterclockwiseTransform(kraftdarstellen,kraftdarstellen.copy().shift(1.6*UL,LEFT)),
-                  CounterclockwiseTransform(kraftaufteilung,kraftaufteilung.copy().shift(1.6*UR,1.2*RIGHT)),
+        self.wait(2)
+        self.play(CounterclockwiseTransform(kraftdarstellen,kraftdarstellen.copy().shift(2.3*UL,LEFT)),
+                  CounterclockwiseTransform(kraftaufteilung,kraftaufteilung.copy().shift(1.9*UR,1.2*RIGHT)),
                   axiom2.animate.shift(2*RIGHT),
                   newton.animate.shift(4*LEFT),
                   path_arc=1.2,
                   run_time= 2)
-        self.wait()
-        self.play(CounterclockwiseTransform(kraftaufteilung,kraftaufteilung.copy().shift(1.6*UL,LEFT)),
-                  CounterclockwiseTransform(axiom2,axiom2.copy().shift(1.6*UR,2*RIGHT)),
+        self.wait(2)
+        self.play(CounterclockwiseTransform(kraftaufteilung,kraftaufteilung.copy().shift(2.3*UL,0.4*LEFT)),
+                  CounterclockwiseTransform(axiom2,axiom2.copy().shift(1.9*UR,2*RIGHT)),
                   gewichtskraft.animate.shift(2*RIGHT),
                   kraftdarstellen.animate.shift(4*LEFT),
                   path_arc=1.2,
                   run_time= 2)
-        self.wait()
-        self.play(CounterclockwiseTransform(axiom2,axiom2.copy().shift(1.6*UL,1.3*LEFT)),
-                  CounterclockwiseTransform(gewichtskraft,gewichtskraft.copy().shift(1.6*UR,1.2*RIGHT)),
+        self.wait(2)
+        self.play(CounterclockwiseTransform(axiom2,axiom2.copy().shift(2*UL,1.3*LEFT)),
+                  CounterclockwiseTransform(gewichtskraft,gewichtskraft.copy().shift(1.9*UR,1.2*RIGHT)),
                   axiom1.animate.shift(2*RIGHT),
                   kraftaufteilung.animate.shift(4*LEFT),
                   path_arc=1.2,
                   run_time= 2)
-        self.wait()
-        self.play(CounterclockwiseTransform(gewichtskraft,gewichtskraft.copy().shift(1.6*UL,LEFT)),
-                  CounterclockwiseTransform(axiom1,axiom1.copy().shift(1.6*UR,2*RIGHT)),
+        self.wait(2)
+        self.play(CounterclockwiseTransform(gewichtskraft,gewichtskraft.copy().shift(2.2*UL,0.6*LEFT)),
+                  CounterclockwiseTransform(axiom1,axiom1.copy().shift(1.9*UR,2*RIGHT)),
                   addition.animate.shift(2*RIGHT),
                   axiom2.animate.shift(4*LEFT),
                   path_arc=1.2,
                   run_time= 2)
-        self.wait()
-        self.play(CounterclockwiseTransform(axiom1,axiom1.copy().shift(1.6*UL,1.3*LEFT)),
-                  CounterclockwiseTransform(addition,addition.copy().shift(1.6*UR,1.3*RIGHT)),
+        self.wait(2)
+        self.play(CounterclockwiseTransform(axiom1,axiom1.copy().shift(2*UL,1.3*LEFT)),
+                  CounterclockwiseTransform(addition,addition.copy().shift(1.9*UR,1.3*RIGHT)),
                   kräfteparalellogramm.animate.shift(2*RIGHT),
                   gewichtskraft.animate.shift(4*LEFT),
                   path_arc=1.2,
                   run_time= 2)
-        self.wait()
-        self.play(CounterclockwiseTransform(addition,addition.copy().shift(1.6*UL,LEFT)),
-                  CounterclockwiseTransform(kräfteparalellogramm,kräfteparalellogramm.copy().shift(1.6*UR,1.7*RIGHT)),
+        self.wait(2)
+        self.play(CounterclockwiseTransform(addition,addition.copy().shift(2*UL,LEFT)),
+                  CounterclockwiseTransform(kräfteparalellogramm,kräfteparalellogramm.copy().shift(1.9*UR,1.7*RIGHT)),
                   axiom3.animate.shift(2*RIGHT),
                   axiom1.animate.shift(4*LEFT),
                   path_arc=1.2,
                   run_time= 2)
-        self.wait()
-        self.play(CounterclockwiseTransform(kräfteparalellogramm,kräfteparalellogramm.copy().shift(1.6*UL,LEFT)),
-                  CounterclockwiseTransform(axiom3,axiom3.copy().shift(1.6*UR,2*RIGHT)),
+        self.wait(2)
+        self.play(CounterclockwiseTransform(kräfteparalellogramm,kräfteparalellogramm.copy().shift(2*UL,LEFT)),
+                  CounterclockwiseTransform(axiom3,axiom3.copy().shift(1.9*UR,2*RIGHT)),
                   kräftegleichgewicht.animate.shift(2*RIGHT),
                   addition.animate.shift(4*LEFT),
                   path_arc=1.2,
                   run_time= 2)
-        self.wait()
-        self.play(CounterclockwiseTransform(axiom3,axiom3.copy().shift(1.6*UL,1.3*LEFT)),
-                  CounterclockwiseTransform(kräftegleichgewicht,kräftegleichgewicht.copy().shift(1.6*UR,1.5*RIGHT)),
+        self.wait(2)
+        self.play(CounterclockwiseTransform(axiom3,axiom3.copy().shift(2*UL,1.3*LEFT)),
+                  CounterclockwiseTransform(kräftegleichgewicht,kräftegleichgewicht.copy().shift(1.9*UR,1.5*RIGHT)),
                   fazit.animate.shift(3*RIGHT),
                   kräfteparalellogramm.animate.shift(4*LEFT),
                   path_arc=1.2,
                   run_time= 2)
-        self.wait()
-        self.play(CounterclockwiseTransform(kräftegleichgewicht,kräftegleichgewicht.copy().shift(1.6*UL,1.4*LEFT)),
-                  CounterclockwiseTransform(fazit,fazit.copy().shift(1.6*UR,0.7*LEFT)),
+        self.wait(2)
+        self.play(CounterclockwiseTransform(kräftegleichgewicht,kräftegleichgewicht.copy().shift(2*UL,1.4*LEFT)),
+                  CounterclockwiseTransform(fazit,fazit.copy().shift(1.9*UR,0.4*LEFT)),
                   axiom3.animate.shift(4*LEFT),
                   path_arc=1.2,
                   run_time= 2)
-        self.wait()
-        self.play(CounterclockwiseTransform(fazit,fazit.copy().shift(1.6*UL,4*LEFT)),
+        self.wait(2)
+        self.play(CounterclockwiseTransform(fazit,fazit.copy().shift(3*UL,2*LEFT)),
                   kräftegleichgewicht.animate.shift(4*LEFT),
                   path_arc=1.2,
                   run_time= 2)
-        self.wait()
+        self.wait(2)
 
 class Wasistkraft(Scene):
     def construct(self):
@@ -2622,3 +2649,95 @@ class Ending(Scene):
 # ("#86CFF9") blau
 
 #_.next_to(_, DOWN).to_edge(LEFT)
+
+
+
+
+# class Te(Scene):
+#     def construct(self):
+
+#         #Raster
+#         nupl = NumberPlane(x_range=(-10,10,1.5),y_range=(-6,6,1.5)).set_opacity(0.5)
+
+#         #Texte
+#         kraftdarstellen = Tex("Kraft darstellen").scale(1.2)
+#         ul1 = Underline(kraftdarstellen)
+#         blackbox1 = SurroundingRectangle(kraftdarstellen, buff=0, color=BLACK,fill_opacity=1)
+#         kraftdarstellengruppe = VGroup(blackbox1,kraftdarstellen,ul1)
+
+#         pfeil = Tex("Pfeil = Vektor")
+#         blackbox2 = SurroundingRectangle(pfeil, color=BLACK,fill_opacity=1,buff=0)
+#         pfeilgruppe = VGroup(blackbox2,pfeil)
+
+#         v = MathTex(r"\vec{F}")
+
+#         vectorzahl = MathTex(r" \begin{bmatrix} 4\\3 \end{bmatrix}")
+#         blackbox6 = SurroundingRectangle(vectorzahl, color=BLACK,fill_opacity=1,buff=0)
+#         vectorzahlgruppe = VGroup(blackbox6,vectorzahl)
+
+#         vectorzahlfull2 = MathTex(r" \vec{F} = \begin{bmatrix} -2\\1 \end{bmatrix}")
+#         blackbox10 = SurroundingRectangle(vectorzahlfull2, color=BLACK,fill_opacity=1,buff=0)
+#         vectorzahlfull2gruppe = VGroup(blackbox10,vectorzahlfull2)
+        
+#         vectorzahlfull3 = MathTex(r" \vec{F} = \begin{bmatrix} 3\\-1 \end{bmatrix}")
+#         blackbox11 = SurroundingRectangle(vectorzahlfull3, color=BLACK,fill_opacity=1,buff=0)
+#         vectorzahlfull3gruppe = VGroup(blackbox11,vectorzahlfull3)
+
+#         länge = MathTex("F = 5N")
+#         blackbox4 = SurroundingRectangle(länge, color=BLACK,fill_opacity=1,buff=0)
+#         längegruppe = VGroup(blackbox4,länge)
+
+#         länge1 = MathTex(r"F \approx 2.2N")
+#         blackbox8 = SurroundingRectangle(länge1, color=BLACK,fill_opacity=1,buff=0)
+#         länge1gruppe = VGroup(blackbox8,länge1)
+
+#         länge2 = MathTex(r"F \approx 3.1N")
+#         blackbox9 = SurroundingRectangle(länge2, color=BLACK,fill_opacity=1,buff=0)
+#         länge2gruppe = VGroup(blackbox9,länge2)
+
+#         angriffspunkt = Tex("Angriffspunkt")
+#         blackbox5 = SurroundingRectangle(angriffspunkt, color=BLACK,fill_opacity=1,buff=0)
+#         angriffspunktgruppe = VGroup(blackbox5,angriffspunkt)
+
+#         #Andere Mobjects
+#         v1 = nupl.get_vector([6,4.5,0]).set_color(ORANGE)
+#         v2 = nupl.get_vector([-3,1.5,0]).set_color(ORANGE)
+#         v2.shift(0.5 * DOWN)
+#         v2.shift(2.5 * RIGHT)
+#         v3 = nupl.get_vector([4.5,-1.5,0]).set_color(ORANGE)
+#         v3.shift(3.5*LEFT)
+#         v3.shift(0.5*DOWN)
+#         punkt = Dot()
+#         punkt.shift(2 * DL)
+        
+
+#         #Animationen
+#         self.add(kraftdarstellengruppe)
+#         self.wait()
+#         self.play(kraftdarstellengruppe.animate.to_corner(UL))
+#         nupl.shift(2 * DL)
+#         self.play(FadeIn(nupl))
+#         self.add(kraftdarstellengruppe)
+#         self.wait(2)
+#         v1.shift(2 * DL) 
+#         self.play(GrowArrow(v1))
+#         self.wait(3)
+#         pfeilgruppe.move_to([-1.5,0,0])
+#         self.play(Write(pfeilgruppe))
+#         self.wait()
+#         self.play(pfeilgruppe.animate.next_to(kraftdarstellen, DOWN).to_edge(LEFT))
+#         self.wait(4)
+#         längegruppe.move_to([0,0.4,0])
+#         self.play(Write(v))
+#         self.wait(9)
+#         vectorzahlgruppe.move_to([4,1.3,0])
+#         self.play(Write(vectorzahlgruppe))
+#         self.wait(11)
+
+#         self.play(Write(längegruppe))
+#         längegruppe.move_to([-1,2,0])
+#         self.wait(6)
+#         angriffspunktgruppe.move_to([-3.6,-1.6,0])
+#         self.play(Write(angriffspunktgruppe))
+#         angriffspunktgruppe.shift(RIGHT*3.5)
+#         angriffspunktgruppe.shift(DOWN*0.4)
