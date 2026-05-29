@@ -445,11 +445,11 @@ class Kraftdarstellen(Scene):
         blackbox4 = SurroundingRectangle(länge, color=BLACK,fill_opacity=1,buff=0)
         längegruppe = VGroup(blackbox4,länge)
 
-        länge1 = MathTex(r"F \approx 2.2N")
+        länge1 = MathTex(r"F \approx 2,2N")
         blackbox8 = SurroundingRectangle(länge1, color=BLACK,fill_opacity=1,buff=0)
         länge1gruppe = VGroup(blackbox8,länge1)
 
-        länge2 = MathTex(r"F \approx 3.1N")
+        länge2 = MathTex(r"F \approx 3,1N")
         blackbox9 = SurroundingRectangle(länge2, color=BLACK,fill_opacity=1,buff=0)
         länge2gruppe = VGroup(blackbox9,länge2)
 
@@ -540,11 +540,11 @@ class Kraftaufteilung(Scene):
         mitte1_2.move_to([2.3,-0.8,0])
         unten1_2 = Tex("?N")
         unten1_2.move_to([6,-1.3,0])
-        unten2_2 = Tex("4.5N")
+        unten2_2 = Tex("4,5N")
         unten2_2.move_to([6,-1.3,0])
         oben1_2 = Tex("?N")
         oben1_2.move_to([6,1.3,0])
-        oben2_2 = Tex("4.5N")
+        oben2_2 = Tex("4,5N")
         oben2_2.move_to([6,1.3,0])
 
         mitte1_3 = Tex("12N")
@@ -879,15 +879,15 @@ class Einheiten(Scene):
         gruppe = VGroup(axiom2,ul1,formel,f4,m,agruppe)
 
         frage1 = MathTex(r"a = 5 \cdot \frac{Meter}{Sekunde^{2}} ?")
-        frage2 = MathTex(r"a = 12.3 \cdot \frac{Meter}{Sekunde^{2}} ?")
+        frage2 = MathTex(r"a = 12,3 \cdot \frac{Meter}{Sekunde^{2}} ?")
         frage3 = MathTex(r"a = 10 \cdot \frac{Meter}{Sekunde^{2}} ?")
 
         gkraft1 = MathTex(r"G-Kraft")
         gkraft2 = MathTex(r"G-Kraft = \frac{a}{g}")
-        g = MathTex(r"g \approx 9.81 \cdot \frac{Meter}{Sekunde^{2}}")
-        gkraft3 = MathTex(r"G-Kraft = \frac{a}{9.81 \cdot \frac{Meter}{Sekunde^{2}}}")
+        g = MathTex(r"g \approx 9,81 \cdot \frac{Meter}{Sekunde^{2}}")
+        gkraft3 = MathTex(r"G-Kraft = \frac{a}{9,81 \cdot \frac{Meter}{Sekunde^{2}}}")
 
-        lösung1 = MathTex(r"G-Kraft(10) = \frac{10 \cdot \frac{Meter}{Sekunde^{2}}}{9.81 \cdot \frac{Meter}{Sekunde^{2}}}")
+        lösung1 = MathTex(r"G-Kraft(10) = \frac{10 \cdot \frac{Meter}{Sekunde^{2}}}{9,81 \cdot \frac{Meter}{Sekunde^{2}}}")
         lösung2 = MathTex(r"G-Kraft(10) \approx 1.19")
 
 
@@ -1112,11 +1112,11 @@ class Gewichtskraft(Scene):
         fma2 = MathTex(r"F = m \cdot g")
 
         fma2_3 = MathTex(r"Stein: F = 200 kg \cdot g")
-        fma2_4 = MathTex(r"Stein: F = 200 kg \cdot 9.81 \frac{Meter}{Sekunde^{2}}")
-        fma2_5 = MathTex(r"Stein: 1962N = 200 kg \cdot 9.81 \frac{Meter}{Sekunde^{2}}")
+        fma2_4 = MathTex(r"Stein: F = 200 kg \cdot 9,81 \frac{Meter}{Sekunde^{2}}")
+        fma2_5 = MathTex(r"Stein: 1962N = 200 kg \cdot 9,81 \frac{Meter}{Sekunde^{2}}")
         fma2gruppe = VGroup(fma2_3,fma2_4,fma2_5)
 
-        g = MathTex(r"Erdbeschleunigung \approx 9.81 \frac{Meter}{Sekunde^{2}}")
+        g = MathTex(r"Erdbeschleunigung \approx 9,81 \frac{Meter}{Sekunde^{2}}")
 
         fragezeichen = Tex("?")
 
@@ -1208,16 +1208,16 @@ class GewichtskraftWaagen(Scene):
         formel3 = MathTex(r"\frac{F}{g} = \frac{m \cdot g}{g}")
         formel4 = MathTex(r"\frac{F}{g} = m")
         formel5 = MathTex(r"m = \frac{F}{g}")
-        formel6 = MathTex(r"m = \frac{F}{9.81 \frac{Meter}{Sekunde^{2}}}")
-        formel7 = MathTex(r"m = \frac{1962N}{9.81 \frac{Meter}{Sekunde^{2}}}")
-        formel8 = MathTex(r"200kg = \frac{1962N}{9.81 \frac{Meter}{Sekunde^{2}}}")
+        formel6 = MathTex(r"m = \frac{F}{9,81 \frac{Meter}{Sekunde^{2}}}")
+        formel7 = MathTex(r"m = \frac{1962N}{9,81 \frac{Meter}{Sekunde^{2}}}")
+        formel8 = MathTex(r"200kg = \frac{1962N}{9,81 \frac{Meter}{Sekunde^{2}}}")
         #-_
 
         iss1 = MathTex(r"m = \frac{F}{0}")
         iss2 = MathTex(r"m = \frac{F}{a}")
         iss3 = MathTex(r"m = \frac{5N}{a}")
-        iss4 = MathTex(r"m = \frac{5N}{0.025 \frac{Meter}{Sekunde^{2}}}}")
-        iss5 = MathTex(r"200kg \approx \frac{5N}{0.025 \frac{Meter}{Sekunde^{2}}}}")
+        iss4 = MathTex(r"m = \frac{5N}{0,025 \frac{Meter}{Sekunde^{2}}}}")
+        iss5 = MathTex(r"200kg \approx \frac{5N}{0,025 \frac{Meter}{Sekunde^{2}}}}")
 
         formelgruppe = VGroup(formel1,formel2,formel3,formel4,formel5,formel6,formel7,formel8,iss1,iss2,iss3,iss4,iss5)
 
@@ -1324,13 +1324,13 @@ class Gewichtskraftexperiment(Scene):
         newton = MathTex(r"\approx 1N")
         newton2 = MathTex(r"0.981N \approx 1N")
         gramm = Tex("100g")
-        gramm2 = Tex("100g = 0.1 kg")
+        gramm2 = Tex("100g = 0,1 kg")
 
         formel1 = MathTex(r"F = m \cdot g")
-        formel2 = MathTex(r"F = m \cdot 9.81 \frac{Meter}{Sekunde^{2}}")
-        formel3 = MathTex(r"F = 0.1 kg \cdot 9.81 \frac{Meter}{Sekunde^{2}}")
-        formel4 = MathTex(r"0.981N = 0.1 kg \cdot 9.81 \frac{Meter}{Sekunde^{2}}")
-        formel5 = MathTex(r"1N \approx 0.1 kg \cdot 9.81 \frac{Meter}{Sekunde^{2}}")
+        formel2 = MathTex(r"F = m \cdot 9,81 \frac{Meter}{Sekunde^{2}}")
+        formel3 = MathTex(r"F = 0,1 kg \cdot 9,81 \frac{Meter}{Sekunde^{2}}")
+        formel4 = MathTex(r"0.981N = 0,1 kg \cdot 9,81 \frac{Meter}{Sekunde^{2}}")
+        formel5 = MathTex(r"1N \approx 0,1 kg \cdot 9,81 \frac{Meter}{Sekunde^{2}}")
         formelgruppe = VGroup(formel1,formel2,formel3,formel5)
 
         #andere mobjects
@@ -2649,8 +2649,6 @@ class Ending(Scene):
 # ("#86CFF9") blau
 
 #_.next_to(_, DOWN).to_edge(LEFT)
-
-
 
 
 # class Te(Scene):
