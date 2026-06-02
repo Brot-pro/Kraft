@@ -1,8 +1,8 @@
 -- Präsentation Physik: Kraft --
 
 Hier ein paar Hilfestellung falls du nicht weißt wie man sich hier navigiert;
-1. "Kraft.py" ist die Datei, in der der ganze Code steht. (Python / Manim)
-2. "xy.png" sind einfach Bilder, die an irgenteiner Stelle benutzt wurden
-3. "media" ist wie der Name sagt alle Medien. Interessant ist nur der Unterordner "videos/Kraft" Darunter
-  sind weiter Unterunter der jeweiligen Auflösungen. Die Präsentation wird / wurde in 1080p60 gehalten.
-4. Alle anderen Dateien sind "Nebenprodukte" der eigentlichen Präsentation. (aka unnötig anzuschauen)
+1. Unter dem Ordner "Code" ist eine Python Datei, in der der Code ist, womit die Präsentation geschrieben wurde.
+2. Unter dem Ordner "Renders bzw. Animationen" sind diese als Videodateien. Welche so in der Präsentation sind.
+3. "Quellen.txt" ist ein einfaches Textdokument, wo ihr euch erneut die Quellen anschauen könnt.
+4. "Benutzte Bilder" ist der Ordner mit den Bildern, welche in den Videos vorkommen.
+5. "README.md" ist diese Textdatei, welche dafür sorgt, dass ihr das hier hier unten lesen könnt.
